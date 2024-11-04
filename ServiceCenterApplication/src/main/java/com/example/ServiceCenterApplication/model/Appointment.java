@@ -28,7 +28,7 @@ public class Appointment {
 
     private LocalDate appointmentDate;
     private LocalTime appointmentTime;
-    private String appointmentStatus; // "Scheduled", "Completed"
+    private String appointmentStatus = "Scheduled"; // Default status
 
     // Getters and setters
     public Long getAppointmentId() {
