@@ -1,0 +1,64 @@
+<div class="service-list">
+    <div *ngFor="let service of services" class="service-card">
+      <h3>{{ service.name }}</h3>
+      <p>{{ service.description }}</p>
+      <button (click)="scheduleAppointment(service)">Schedule Appointment</button>
+    </div>
+  </div>
+  
+    <div *ngIf="selectedService" class="appointment-form">
+      <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="userId">User ID:</label>
+          <input type="number" id="userId" formControlName="userId" required>
+        </div>
+
+        <div class="form-group">
+          <label for="serviceId">Selected Service:</label>
+          <input type="text" id="serviceId" [value]="selectedService.name" readonly>
+        </div>
+        
+        <div class="form-group">
+          <label for="servicePrice">Price:</label>
+          <input type="text" id="servicePrice" [value]="selectedService.price | currency" readonly>
+        </div>
+
+        <div class="form-group">
+          <label for="appointmentDate">Appointment Date:</label>
+          <input type="date" id="appointmentDate" formControlName="appointmentDate" required>
+        </div>
+
+        <div class="form-group">
+          <label for="appointmentTime">Appointment Time:</label>
+          <input type="time" id="appointmentTime" formControlName="appointmentTime" required>
+        </div>
+
+        <button type="submit" [disabled]="!appointmentForm.valid">Confirm Appointment</button>
+      </form>
+    </div>
+    
+    <div *ngIf="appointmentForm.valid && selectedService" class="success-message">
+      <p>Your appointment for {{ selectedService.name }} has been scheduled successfully!</p>
+      <p>Date: {{ appointmentForm.get('appointmentDate')?.value | date }}</p>
+      <p>Time: {{ appointmentForm.get('appointmentTime')?.value }}</p>
+      <p>Price: {{ selectedService.price }}</p>
+    </div>
+    <div class="view-appointments">
+      <button (click)="viewAppointments()" class="view-appointments-btn">View My Appointments</button>
+      
+      <div *ngIf="userAppointments && userAppointments.length > 0" class="appointments-list">
+        <h3>Your Appointments</h3>
+        <div *ngFor="let appointment of userAppointments" class="appointment-item">
+          <p>Service: {{appointment.serviceId}}</p>
+          <p>Date: {{appointment.appointmentDate | date}}</p>
+          <p>Time: {{appointment.appointmentTime}}</p>
+          <button (click)="deleteAppointment(appointment.id)" class="delete-btn">Cancel Appointment</button>
+        </div>
+      </div>
+      
+      <div *ngIf="userAppointments && userAppointments.length === 0" class="no-appointments">
+        <p>You have no scheduled appointments.</p>
+      </div>
+    </div>
+  
+  
