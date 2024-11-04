@@ -24,6 +24,7 @@ interface Appointment {
   styleUrl: './service.component.css'
 })
 export class ServiceComponent {
+  userId: string = '';
   services: Service[] = [
     { id: 1, name: 'Tire Replacement', description: 'Professional tire replacement service.', price: 400 },
     { id: 2, name: 'Wheel Alignment', description: 'Accurate wheel alignment for smooth driving.', price: 250 },
@@ -36,7 +37,7 @@ export class ServiceComponent {
 
   constructor(private fb: FormBuilder, private appService: AppService) {
     this.appointmentForm = this.fb.group({
-      userId: [''],
+      userId: [this.userId],
       appointmentDate: [''],
       appointmentTime: [''],
       serviceId: [null],
@@ -46,7 +47,7 @@ export class ServiceComponent {
   }
 
   viewAppointments() {
-    const userId = 'current-user-id'; // Replace with actual user ID
+    const userId = this.userId; // Replace with actual user ID
     this.appService.getUserAppointments(userId).subscribe(
       (appointments: any) => {
         this.userAppointments = appointments;

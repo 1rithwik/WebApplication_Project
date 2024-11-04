@@ -44,6 +44,8 @@
       <p>Price: {{ selectedService.price }}</p>
     </div>
     <div class="view-appointments">
+      <label for="userId">User ID:</label>
+      <input type="number" id="userId" formControlName="userId" required>
       <button (click)="viewAppointments()" class="view-appointments-btn">View My Appointments</button>
       
       <div *ngIf="userAppointments && userAppointments.length > 0" class="appointments-list">
