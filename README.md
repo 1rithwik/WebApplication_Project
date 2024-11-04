@@ -12,7 +12,7 @@ Backend: Spring Boot with RESTful APIs, JWT-based authentication, and integratio
 Database: MySQL with tables for user data, appointments, services, tires, and reviews.</br>
 
 ## 3. Functional Requirements
-User Side</br>
+### User Side</br>
 Home Page:</br>
 Navbar with links to Services, About Us, Contact Us, and Login.</br>
 Services are accessible only if the user is logged in.</br>
@@ -22,7 +22,7 @@ Tire replacement includes an option for selecting a tire model.</br>
 Users can schedule appointments with specified dates and times.</br>
 Feedback:</br>
 Users can leave reviews and feedback on services received.</br>
-Admin Side</br>
+### Admin Side</br>
 Main Page:</br>
 View scheduled appointments, tire stock, and user reviews.</br>
 Scheduling Appointment Management:</br>
@@ -39,7 +39,7 @@ Scalability: The application should be able to handle a growing number of users 
 Usability: User-friendly UI with intuitive navigation and clear forms.</br>
 
 ## 5. System Architecture
-Frontend Architecture (Angular)</br>
+### Frontend Architecture (Angular)</br>
 Components:</br>
 app.component.ts: Main container for other components.</br>
 services.component.ts: Displays services list with buttons to schedule appointments.</br>
@@ -51,7 +51,7 @@ AuthService: Handles login and registration requests.</br>
 AppointmentService: Manages appointment scheduling and retrieval.</br>
 TireService: Updates and retrieves tire stock details.</br>
 FeedbackService: Handles user feedback.</br>
-Backend Architecture (Spring Boot)</br>
+### Backend Architecture (Spring Boot)</br>
 Controller Layer</br>
 UserController: Manages user registration and login.</br>
 AppointmentController: Manages scheduling and appointment retrieval.</br>
@@ -69,7 +69,7 @@ Uses Spring Data JPA for CRUD operations on MySQL database tables.</br>
 Tables: Users, Appointments, Services, Tires, Feedback.</br>
 
 ## 7. Authentication and Authorization
-JWT Authentication Flow:</br>
+#### JWT Authentication Flow:</br>
 Frontend sends username and password to backend.</br>
 Backend verifies credentials and returns a JWT token.</br>
 Frontend stores the token, sending it with requests to access protected resources.</br>
