@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'Frontend';
   constructor(private router: Router) {}
-  gotoRegister() {
-    this.router.navigate(['/register']);
-  }
+  // gotoRegister() {
+  //   this.router.navigate(['/register']);
+  // }
 }
