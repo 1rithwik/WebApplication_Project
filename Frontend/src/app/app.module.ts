@@ -7,22 +7,28 @@ import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { ServiceComponent } from './service/service.component';
+import { AppointmentComponent } from './appointment/appointment.component';
+import { FeedbackComponent } from './feedback/feedback.component';
+
 
 @NgModule({
   declarations: [
-    AppComponent,
+    // AppComponent,
     LoginComponent,
     ServiceComponent,
     // RegisterComponent
   ],
   imports: [
+    AppComponent,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    RegisterComponent
+    RegisterComponent,
+    AppointmentComponent,
+    FeedbackComponent
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  // bootstrap: [AppComponent]
 })
 export class AppModule { }

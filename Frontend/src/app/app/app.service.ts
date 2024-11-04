@@ -31,4 +31,10 @@ export class AppService {
   deleteFeedback(id: number) {
     return this.http.delete(`${this.apiUrl}/admin/feedback/delete/${id}`);
   }
+  getAppointments() {
+    return this.http.get(`${this.apiUrl}/service/getUserAppointments`);
+  }
+  updateAppointment(appointment: any) {
+    return this.http.put(`${this.apiUrl}/service/updateAppointment`, appointment);
+  }
 }
