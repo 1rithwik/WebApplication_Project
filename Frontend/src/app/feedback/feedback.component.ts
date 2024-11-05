@@ -4,8 +4,8 @@ import { AppService } from '../app/app.service';
 
 @Component({
   selector: 'app-feedback',
-  standalone: true,
-  imports: [CommonModule],
+  // standalone: true,
+  // imports: [CommonModule],
   templateUrl: './feedback.component.html',
   styleUrl: './feedback.component.css'
 })

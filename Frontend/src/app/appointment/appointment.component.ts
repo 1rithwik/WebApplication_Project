@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-appointment',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
+  // standalone: true,
+  // imports: [CommonModule, FormsModule],
   templateUrl: './appointment.component.html',
   styleUrl: './appointment.component.css'
 })
