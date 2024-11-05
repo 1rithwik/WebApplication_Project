@@ -16,7 +16,7 @@ Database: MySQL with tables for user data, appointments, services, tires, and re
 #### Home Page:</br>
 Navbar with links to Services, About Us, Contact Us, and Login.</br>
 Services are accessible only if the user is logged in.</br>
-Scheduling Appointment:</br>
+#### Scheduling Appointment:</br>
 Lists available services, including tire replacement, alignment, balancing, and fusion repairs.</br>
 Tire replacement includes an option for selecting a tire model.</br>
 Users can schedule appointments with specified dates and times.</br>
@@ -73,7 +73,7 @@ Tables: Users, Appointments, Services, Tires, Feedback.</br>
 Frontend sends username and password to backend.</br>
 Backend verifies credentials and returns a JWT token.</br>
 Frontend stores the token, sending it with requests to access protected resources.</br>
-Role-Based Access Control:</br>
+#### Role-Based Access Control:</br>
 Users have basic access (appointment booking, feedback).</br>
 Admins have extended permissions (manage inventory, view appointments, feedback).</br>
 
