@@ -10,7 +10,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import jakarta.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+=======
+>>>>>>> e4bde25 (Appointment Implemented for admin)
 
 @Entity
 @Table(name = "appointments")
@@ -21,6 +24,7 @@ public class Appointment {
     private Long appointmentId;
 
     @ManyToOne
+<<<<<<< HEAD
     @JoinColumn(name = "user_id")
     // @JsonBackReference
     @JsonIgnoreProperties("appointments")
@@ -30,6 +34,15 @@ public class Appointment {
     @JoinColumn(name = "service_id")
     // @JsonBackReference
     @JsonIgnoreProperties("appointments")
+=======
+    @JoinColumn(name = "userId")
+    @JsonBackReference
+    private Users users;
+
+    @ManyToOne
+    @JoinColumn(name = "serviceId")
+    @JsonBackReference
+>>>>>>> e4bde25 (Appointment Implemented for admin)
     private Service service;
 
     private LocalDate appointmentDate;

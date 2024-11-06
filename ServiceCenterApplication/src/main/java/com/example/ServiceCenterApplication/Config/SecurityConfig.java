@@ -34,6 +34,7 @@ public class SecurityConfig {
     private UserDetailsService userDetailsService;
 
     @Bean
+<<<<<<< HEAD
     public SecurityFilterChain securityFilterChain(HttpSecurity httpsec) throws Exception {
 
         httpsec
@@ -53,16 +54,39 @@ public class SecurityConfig {
 
         return httpsec.build();
     }
+=======
+>>>>>>> e4bde25 (Appointment Implemented for admin)
     // public SecurityFilterChain securityFilterChain(HttpSecurity httpsec) throws
     // Exception {
+
     // httpsec
     // .csrf(customizer -> customizer.disable())
     // .authorizeHttpRequests(request -> request
-    // .anyRequest().permitAll())
-    // .httpBasic(Customizer.withDefaults());
+    // .requestMatchers("login", "register")
+    // .permitAll()
+    // .requestMatchers("/admin/**").hasRole("ADMIN")
+    // .anyRequest().authenticated())// any request is authenticated
+    // // like when you login from
+    // // different browser, it should
+    // // ask login
+    // // .formLogin(Customizer.withDefaults())// enabling the form login
+    // .httpBasic(Customizer.withDefaults())
+    // .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+    // .sessionManagement(session ->
+    // session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));// session
+    // // creation policy is stateless i.e every request new session is created
 
     // return httpsec.build();
     // }
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpsec) throws Exception {
+        httpsec
+                .csrf(customizer -> customizer.disable())
+                .authorizeHttpRequests(request -> request
+                        .anyRequest().permitAll())
+                .httpBasic(Customizer.withDefaults());
+
+        return httpsec.build();
+    }
 
     // @Bean
     // public UserDetailsService userDetailsService() {

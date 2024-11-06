@@ -17,8 +17,11 @@ import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
 import { TireAdminComponent } from './tire-admin/tire-admin.component';
 import { AdminDashComponent } from './admin-dash/admin-dash.component';
+<<<<<<< HEAD
 import { AuthInterceptor } from './auth.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+=======
+>>>>>>> e4bde25 (Appointment Implemented for admin)
 @NgModule({
   declarations: [
     ServiceComponent,
