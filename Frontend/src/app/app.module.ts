@@ -15,7 +15,8 @@ import { FeedbackComponent } from './feedback/feedback.component';
 import { HomeComponent } from './home/home.component';
 import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
-
+import { TireAdminComponent } from './tire-admin/tire-admin.component';
+import { AdminDashComponent } from './admin-dash/admin-dash.component';
 @NgModule({
   declarations: [
     ServiceComponent,
@@ -25,6 +26,8 @@ import { CommonModule } from '@angular/common';
     LoginComponent,
     AppointmentComponent,
     FeedbackComponent,
+    TireAdminComponent,
+    AdminDashComponent
   ],
   imports: [
     // NgModule,

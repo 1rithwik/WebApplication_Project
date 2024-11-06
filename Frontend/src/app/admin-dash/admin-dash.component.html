@@ -3,16 +3,16 @@
     <div class="sidebar">
       <h2>Admin Dashboard</h2>
       <ul>
-        <li><a routerLink="/overview">Overview</a></li>
-        <li><a routerLink="/manage-services">Manage Services</a></li>
-        <li><a routerLink="/appointments">Appointments</a></li>
-        <li><a routerLink="/customer-feedback">Customer Feedback</a></li>
-        <li><a routerLink="/settings">Settings</a></li>
+        <li><a (click)="activeChild = 'overview'">Overview</a></li>
+        <li><a (click)="activeChild = 'manageServices'">Manage Services</a></li>
+        <li><a (click)="activeChild = 'appointment'">Appointments</a></li>
+        <li><a (click)="activeChild = 'customerFeedback'">Customer Feedback</a></li>
+        <li><a (click)="activeChild = 'tireStock'">Tire Stock</a></li>
       </ul>
     </div>
   
     <!-- Main Content -->
-    <div class="content">
+    <div *ngIf="activeChild == 'overview'" class="content">
       <div class="header">
         <h1>Welcome, Admin</h1>
         <p>Manage your car tire services effectively.</p>
@@ -33,5 +33,45 @@
           <p>5 New Reviews</p>
         </div>
       </div>
+    </div>
+
+    <div *ngIf="activeChild == 'appointment'" class="appointment-content">
+      <div class="container">
+      <h1>Appointments</h1>
+    <table class="appointment-table">
+        <thead>
+            <tr>
+                <th>Appointment ID</th>
+                <th>Customer ID</th>
+                <th>Service ID</th>
+                <th>Appointment Date</th>
+                <th>Appointment Time</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let appointment of appointments; let i = index">
+                <td>{{ appointment.appointmentId }}</td>
+                <td>{{ appointment.userId }}</td>
+                <td>{{ appointment.serviceId }}</td>
+                <td>{{ appointment.appointmentDate }}</td>
+                <td>{{ appointment.appointmentTime }}</td>
+                <td>{{ appointment.appointmentStatus }}</td>
+                <td>
+                    <button class="update-btn" (click)="updateAppointment(i)">Update</button>
+                    <button class="delete-btn" (click)="deleteAppointment(i)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    </div>
+
+    <div *ngIf="activeChild == 'customerFeedback'" class="content">
+      <h1>Customer Feedback</h1>
+    </div>
+    <div *ngIf="activeChild == 'tireStock'" class="content">
+      <h1>Tire Stock</h1>
     </div>
   </div>

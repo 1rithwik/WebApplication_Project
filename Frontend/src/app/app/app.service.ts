@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoginForm, LoginResponse } from '../login/login.component';
+import { Observable } from 'rxjs';
+import { Appointment } from '../admin-dash/admin-dash.component';
 @Injectable({
   providedIn: 'root'
 })
@@ -31,8 +33,8 @@ export class AppService {
   deleteFeedback(id: number) {
     return this.http.delete(`${this.apiUrl}/admin/feedback/delete/${id}`);
   }
-  getAppointments() {
-    return this.http.get(`${this.apiUrl}/service/getUserAppointments`);
+  getAppointments(): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(`${this.apiUrl}/Appointment/appointments`);
   }
   updateAppointment(appointment: any) {
     return this.http.put(`${this.apiUrl}/service/updateAppointment`, appointment);

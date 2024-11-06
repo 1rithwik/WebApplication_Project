@@ -6,6 +6,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,9 +26,11 @@ public class Users {
     private String role; // Values could be "ADMIN" or "USER"
 
     @OneToMany(mappedBy = "users")
+    @JsonManagedReference
     private List<Appointment> appointments;
 
     @OneToMany(mappedBy = "users")
+    @JsonManagedReference
     private List<Feedback> feedbackList;
 
     // Getters and setters
