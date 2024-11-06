@@ -70,6 +70,7 @@ export class LoginComponent {
         //   alert('Login failed. Please try again.');
         // }
         const token = Object.keys(response)[0];
+<<<<<<< HEAD
         const user = Object.values(response)[0] as LoginResponse;
         localStorage.setItem('token', token);
         console.log("Form submitted successfully!", response);
@@ -80,8 +81,20 @@ export class LoginComponent {
 =======
         if(user.LoginUser.role == 'ADMIN'){
           this.router.navigate(['/adminDashboard']);
+=======
+        const user = response[token];
+        if(user && user.role){
+          localStorage.setItem('token', token);
+          console.log("Form submitted successfully!", response);
+          alert('Login successful!');
+          if(user.role == 'ADMIN'){
+            this.router.navigate(['/adminDashboard']);
+          }
+          else{
+            this.router.navigate(['/home']);
+          }
+>>>>>>> 256486a (AdminDashBoard routing)
         }
-          this.router.navigate(['/home']);
 
 >>>>>>> 78bcbaf (Admin routing)
       },
