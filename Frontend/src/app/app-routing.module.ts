@@ -15,12 +15,16 @@ export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent},
+<<<<<<< HEAD
   { path: 'login', component: LoginComponent },
   { path: 'adminDashboard', component: AdminDashComponent },
   { path: 'appointment', component: AppointmentComponent },
   { path: 'customerFeedback', component: FeedbackComponent },
   { path: 'tireStock', component: TireAdminComponent },
   { path: 'user/service', component: ServiceComponent },
+=======
+  { path: 'login', component: LoginComponent }
+>>>>>>> dd90d20 (Login routed)
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

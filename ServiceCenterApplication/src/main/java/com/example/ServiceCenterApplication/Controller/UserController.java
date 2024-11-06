@@ -21,6 +21,13 @@ public class UserController {
     private UserService service;
 
     HashMap<String, Users> map = new HashMap<>();
+<<<<<<< HEAD
+=======
+
+    @PostMapping("/register")
+    public Users register(@RequestBody Users user) {
+        return service.register(user);
+>>>>>>> dd90d20 (Login routed)
 
     @PostMapping(value = "/register", consumes = "application/json")
     public ResponseEntity<?> register(@RequestBody Users user) {

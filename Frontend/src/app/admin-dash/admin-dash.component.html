@@ -3,16 +3,28 @@
     <div class="sidebar">
       <h2>Admin Dashboard</h2>
       <ul>
+<<<<<<< HEAD
         <li><a (click)="activeChild = 'overview'">Overview</a></li>
         <li><a (click)="activeChild = 'manageServices'">Manage Services</a></li>
         <li><a (click)="activeChild = 'appointment'">Appointments</a></li>
         <li><a (click)="activeChild = 'customerFeedback'">Customer Feedback</a></li>
         <li><a (click)="activeChild = 'tireStock'">Tire Stock</a></li>
+=======
+        <li><a routerLink="/overview">Overview</a></li>
+        <li><a routerLink="/manage-services">Manage Services</a></li>
+        <li><a routerLink="/appointments">Appointments</a></li>
+        <li><a routerLink="/customer-feedback">Customer Feedback</a></li>
+        <li><a routerLink="/settings">Settings</a></li>
+>>>>>>> dd90d20 (Login routed)
       </ul>
     </div>
   
     <!-- Main Content -->
+<<<<<<< HEAD
     <div *ngIf="activeChild == 'overview'" class="content">
+=======
+    <div class="content">
+>>>>>>> dd90d20 (Login routed)
       <div class="header">
         <h1>Welcome, Admin</h1>
         <p>Manage your car tire services effectively.</p>
@@ -22,6 +34,7 @@
       <div class="overview-section">
         <div class="overview-card">
           <h3>Total Services</h3>
+<<<<<<< HEAD
           <p>4</p>
         </div>
         <div class="overview-card">
@@ -133,4 +146,18 @@
         </div>
     </div>
     </div>
+=======
+          <p>15</p>
+        </div>
+        <div class="overview-card">
+          <h3>Upcoming Appointments</h3>
+          <p>7</p>
+        </div>
+        <div class="overview-card">
+          <h3>Customer Feedback</h3>
+          <p>5 New Reviews</p>
+        </div>
+      </div>
+    </div>
+>>>>>>> dd90d20 (Login routed)
   </div>

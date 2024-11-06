@@ -33,6 +33,7 @@ export class LoginComponent {
     username: '',
     password: '',
   };
+<<<<<<< HEAD
   constructor(private appService: AppService, private router: Router) { }
   onFormSubmit() {
     this.appService.loginUser(this.loginData).subscribe(
@@ -52,6 +53,29 @@ export class LoginComponent {
           }
         }
 
+=======
+  constructor(private appService: AppService, private router: Router) {  }
+  onFormSubmit() {
+    this.appService.loginUser(this.loginData).subscribe(
+      (response: any) => {
+        // if(response && response.token){
+        //   localStorage.setItem('token', response.token);
+        //   console.log("Form submitted successfully!", response);
+        //   alert('Login successful!');
+
+        //   const user = response.LoginUser;
+        //   console.log("User details:", user);
+        // }
+        // else{
+        //   alert('Login failed. Please try again.');
+        // }
+        const token = Object.keys(response)[0];
+        const user = response[token];
+        localStorage.setItem('token', token);
+        console.log("Form submitted successfully!", response);
+        alert('Login successful!');
+        this.router.navigate(['/home']);
+>>>>>>> dd90d20 (Login routed)
       },
       error => {
         console.error("Error submitting form", error);

@@ -93,6 +93,7 @@
     font-size: 1.5em;
     color: #666;
     margin-top: 10px;
+<<<<<<< HEAD
   }
 
   .appointment-content {
@@ -303,3 +304,6 @@
     font-size: 14px;
     color: #888;
 }
+=======
+  }
+>>>>>>> dd90d20 (Login routed)

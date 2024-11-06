@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../app/app.service';
 export interface Appointment {
@@ -155,3 +156,17 @@ loadFeedbacks() {
 
 }
 
+=======
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-admin-dash',
+  standalone: true,
+  imports: [],
+  templateUrl: './admin-dash.component.html',
+  styleUrl: './admin-dash.component.css'
+})
+export class AdminDashComponent {
+
+}
+>>>>>>> dd90d20 (Login routed)
