@@ -70,12 +70,20 @@ export class LoginComponent {
         //   alert('Login failed. Please try again.');
         // }
         const token = Object.keys(response)[0];
-        const user = response[token];
+        const user = Object.values(response)[0] as LoginResponse;
         localStorage.setItem('token', token);
         console.log("Form submitted successfully!", response);
         alert('Login successful!');
+<<<<<<< HEAD
         this.router.navigate(['/home']);
 >>>>>>> dd90d20 (Login routed)
+=======
+        if(user.LoginUser.role == 'ADMIN'){
+          this.router.navigate(['/adminDashboard']);
+        }
+          this.router.navigate(['/home']);
+
+>>>>>>> 78bcbaf (Admin routing)
       },
       error => {
         console.error("Error submitting form", error);
