@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule,NgModel,ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { AppService } from '../app/app.service';
 import { trigger, transition, style, animate } from '@angular/animations';
 
@@ -44,7 +44,7 @@ export class RegisterComponent {
     role: ''
   };
 
-  constructor(private appService: AppService) {}
+  constructor(private appService: AppService,private router: Router) {}
 
   onSubmit() {
     if (this.validateForm()) {
@@ -52,6 +52,7 @@ export class RegisterComponent {
         next: (response) => {
           console.log("Registration successful!", response);
           alert('Registration successful!');
+          this.router.navigate(['/login']);
         },
         error: (error) => {
           console.error("Registration failed", error);

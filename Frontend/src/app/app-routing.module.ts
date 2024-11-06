@@ -8,7 +8,7 @@ import { RegisterGuardService } from './register-guard.service';
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'register', component: RegisterComponent ,canActivate: [RegisterGuardService]},
+  { path: 'register', component: RegisterComponent},
   { path: 'login', component: LoginComponent }
 ];
 @NgModule({

@@ -2,11 +2,23 @@ import { Component } from '@angular/core';
 import { AppService } from '../app/app.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { Router } from '@angular/router';
 
 export interface LoginForm {
   username: string;
   password: string;
+}
+
+export interface LoginResponse {
+  token: string;
+  LoginUser:{
+    id: number;
+    username: string;
+    role: string;
+    mobile: string;
+    email: string;
+    password: string;
+  }
 }
 
 @Component({
@@ -21,21 +33,28 @@ export class LoginComponent {
     username: '',
     password: '',
   };
-  constructor(private appService: AppService) {
-
-  }
+  constructor(private appService: AppService, private router: Router) {  }
   onFormSubmit() {
     this.appService.loginUser(this.loginData).subscribe(
       (response: any) => {
-        if(response && response.token){
-          localStorage.setItem('token', response.token);
-          console.log("Form submitted successfully!", response);
-          alert('Login successful!');
-        }
-        else{
-          alert('Login failed. Please try again.');
-        }
-        },
+        // if(response && response.token){
+        //   localStorage.setItem('token', response.token);
+        //   console.log("Form submitted successfully!", response);
+        //   alert('Login successful!');
+
+        //   const user = response.LoginUser;
+        //   console.log("User details:", user);
+        // }
+        // else{
+        //   alert('Login failed. Please try again.');
+        // }
+        const token = Object.keys(response)[0];
+        const user = response[token];
+        localStorage.setItem('token', token);
+        console.log("Form submitted successfully!", response);
+        alert('Login successful!');
+        this.router.navigate(['/home']);
+      },
       error => {
         console.error("Error submitting form", error);
         alert('Login failed. Please try again.');

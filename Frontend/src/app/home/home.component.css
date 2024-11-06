@@ -65,6 +65,17 @@ nav ul li a {
     cursor: pointer;
 }
 
+.hero-section a {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.hero-section a:hover {
+    color: #2d002d;
+}
+
 .services-section {
     background-color: #f4f4f4;
     height: 70vh;
