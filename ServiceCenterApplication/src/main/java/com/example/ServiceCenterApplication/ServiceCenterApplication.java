@@ -8,6 +8,6 @@ public class ServiceCenterApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ServiceCenterApplication.class, args);
+		System.out.println("Hello World");
 	}
-
 }

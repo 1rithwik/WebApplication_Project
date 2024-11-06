@@ -35,7 +35,12 @@ public class UserService {
         if (authentication.isAuthenticated()) {
             return jwtService.generateToken(user.getUsername());
         } else {
-            return "Login failed";
+            return null;
         }
     }
+
+    public Users getUserDetails(String username) {
+        return repo.findByUsername(username);
+    }
+
 }
