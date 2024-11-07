@@ -19,9 +19,10 @@ public class Service {
 
     private String servicename;
     private double price; // Price for the service
+    private String description;
 
     @OneToMany(mappedBy = "service")
-    @JsonManagedReference
+    // @JsonManagedReference
     private List<Appointment> appointments;
 
     // Getters and setters

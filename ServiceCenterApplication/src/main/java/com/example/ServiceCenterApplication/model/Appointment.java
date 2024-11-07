@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import jakarta.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "appointments")
@@ -21,12 +22,13 @@ public class Appointment {
 
     @ManyToOne
     @JoinColumn(name = "userId")
-    @JsonBackReference
+    // @JsonBackReference
+    @JsonIgnoreProperties("appointments")
     private Users users;
 
     @ManyToOne
     @JoinColumn(name = "serviceId")
-    @JsonBackReference
+    // @JsonBackReference
     private Service service;
 
     private LocalDate appointmentDate;

@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { LoginForm, LoginResponse } from '../login/login.component';
 import { Observable } from 'rxjs';
 import { Appointment } from '../admin-dash/admin-dash.component';
+import { Service } from '../service/service.component';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -38,5 +40,10 @@ export class AppService {
   }
   updateAppointment(appointment: any) {
     return this.http.put(`${this.apiUrl}/service/updateAppointment`, appointment);
+  }
+
+  // to display all services to the user
+  getServices(): Observable<Service[]> {
+    return this.http.get<Service[]>(`${this.apiUrl}/user/service/all`);
   }
 }

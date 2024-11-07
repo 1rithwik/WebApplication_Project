@@ -26,11 +26,11 @@ public class Users {
     private String role; // Values could be "ADMIN" or "USER"
 
     @OneToMany(mappedBy = "users")
-    @JsonManagedReference
+    // @JsonManagedReference
     private List<Appointment> appointments;
 
     @OneToMany(mappedBy = "users")
-    @JsonBackReference
+    // @JsonBackReference
     private List<Feedback> feedbackList;
 
     // Getters and setters

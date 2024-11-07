@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AppService } from '../app/app.service';
 
-interface Service {
-  id: number;
-  name: string;
-  description: string;
+export interface Service {
+  service_id: number;
   price: number;
+  servicename: string;
+  description: string;
 }
 
-interface Appointment {
+export interface Appointment {
   id: number;
   userId: string;
   appointmentDate: string;
@@ -25,12 +25,7 @@ interface Appointment {
 })
 export class ServiceComponent {
   userId: string = '';
-  services: Service[] = [
-    { id: 1, name: 'Tire Replacement', description: 'Professional tire replacement service.', price: 400 },
-    { id: 2, name: 'Wheel Alignment', description: 'Accurate wheel alignment for smooth driving.', price: 250 },
-    { id: 3, name: 'Balancing', description: 'Precise wheel balancing for better stability.', price: 150 },
-    { id: 4, name: 'Fusion Repairs', description: 'Repair and restore tire fusion effectively.', price: 100 }
-  ];
+  services: Service[] = [];
   selectedService: Service | null = null;
   appointmentForm: FormGroup;
   userAppointments: Appointment[] = [];
@@ -44,6 +39,7 @@ export class ServiceComponent {
       servicePrice: [null]
     });
     this.viewAppointments();
+    this.loadServices();
   }
 
   viewAppointments() {
@@ -61,7 +57,7 @@ export class ServiceComponent {
   scheduleAppointment(service: Service) {
     this.selectedService = service;
     this.appointmentForm.patchValue({
-      serviceId: service.id,
+      serviceId: service.service_id,
       servicePrice: service.price,
       userId: '',
       appointmentDate: '',
@@ -80,6 +76,11 @@ export class ServiceComponent {
   deleteAppointment(appointmentId: number) {
     this.appService.deleteAppointment(appointmentId).subscribe(response => {
       console.log(response);
+    });
+  }
+  loadServices() {
+    this.appService.getServices().subscribe(services => {
+      this.services = services;
     });
   }
 }

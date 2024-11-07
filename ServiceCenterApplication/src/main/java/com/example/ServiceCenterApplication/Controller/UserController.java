@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.http.ResponseEntity;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -21,10 +22,9 @@ public class UserController {
 
     HashMap<String, Users> map = new HashMap<>();
 
-    @PostMapping("/register")
-    public Users register(@RequestBody Users user) {
-        return service.register(user);
-
+    @PostMapping(value = "/register", consumes = "application/json")
+    public ResponseEntity<?> register(@RequestBody Users user) {
+        return ResponseEntity.ok(service.register(user));
     }
 
     @PostMapping("/login")
