@@ -50,4 +50,9 @@ export class AppService {
   getServices(): Observable<Service[]> {
     return this.http.get<Service[]>(`${this.apiUrl}/user/service/all`);
   }
+
+  // to submit feedback for a service
+  submitFeedback(feedback: any) {
+    return this.http.post(`${this.apiUrl}/user/service/submitFeedback`, feedback);
+  }
 }

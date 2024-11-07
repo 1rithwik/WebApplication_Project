@@ -24,7 +24,7 @@ public class Feedback {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     // @JsonManagedReference
     @JsonIgnoreProperties({ "username", "appointments", "password", "role" })
     // "mobile", "feedbackList" })

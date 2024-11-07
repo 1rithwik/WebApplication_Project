@@ -79,6 +79,7 @@
           <div class="feedback-card">
             <div *ngFor="let feedback of feedbacks; let i = index">
               <h4>User ID: {{ feedback.users.userId }}</h4>
+              <h4>Email: {{ feedback.users.email }}</h4>
               <p>Feedback: {{ feedback.comments }}</p>
               <span class="rating">Rating: {{ feedback.rating }} / 5</span>
             </div>

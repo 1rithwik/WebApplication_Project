@@ -36,6 +36,13 @@ export interface AppointmentResponse {
   appointmentStatus: string;
 }
 
+// export interface Feedback {
+//   id: number;
+//   comments: string;
+//   rating: number;
+//   user_id: number;
+// }
+
 @Component({
   selector: 'app-service',
   templateUrl: './service.component.html',
@@ -48,6 +55,8 @@ export class ServiceComponent {
   appointmentForm: FormGroup;
   userAppointmentResponse: AppointmentResponse[] = [];
   searchUserId: number = 0;
+  feedbackForm: FormGroup;
+  showFeedbackForm: number | null = null;
 
   constructor(private fb: FormBuilder, private appService: AppService) {
     this.appointmentForm = this.fb.group({
@@ -56,6 +65,11 @@ export class ServiceComponent {
       appointmentTime: [''],
       service_id: [null],
       servicePrice: [null]
+    });
+    this.feedbackForm = this.fb.group({
+      userId: [''],
+      comments: [''],
+      rating: [null]
     });
     this.loadServices();
   }
@@ -105,6 +119,18 @@ export class ServiceComponent {
   loadServices() {
     this.appService.getServices().subscribe(services => {
       this.services = services;
+    });
+  }
+
+  toggleFeedbackForm(appointmentId: number) {
+    this.showFeedbackForm = appointmentId;
+  }
+
+  // comments: string = '';
+  // rating: number = 0;
+  submitFeedback(feedbackForm: any) {
+    this.appService.submitFeedback(this.feedbackForm.value).subscribe(response => {
+      console.log(response);
     });
   }
 }
