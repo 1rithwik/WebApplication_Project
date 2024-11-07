@@ -27,7 +27,7 @@ export class AppService {
   getUserAppointments(userId: string) {
     return this.http.get(`${this.apiUrl}/service/getUserAppointments/${userId}`);
   }
-  getFeedback() {
+  getFeedbacks() {
     return this.http.get(`${this.apiUrl}/admin/feedback/all`);
   }
   deleteFeedback(id: number) {

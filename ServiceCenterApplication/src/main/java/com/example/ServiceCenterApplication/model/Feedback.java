@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "feedback")
@@ -24,6 +25,9 @@ public class Feedback {
 
     @ManyToOne
     @JoinColumn(name = "userId")
+    @JsonManagedReference
+    // @JsonIgnoreProperties({ "username", "appointments", "password", "role",
+    // "mobile", "feedbackList" })
     private Users users;
 
     private String comments;

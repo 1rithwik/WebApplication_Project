@@ -8,7 +8,7 @@ import jakarta.persistence.OneToMany;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,7 +30,7 @@ public class Users {
     private List<Appointment> appointments;
 
     @OneToMany(mappedBy = "users")
-    @JsonManagedReference
+    @JsonBackReference
     private List<Feedback> feedbackList;
 
     // Getters and setters

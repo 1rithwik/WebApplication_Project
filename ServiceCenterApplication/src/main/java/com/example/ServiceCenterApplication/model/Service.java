@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.List;
 import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "service")
@@ -20,6 +21,7 @@ public class Service {
     private double price; // Price for the service
 
     @OneToMany(mappedBy = "service")
+    @JsonManagedReference
     private List<Appointment> appointments;
 
     // Getters and setters
