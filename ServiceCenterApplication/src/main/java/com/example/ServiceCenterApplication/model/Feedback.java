@@ -25,11 +25,15 @@ public class Feedback {
 
     @ManyToOne
 <<<<<<< HEAD
+<<<<<<< HEAD
     @JoinColumn(name = "user_id")
     // @JsonManagedReference
     @JsonIgnoreProperties({ "username", "appointments", "password", "role" })
 =======
     @JoinColumn(name = "userId")
+=======
+    @JoinColumn(name = "user_id")
+>>>>>>> ec41372 (user feedback initialized)
     // @JsonManagedReference
     @JsonIgnoreProperties({ "username", "appointments", "password", "role" })
     // "mobile", "feedbackList" })

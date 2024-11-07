@@ -80,6 +80,7 @@ export class ServiceComponent {
   userAppointmentResponse: AppointmentResponse[] = [];
   searchUserId: number = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
   feedbackForm: FormGroup;
   showFeedbackForm: number | null = null;
 
@@ -87,6 +88,10 @@ export class ServiceComponent {
     this.appointmentForm = this.fb.group({
       userId: [''],
 =======
+=======
+  feedbackForm: FormGroup;
+  showFeedbackForm: number | null = null;
+>>>>>>> ec41372 (user feedback initialized)
 
   constructor(private fb: FormBuilder, private appService: AppService) {
     this.appointmentForm = this.fb.group({
@@ -96,6 +101,11 @@ export class ServiceComponent {
       appointmentTime: [''],
       service_id: [null],
       servicePrice: [null]
+    });
+    this.feedbackForm = this.fb.group({
+      userId: [''],
+      comments: [''],
+      rating: [null]
     });
     this.loadServices();
   }
@@ -151,6 +161,18 @@ export class ServiceComponent {
   loadServices() {
     this.appService.getServices().subscribe(services => {
       this.services = services;
+    });
+  }
+
+  toggleFeedbackForm(appointmentId: number) {
+    this.showFeedbackForm = appointmentId;
+  }
+
+  // comments: string = '';
+  // rating: number = 0;
+  submitFeedback(feedbackForm: any) {
+    this.appService.submitFeedback(this.feedbackForm.value).subscribe(response => {
+      console.log(response);
     });
   }
 }

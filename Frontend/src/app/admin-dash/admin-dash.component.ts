@@ -181,6 +181,7 @@ export interface Feedback {
   id: number;
   users: {
     userId: number;
+    email: string;
   };
   comments: string;
   rating: number;
