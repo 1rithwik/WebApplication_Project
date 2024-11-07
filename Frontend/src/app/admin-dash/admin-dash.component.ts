@@ -169,6 +169,24 @@ import { Component } from '@angular/core';
 =======
 >>>>>>> e4bde25 (Appointment Implemented for admin)
 
+export interface Tire {
+  id: number;
+  brand: string;
+  model: string;
+  stock: number;
+  price: number;
+}
+
+export interface Feedback {
+  id: number;
+  users: {
+    userId: number;
+  };
+  comments: string;
+  rating: number;
+  appointmentId: string;
+}
+
 @Component({
   selector: 'app-admin-dash',
   // standalone: true,
@@ -182,6 +200,7 @@ export class AdminDashComponent{
 
   constructor(private appService: AppService) {
     this.loadAppointments();
+    this.loadFeedbacks();
   }
   appointments: Appointment[] = [];
 
@@ -196,11 +215,6 @@ export class AdminDashComponent{
   }
   updateAppointment(index: number) {
     const appointment = this.appointments[index];
-          
-    // const customerName = prompt('Enter new customer name:', appointment.customerName);
-    // const serviceType = prompt('Enter new service type:', appointment.serviceType);
-    // const date = prompt('Enter new appointment date (YYYY-MM-DD):', appointment.date);
-    // const time = prompt('Enter new appointment time (HH:MM AM/PM):', appointment.appointmentTime);
     const status = prompt('Enter new status:', appointment.appointmentStatus);
           
           if (status) {
@@ -223,27 +237,80 @@ export class AdminDashComponent{
               // Here, you'd send a delete request to your backend.
     }
   }
+
+  tires: Tire[] = [
+    { id: 1, brand: 'Michelin', model: '215/65R16', stock: 10, price: 120 },
+    { id: 2, brand: 'Bridgestone', model: '205/55R16', stock: 15, price: 110 },
+    { id: 3, brand: 'Goodyear', model: '225/50R17', stock: 8, price: 130 }
+];
+
+newTire: Tire = {
+  id: 0,
+  brand: '',
+  model: '',
+  stock: 0,
+  price: 0
+};
+
+addTire(): void {
+  if (this.newTire.brand && this.newTire.model && this.newTire.stock > 0 && this.newTire.price > 0) {
+      this.newTire.id = this.generateNewId();
+      this.tires.push({ ...this.newTire });
+      this.clearNewTireForm();
+  } else {
+      alert('Please fill in all the fields with valid data.');
+  }
+}
+// Generate a unique ID for each new tire
+generateNewId(): number {
+  return this.tires.length > 0 ? Math.max(...this.tires.map(t => t.id)) + 1 : 1;
 }
 <<<<<<< HEAD
 >>>>>>> dd90d20 (Login routed)
 =======
 
+// Clear the form after adding a tire
+clearNewTireForm(): void {
+  this.newTire = { id: 0, brand: '', model: '', stock: 0, price: 0 };
+}
+// Update an existing tire
+updateTire(index: number): void {
+  const updatedBrand = prompt('Enter new brand:', this.tires[index].brand);
+  const updatedModel = prompt('Enter new model:', this.tires[index].model);
+  const updatedstock = prompt('Enter new stock:', this.tires[index].stock.toString());
+  const updatedPrice = prompt('Enter new price:', this.tires[index].price.toString());
 
-// export class AdminDashComponent {
+  if (updatedBrand && updatedModel && Number(updatedstock) > 0 && Number(updatedPrice) > 0) {
+      this.tires[index].brand = updatedBrand;
+      this.tires[index].model = updatedModel;
+      this.tires[index].stock = Number(updatedstock);
+      this.tires[index].price = Number(updatedPrice);
+  } else {
+      alert('Please provide valid data for all fields.');
+  }
+}
+// Delete a tire from stock
+deleteTire(index: number): void {
+  if (confirm(`Are you sure you want to delete the tire with ID ${this.tires[index].id}?`)) {
+      this.tires.splice(index, 1);
+  }
+}
 
-//   activeChild: string = 'overview';
+feedbacks: Feedback[] = [];
 
-//   updateAppointment(index: number) {
-//     // Logic to update the appointment
-//     console.log('Updating appointment at index:', index);
-//   }
+loadFeedbacks() {
+    this.appService.getFeedbacks().subscribe((data: any) => {
+    this.feedbacks = data;
+  },
+  (error: any) => {
+    console.error('Error loading feedbacks:', error);
+  }
+);
+}
 
-//   deleteAppointment(index: number) {
-//     // Logic to delete the appointment
-//     console.log('Deleting appointment at index:', index);
-//   }
-// }
+}
 
+<<<<<<< HEAD
 
 // interface Appointment {
 //     id: string;
@@ -301,3 +368,5 @@ export class AdminDashComponent{
 //     }
 // }
 >>>>>>> e4bde25 (Appointment Implemented for admin)
+=======
+>>>>>>> b7e04c6 (Feedback admin initialized)
