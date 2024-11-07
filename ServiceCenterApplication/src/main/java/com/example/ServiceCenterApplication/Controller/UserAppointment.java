@@ -13,10 +13,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.time.LocalDate;
 import java.time.LocalTime;
 =======
 >>>>>>> 4915eaa (View ans delete appointment by user)
+=======
+import java.time.LocalDate;
+import java.time.LocalTime;
+>>>>>>> 16b0685 (user appointment scheduling initialized)
 
 import com.example.ServiceCenterApplication.Service.AppointmentServ;
 import com.example.ServiceCenterApplication.model.Appointment;
@@ -30,11 +35,15 @@ public class UserAppointment {
 
     @PostMapping("/user/service/scheduleAppointment")
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 16b0685 (user appointment scheduling initialized)
     public ResponseEntity<Appointment> postAppointment(@RequestBody AppointmentResponse appointmentResponse) {
 
         return ResponseEntity
                 .ok(appointmentServ.scheduleAppointment(appointmentResponse.userId, appointmentResponse.serviceId,
                         appointmentResponse.appointmentDate, appointmentResponse.appointmentTime));
+<<<<<<< HEAD
 =======
     public ResponseEntity<?> postAppointment(@RequestBody Appointment appointment) {
         // try {
@@ -44,6 +53,8 @@ public class UserAppointment {
         // scheduling appointment");
         // }
 >>>>>>> 4915eaa (View ans delete appointment by user)
+=======
+>>>>>>> 16b0685 (user appointment scheduling initialized)
     }
 
     @DeleteMapping("/user/service/deleteAppointment/{id}")
