@@ -8,6 +8,7 @@ import jakarta.persistence.OneToMany;
 import java.util.List;
 import jakarta.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.Column;
 
 @Entity
 @Table(name = "service")
@@ -15,6 +16,7 @@ public class Service {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "service_id")
     private Long serviceId;
 
     private String servicename;

@@ -7,9 +7,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 
 @Entity
 @Table(name = "users")
@@ -17,6 +18,7 @@ public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long userId;
 
     private String username;
@@ -27,6 +29,8 @@ public class Users {
 
     @OneToMany(mappedBy = "users")
     // @JsonManagedReference
+    @JsonIgnoreProperties({ "users" })
+    @JsonIgnore
     private List<Appointment> appointments;
 
     @OneToMany(mappedBy = "users")

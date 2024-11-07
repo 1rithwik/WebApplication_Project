@@ -39,19 +39,6 @@ public class AppointmentContr {
         return ResponseEntity.ok(appointmentServ.scheduleAppointment(appointment));
     }
 
-    @PutMapping("/UpdateAppointment/{id}")
-    public ResponseEntity<Appointment> putAppointment(@PathVariable Long id, @RequestBody Appointment appointment) {
-        Appointment existingAppointment = appointmentServ.getAppointmentById(id);
-        if (existingAppointment == null) {
-            return ResponseEntity.notFound().build();
-        }
-        existingAppointment.setAppointmentDate(appointment.getAppointmentDate());
-        existingAppointment.setAppointmentTime(appointment.getAppointmentTime());
-        existingAppointment.setAppointmentStatus(appointment.getAppointmentStatus());
-        existingAppointment.setServiceId(appointment.getServiceId());
-        return ResponseEntity.ok(appointmentServ.updateAppointment(existingAppointment));
-    }
-
     @DeleteMapping("/DeleteAppointment/{id}")
     public ResponseEntity<String> deleteAppointment(@PathVariable Long id) {
         Appointment existingAppointment = appointmentServ.getAppointmentById(id);

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
+import org.springframework.http.HttpStatus;
 
 import com.example.ServiceCenterApplication.Service.AppointmentServ;
 import com.example.ServiceCenterApplication.model.Appointment;
@@ -22,12 +23,17 @@ public class UserAppointment {
     @Autowired
     private AppointmentServ appointmentServ;
 
-    @PostMapping("/service/scheduleAppointment")
-    public ResponseEntity<Appointment> postAppointment(@RequestBody Appointment appointment) {
+    @PostMapping("/user/service/scheduleAppointment")
+    public ResponseEntity<?> postAppointment(@RequestBody Appointment appointment) {
+        // try {
         return ResponseEntity.ok(appointmentServ.scheduleAppointment(appointment));
+        // } catch (Exception e) {
+        // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error
+        // scheduling appointment");
+        // }
     }
 
-    @DeleteMapping("/service/deleteAppointment/{id}")
+    @DeleteMapping("/user/service/deleteAppointment/{id}")
     public void deleteAppointment(@PathVariable Long id) {
         Appointment appointment = appointmentServ.getAppointmentById(id);
         if (appointment != null) {
@@ -35,7 +41,7 @@ public class UserAppointment {
         }
     }
 
-    @GetMapping("/service/getUserAppointments/{userId}")
+    @GetMapping("/user/service/getUserAppointments/{userId}")
     public List<Appointment> getUserAppointments(@PathVariable Long userId) {
         return appointmentServ.getAppointmentsByUserId(userId);
     }

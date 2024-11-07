@@ -10,12 +10,30 @@ export interface Service {
 }
 
 export interface Appointment {
-  id: number;
-  userId: string;
+  appointment_id: number;
+  user_id: number;
   appointmentDate: string;
   appointmentTime: string;
-  serviceId: number;
-  servicePrice: number;
+  service_id: number;
+}
+
+export interface AppointmentResponse {
+  appointmentId: number;
+  users: {
+    userId: number;
+    username: string;
+    email: string;
+    mobile: string;
+    role: string;
+  };
+  service: {
+    serviceId: number;
+    servicename: string;
+    price: number;
+  };
+  appointmentDate: string;
+  appointmentTime: string;
+  appointmentStatus: string;
 }
 
 @Component({
@@ -24,29 +42,28 @@ export interface Appointment {
   styleUrl: './service.component.css'
 })
 export class ServiceComponent {
-  userId: string = '';
+  user_id: string = '';
   services: Service[] = [];
   selectedService: Service | null = null;
   appointmentForm: FormGroup;
-  userAppointments: Appointment[] = [];
+  userAppointmentResponse: AppointmentResponse[] = [];
+  searchUserId: number = 0;
 
   constructor(private fb: FormBuilder, private appService: AppService) {
     this.appointmentForm = this.fb.group({
-      userId: [this.userId],
+      user_id: [''],
       appointmentDate: [''],
       appointmentTime: [''],
-      serviceId: [null],
+      service_id: [null],
       servicePrice: [null]
     });
-    this.viewAppointments();
     this.loadServices();
   }
 
-  viewAppointments() {
-    const userId = this.userId; // Replace with actual user ID
-    this.appService.getUserAppointments(userId).subscribe(
+  viewAppointments(searchUserId: number) {
+    this.appService.getUserAppointments(searchUserId).subscribe(
       (appointments: any) => {
-        this.userAppointments = appointments;
+        this.userAppointmentResponse = appointments;
       },
       (error) => {
         console.error('Error loading appointments:', error);
@@ -57,15 +74,20 @@ export class ServiceComponent {
   scheduleAppointment(service: Service) {
     this.selectedService = service;
     this.appointmentForm.patchValue({
-      serviceId: service.service_id,
+      service_id: service.service_id,
       servicePrice: service.price,
-      userId: '',
+      user_id: '',
       appointmentDate: '',
       appointmentTime: ''
     });
   }
 
   onSubmit() {
+    this.appointmentForm.patchValue({
+      user_id: this.user_id,
+      service_id: this.selectedService?.service_id
+    });
+
     this.appService.scheduleAppointment(this.appointmentForm.value).subscribe(response => {
       console.log(response);
     },
@@ -73,11 +95,13 @@ export class ServiceComponent {
       console.error('Error scheduling appointment:', error);
     });
   }
+
   deleteAppointment(appointmentId: number) {
     this.appService.deleteAppointment(appointmentId).subscribe(response => {
       console.log(response);
     });
   }
+
   loadServices() {
     this.appService.getServices().subscribe(services => {
       this.services = services;

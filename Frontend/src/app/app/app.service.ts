@@ -20,14 +20,18 @@ export class AppService {
   loginUser(user: any) {
     return this.http.post(`${this.apiUrl}/login`, user);
   }
+
+  // to schedule an appointment for a user
   scheduleAppointment(appointment: any) {
-    return this.http.post(`${this.apiUrl}/service/scheduleAppointment`, appointment);
+    return this.http.post(`${this.apiUrl}/user/service/scheduleAppointment`, appointment);
   }
+
+  // to delete an appointment for a user
   deleteAppointment(appointmentId: number) {
     return this.http.delete(`${this.apiUrl}/service/deleteAppointment/${appointmentId}`);
   }
-  getUserAppointments(userId: string) {
-    return this.http.get(`${this.apiUrl}/service/getUserAppointments/${userId}`);
+  getUserAppointments(searchUserId: number) {
+    return this.http.get(`${this.apiUrl}/user/service/getUserAppointments/${searchUserId}`);
   }
   getFeedbacks() {
     return this.http.get(`${this.apiUrl}/admin/feedback/all`);

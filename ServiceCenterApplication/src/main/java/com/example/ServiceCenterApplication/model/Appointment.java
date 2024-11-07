@@ -21,14 +21,15 @@ public class Appointment {
     private Long appointmentId;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     // @JsonBackReference
     @JsonIgnoreProperties("appointments")
     private Users users;
 
     @ManyToOne
-    @JoinColumn(name = "serviceId")
+    @JoinColumn(name = "service_id")
     // @JsonBackReference
+    @JsonIgnoreProperties("appointments")
     private Service service;
 
     private LocalDate appointmentDate;
@@ -52,15 +53,23 @@ public class Appointment {
         this.users = users;
     }
 
-    public Long getServiceId() {
-        return service != null ? service.getServiceId() : null;
+    // public Long getServiceId() {
+    // return service != null ? service.getServiceId() : null;
+    // }
+
+    // public void setServiceId(Long serviceId) {
+    // if (this.service == null) {
+    // this.service = new Service();
+    // }
+    // this.service.setServiceId(serviceId);
+    // }
+
+    public Service getService() {
+        return service;
     }
 
-    public void setServiceId(Long serviceId) {
-        if (this.service == null) {
-            this.service = new Service();
-        }
-        this.service.setServiceId(serviceId);
+    public void setService(Service service) {
+        this.service = service;
     }
 
     public LocalDate getAppointmentDate() {
