@@ -1,18 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoginForm, LoginResponse } from '../login/login.component';
-<<<<<<< HEAD
-<<<<<<< HEAD
 import { Observable } from 'rxjs';
 import { Appointment } from '../admin-dash/admin-dash.component';
 import { Service } from '../service/service.component';
 
-=======
->>>>>>> dd90d20 (Login routed)
-=======
-import { Observable } from 'rxjs';
-import { Appointment } from '../admin-dash/admin-dash.component';
->>>>>>> e4bde25 (Appointment Implemented for admin)
 @Injectable({
   providedIn: 'root'
 })
@@ -57,10 +49,5 @@ export class AppService {
   // to display all services to the user
   getServices(): Observable<Service[]> {
     return this.http.get<Service[]>(`${this.apiUrl}/user/service/all`);
-  }
-
-  // to submit feedback for a service
-  submitFeedback(feedback: any) {
-    return this.http.post(`${this.apiUrl}/user/service/submitFeedback`, feedback);
   }
 }

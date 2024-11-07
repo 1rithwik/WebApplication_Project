@@ -3,15 +3,15 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { AppService } from '../app/app.service';
 
 export interface Service {
-  serviceId: number;
+  service_id: number;
   price: number;
   servicename: string;
   description: string;
 }
 
 export interface Appointment {
-  appointment_id: number;
-  userId: number;
+  id: number;
+  userId: string;
   appointmentDate: string;
   appointmentTime: string;
   serviceId: number;
@@ -51,6 +51,7 @@ export interface AppointmentResponse {
 export class ServiceComponent {
   userId: string = '';
   services: Service[] = [];
+  services: Service[] = [];
   selectedService: Service | null = null;
   appointmentForm: FormGroup;
   userAppointmentResponse: AppointmentResponse[] = [];
@@ -66,11 +67,7 @@ export class ServiceComponent {
       serviceId: [null],
       servicePrice: [null]
     });
-    this.feedbackForm = this.fb.group({
-      userId: [''],
-      comments: [''],
-      rating: [null]
-    });
+    this.viewAppointments();
     this.loadServices();
   }
 
@@ -88,7 +85,7 @@ export class ServiceComponent {
   scheduleAppointment(service: Service) {
     this.selectedService = service;
     this.appointmentForm.patchValue({
-      serviceId: service.serviceId,
+      serviceId: service.service_id,
       servicePrice: service.price,
       userId: '',
       appointmentDate: '',
@@ -114,22 +111,9 @@ export class ServiceComponent {
       console.log(response);
     });
   }
-
   loadServices() {
     this.appService.getServices().subscribe(services => {
       this.services = services;
-    });
-  }
-
-  toggleFeedbackForm(appointmentId: number) {
-    this.showFeedbackForm = appointmentId;
-  }
-
-  // comments: string = '';
-  // rating: number = 0;
-  submitFeedback(feedbackForm: any) {
-    this.appService.submitFeedback(this.feedbackForm.value).subscribe(response => {
-      console.log(response);
     });
   }
 }

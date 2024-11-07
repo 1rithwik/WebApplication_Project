@@ -1,4 +1,5 @@
 <!-- <div class="service-list">
+<!-- <div class="service-list">
     <div *ngFor="let service of services" class="service-card">
       <h3>{{ service.name }}</h3>
       <p>{{ service.description }}</p>
@@ -143,58 +144,28 @@
             <div class="view-appointments">
                 <h2>My Appointments</h2>
                 <div class="search-box">
-                    <input type="number" id="searchUserId" [(ngModel)]="searchUserId" placeholder="Enter User ID" required>
-                    <button (click)="viewAppointments(searchUserId)" class="view-btn">
+                    <input type="number" id="searchUserId" formControlName="userId" placeholder="Enter User ID" required>
+                    <button (click)="viewAppointments()" class="view-btn">
                         <i class="fas fa-search"></i>
                         View Appointments
                     </button>
                 </div>
 
-                <div class="appointments-list" *ngIf="userAppointmentResponse && userAppointmentResponse.length > 0">
-                    <div class="appointment-item" *ngFor="let appointment of userAppointmentResponse">
+                <div class="appointments-list" *ngIf="userAppointments && userAppointments.length > 0">
+                    <div class="appointment-item" *ngFor="let appointment of userAppointments">
                         <div class="appointment-details">
-                            <h3>Service: {{appointment.service.servicename}}</h3>
-                            <h4>Appointment ID: {{appointment.appointmentId}}</h4>
-                            <p><i class="fas fa-calendar"></i> Date: {{appointment.appointmentDate | date}}</p>
-                            <p><i class="fas fa-clock"></i> Time: {{appointment.appointmentTime}}</p>
-                            <p><i class="fas fa-money-bill"></i> Price: {{appointment.service.price}}</p>
-                            <p><i class="fas fa-check"></i> Status: {{appointment.appointmentStatus}}</p>
+                            <h3>{{appointment.serviceId}}</h3>
+                            <p><i class="fas fa-calendar"></i> {{appointment.appointmentDate | date}}</p>
+                            <p><i class="fas fa-clock"></i> {{appointment.appointmentTime}}</p>
                         </div>
-                        <button *ngIf="appointment.appointmentStatus === 'Completed'" 
-                                (click)="toggleFeedbackForm(appointment.appointmentId)" 
-                                class="feedback-btn">
-                            <i class="fas fa-comment"></i>
-                            Feedback
-                        </button>
-                        <button (click)="deleteAppointment(appointment.appointmentId)" class="cancel-btn">
+                        <button (click)="deleteAppointment(appointment.id)" class="cancel-btn">
                             <i class="fas fa-times"></i>
                             Cancel
                         </button>
-                        
-                        <!-- Feedback Form -->
-                        <div *ngIf="showFeedbackForm === appointment.appointmentId" class="feedback-form">
-                            <form [formGroup]="feedbackForm" (ngSubmit)="submitFeedback(feedbackForm.value)">
-                                <div class="form-group">
-                                    <label for="userId">User ID</label>
-                                    <input type="text" id="userId" formControlName="userId" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="comments">Comment</label>
-                                    <textarea id="comments" formControlName="comments" required></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="rating">Rating</label>
-                                    <input type="number" id="rating" formControlName="rating" min="1" max="5" required>
-                                </div>
-                                <button type="submit" class="submit-feedback-btn">
-                                    Submit Feedback
-                                </button>
-                            </form>
-                        </div>
                     </div>
                 </div>
 
-                <div class="no-appointments" *ngIf="userAppointmentResponse && userAppointmentResponse.length === 0">
+                <div class="no-appointments" *ngIf="userAppointments && userAppointments.length === 0">
                     <i class="fas fa-calendar-times"></i>
                     <p>No appointments scheduled</p>
                 </div>

@@ -18,7 +18,8 @@ import { ServiceComponent } from './service/service.component';
 import { AppointmentComponent } from './appointment/appointment.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { TireAdminComponent } from './tire-admin/tire-admin.component';
->>>>>>> e4bde25 (Appointment Implemented for admin)
+import { ServiceComponent } from './service/service.component';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -31,17 +32,7 @@ export const routes: Routes = [
   { path: 'appointment', component: AppointmentComponent },
   { path: 'customerFeedback', component: FeedbackComponent },
   { path: 'tireStock', component: TireAdminComponent },
-<<<<<<< HEAD
   { path: 'user/service', component: ServiceComponent },
-=======
-  { path: 'login', component: LoginComponent }
->>>>>>> dd90d20 (Login routed)
-=======
-  { path: 'login', component: LoginComponent },
-  { path: 'adminDashboard', component: AdminDashComponent },
->>>>>>> 78bcbaf (Admin routing)
-=======
->>>>>>> e4bde25 (Appointment Implemented for admin)
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

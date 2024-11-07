@@ -7,17 +7,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.List;
 
-<<<<<<< HEAD
+<<<<<<<HEAD
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-=======
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-<<<<<<< HEAD
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;=======
+import com.fasterxml.jackson.annotation.JsonManagedReference;<<<<<<<HEAD
 
->>>>>>> e4bde25 (Appointment Implemented for admin)
-=======
-import com.fasterxml.jackson.annotation.JsonBackReference;
->>>>>>> b7e04c6 (Feedback admin initialized)
+>>>>>>>e4bde25(Appointment Implemented for admin)=======
+import com.fasterxml.jackson.annotation.JsonBackReference;>>>>>>>b7e04c6(Feedback admin initialized)
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 
@@ -37,25 +33,11 @@ public class Users {
     private String role; // Values could be "ADMIN" or "USER"
 
     @OneToMany(mappedBy = "users")
-<<<<<<< HEAD
     // @JsonManagedReference
-    @JsonIgnoreProperties({ "users" })
-    @JsonIgnore
     private List<Appointment> appointments;
 
     @OneToMany(mappedBy = "users")
     // @JsonBackReference
-=======
-    @JsonManagedReference
-    private List<Appointment> appointments;
-
-    @OneToMany(mappedBy = "users")
-<<<<<<< HEAD
-    @JsonManagedReference
->>>>>>> e4bde25 (Appointment Implemented for admin)
-=======
-    @JsonBackReference
->>>>>>> b7e04c6 (Feedback admin initialized)
     private List<Feedback> feedbackList;
 
     // Getters and setters
