@@ -1,65 +1,142 @@
-Project Overview
-The Car Tire Service Project is designed to provide a comprehensive solution for customers seeking tire-related services. It includes functionalities for managing tire services, customer bookings, and an administrative dashboard for service management. This project aims to streamline the process of booking tire services, enhancing user experience and operational efficiency.
+Project Document
+1. Project Overview
+Project Name: Wheel Alignment Center Web Application
 
-System Architecture
-The project follows a three-tier architecture comprising:
+Objective:
+Develop a user-friendly web application tailored for a wheel alignment center. This platform will allow customers to schedule various tire-related services, check availability, and provide feedback. The application will also enable the center’s admin to manage tire inventory, handle service appointments, and oversee customer reviews.
 
-Frontend: Built with Angular, providing a dynamic and responsive user interface for customers and administrators.
-Backend: Developed using Spring Boot, serving as a RESTful API to handle business logic and data processing.
-Database: Utilizes MySQL to store all relevant data, including user information, services, bookings, and payments.
-Key Components
-1. Database Design
-The database structure is crucial for storing and managing data efficiently. The following tables are essential for this project:
+Technologies Used:
 
-Users Table: Stores user details, including usernames, passwords (hashed), roles (Admin or Customer), and timestamps for account creation. This allows for user authentication and role-based access control.
+Frontend: Angular, focusing on building interactive user interfaces.
+Backend: Spring Boot, implementing secure and efficient REST APIs.
+Database: MySQL, structured for customer, service, and inventory data.
+Authentication: JSON Web Tokens (JWT) for secure login and session management.
+2. System Requirements
+Frontend:
 
-Services Table: Contains information about the tire services offered, including service names, descriptions, pricing, and availability status. This table helps customers view and select services.
+Angular version 15 or higher.
+Features required: animations, form handling, API integration for service requests, and JWT token storage for session management.
+Backend:
 
-Bookings Table: Manages customer bookings, linking users to the services they request. It includes booking dates, status (e.g., Confirmed, Completed), and foreign keys referencing the user and service tables.
+Spring Boot with RESTful API capabilities.
+JWT-based authentication to ensure secure access.
+Integration with MySQL for data storage and retrieval.
+Database:
 
-Payments Table: Records payment information associated with bookings, including amounts, payment dates, and statuses (Paid or Unpaid). This table facilitates payment tracking for services rendered.
+MySQL with tables for user information, service appointments, tire inventory, and customer feedback.
+3. Functional Requirements
+User Side
+Home Page:
 
-2. Backend Development
-The backend, implemented in Spring Boot, handles all server-side logic and interacts with the database. Key elements include:
+A navigation bar with links to "Services," "About Us," "Contact Us," and "Login."
+Users must log in to access the full range of services.
+Scheduling Appointments:
 
-Controllers: Serve as the entry points for client requests. Each controller is responsible for handling requests related to a specific domain (e.g., user management, service handling, booking processing).
+Users can view a list of available services, such as tire replacement, wheel alignment, balancing, and fusion repairs.
+The "Tire Replacement" option allows users to select specific tire models.
+Users can schedule an appointment by choosing a preferred date and time.
+Feedback:
 
-Services: Contain the business logic of the application. These classes implement the core functionalities, such as creating a booking, updating service information, or processing payments.
+Logged-in users can submit reviews and feedback about their service experience.
+Admin Side
+Admin Dashboard:
 
-Repositories: Interfaces that facilitate database operations using Spring Data JPA. These repositories enable CRUD (Create, Read, Update, Delete) operations on the database tables.
+A central dashboard to view upcoming appointments, current tire inventory levels, and user-submitted reviews.
+Appointment Management:
 
-Security: Employs Spring Security to manage user authentication and authorization. It ensures that only authorized users can access specific functionalities based on their roles.
+Admins can view, edit, or delete appointments.
+Tire Management:
 
-3. Frontend Development
-The frontend is developed using Angular, providing a rich user interface for both customers and administrators. Key features include:
+The inventory can be updated with current stock levels and details about available tire models.
+Review Management:
 
-User Interface: A responsive design that allows users to navigate through available services, view service details, and make bookings seamlessly.
+Admins have control over user feedback, with options to manage or moderate reviews.
+4. Non-Functional Requirements
+Security:
+JWT-based user authentication and role-based access to secure user data and restrict admin functions.
 
-Components: Modular components represent different parts of the application, such as service listings, booking forms, and user authentication interfaces.
+Performance:
+The application should provide fast load times and handle queries efficiently.
 
-Routing: Manages navigation within the application, allowing users to move between various pages, such as the homepage, service details, and booking management.
+Scalability:
+The system is designed to handle an increasing number of users and service requests as the business expands.
 
-Forms: Utilizes Angular's reactive forms or template-driven forms to handle user inputs for service requests, registrations, and bookings.
+Usability:
+A clean, intuitive UI with easy navigation to enhance user experience and engagement.
 
-4. Features and Functionality
-User Registration and Authentication: Customers can create accounts and log in to access personalized features. Admin users have elevated privileges for managing the application.
+5. System Architecture
+Frontend Architecture (Angular)
+Components:
 
-Service Management: Admins can add, update, or delete tire services, enabling dynamic management of offerings based on availability and demand.
+app.component.ts: The main container that houses other components.
+services.component.ts: Displays the list of available services with scheduling options.
+appointment-form.component.ts: Form component for scheduling appointments.
+feedback.component.ts: Form for users to submit feedback.
+admin-dashboard.component.ts: Admin view with tabs for managing appointments, inventory, and user reviews.
+Services:
 
-Booking System: Customers can select tire services, choose dates and times, and submit booking requests. The system manages booking statuses to keep users informed.
+AuthService: Handles user authentication (login and registration).
+AppointmentService: Manages appointments, including scheduling and data retrieval.
+TireService: Manages tire stock updates and retrieval.
+FeedbackService: Manages user feedback processing.
+Backend Architecture (Spring Boot)
+Controller Layer:
 
-Payment Processing: Facilitates payments for booked services, allowing customers to pay online or track payment statuses.
+UserController: Manages user registration, login, and profile actions.
+AppointmentController: Handles appointment scheduling and retrieval.
+TireController: Manages tire stock updates.
+FeedbackController: Processes user feedback.
+Service Layer:
 
-Admin Dashboard: Provides a centralized interface for administrators to manage services, view booking details, and monitor user activities.
+UserService: Processes user-related data.
+AppointmentService: Manages business logic for appointments.
+TireService: Handles inventory management.
+FeedbackService: Processes and stores user feedback.
+Repository Layer:
 
-Notifications and Alerts (optional): Alerts for booking confirmations, reminders, and updates can enhance user experience.
+Uses Spring Data JPA for CRUD operations, providing seamless database interaction.
+6. Database Schema
+Tables:
 
-Deployment
-The final step involves deploying both the backend and frontend applications:
+Users: Stores user data such as username, password, and contact information.
+Appointments: Holds records of scheduled appointments, including date, time, and service details.
+Services: Lists the available services with descriptions and pricing.
+Tires: Maintains inventory details of different tire models and stock levels.
+Feedback: Records user reviews and ratings for services.
+7. Authentication and Authorization
+JWT Authentication Flow:
 
-Backend Deployment: The Spring Boot application can be hosted on platforms like AWS, Heroku, or a dedicated server. Configuration for connecting to the MySQL database must be ensured.
+The frontend sends user credentials (username and password) to the backend.
+The backend verifies the credentials and, if valid, returns a JWT token.
+The frontend securely stores the JWT token and attaches it to requests for protected resources.
+Role-Based Access Control:
 
-Frontend Deployment: The Angular application can be deployed on platforms like Vercel, Netlify, or Firebase Hosting, making it accessible to users.
+User Role: Limited to booking appointments and submitting feedback.
+Admin Role: Authorized to manage inventory, view appointments, and moderate feedback.
+8. Detailed UI Design
+Register Page: Contains fields for username, password, email, and mobile number. Includes animations for a smooth user experience.
+Login Page: Provides feedback for invalid credentials.
+Service Page: Lists available services with buttons to schedule appointments.
+Appointment Form: Enables date and time selection, with service options pre-filled.
+Admin Dashboard: Organized into tabs for managing appointments, tire inventory, and feedback.
+9. API Endpoints
+Authentication:
 
-Conclusion
-The Car Tire Service Project combines SQL, Spring Boot, and Angular to create a comprehensive application for managing tire services. With a well-structured database, a robust backend, and an interactive frontend, the project aims to enhance customer experience while providing administrators with the tools needed to manage operations efficiently.
+POST /api/auth/register: Registers a new user account.
+POST /api/auth/login: Authenticates a user and returns a JWT token.
+Appointments:
+
+GET /api/appointments: Retrieves all scheduled appointments.
+POST /api/appointments: Schedules a new appointment.
+Tires:
+
+GET /api/tires: Retrieves current tire inventory.
+PUT /api/tires/{id}: Updates specific tire details.
+Feedback:
+
+POST /api/feedback: Allows users to submit feedback.
+GET /api/feedback: Retrieves feedback and reviews.
+10. Future Enhancements
+AI Integration with Spring: For predictive maintenance and service suggestions.
+Expanding Services: Adding more options as the business grows.
+Enhanced Analytics for Admin: Enabling data visualization to analyze service trends and customer feedback.
