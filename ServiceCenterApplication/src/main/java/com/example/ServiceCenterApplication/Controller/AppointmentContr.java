@@ -45,7 +45,11 @@ public class AppointmentContr {
     // // }
     // }
 
+<<<<<<< HEAD
     @DeleteMapping("/service/deleteAppointment/{id}")
+=======
+    @DeleteMapping("/DeleteAppointment/{id}")
+>>>>>>> 4915eaa (View ans delete appointment by user)
     public ResponseEntity<String> deleteAppointment(@PathVariable Long id) {
         Appointment existingAppointment = appointmentServ.getAppointmentById(id);
         if (existingAppointment == null) {

@@ -7,14 +7,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.List;
 
-<<<<<<<HEAD
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;=======
-import com.fasterxml.jackson.annotation.JsonManagedReference;<<<<<<<HEAD
-
->>>>>>>e4bde25(Appointment Implemented for admin)=======
-import com.fasterxml.jackson.annotation.JsonBackReference;>>>>>>>b7e04c6(Feedback admin initialized)
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 import jakarta.persistence.Column;
 
 @Entity
@@ -23,6 +19,7 @@ public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     @Column(name = "user_id")
     private Long userId;
 
@@ -34,6 +31,8 @@ public class Users {
 
     @OneToMany(mappedBy = "users")
     // @JsonManagedReference
+    @JsonIgnoreProperties({ "users" })
+    @JsonIgnore
     private List<Appointment> appointments;
 
     @OneToMany(mappedBy = "users")

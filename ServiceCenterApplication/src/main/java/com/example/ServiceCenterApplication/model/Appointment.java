@@ -27,8 +27,9 @@ public class Appointment {
     private Users users;
 
     @ManyToOne
-    @JoinColumn(name = "serviceId")
+    @JoinColumn(name = "service_id")
     // @JsonBackReference
+    @JsonIgnoreProperties("appointments")
     private Service service;
 
     private LocalDate appointmentDate;

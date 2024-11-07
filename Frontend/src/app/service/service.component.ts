@@ -10,11 +10,34 @@ export interface Service {
 }
 
 export interface Appointment {
-  id: number;
-  userId: string;
+  appointment_id: number;
+  user_id: number;
   appointmentDate: string;
   appointmentTime: string;
+<<<<<<< HEAD
   serviceId: number;
+=======
+  service_id: number;
+}
+
+export interface AppointmentResponse {
+  appointmentId: number;
+  users: {
+    userId: number;
+    username: string;
+    email: string;
+    mobile: string;
+    role: string;
+  };
+  service: {
+    serviceId: number;
+    servicename: string;
+    price: number;
+  };
+  appointmentDate: string;
+  appointmentTime: string;
+  appointmentStatus: string;
+>>>>>>> 4915eaa (View ans delete appointment by user)
 }
 
 export interface AppointmentResponse {
@@ -49,25 +72,31 @@ export interface AppointmentResponse {
   styleUrl: './service.component.css'
 })
 export class ServiceComponent {
-  userId: string = '';
+  user_id: string = '';
   services: Service[] = [];
   services: Service[] = [];
   selectedService: Service | null = null;
   appointmentForm: FormGroup;
   userAppointmentResponse: AppointmentResponse[] = [];
   searchUserId: number = 0;
+<<<<<<< HEAD
   feedbackForm: FormGroup;
   showFeedbackForm: number | null = null;
 
   constructor(private fb: FormBuilder, private appService: AppService) {
     this.appointmentForm = this.fb.group({
       userId: [''],
+=======
+
+  constructor(private fb: FormBuilder, private appService: AppService) {
+    this.appointmentForm = this.fb.group({
+      user_id: [''],
+>>>>>>> 4915eaa (View ans delete appointment by user)
       appointmentDate: [''],
       appointmentTime: [''],
-      serviceId: [null],
+      service_id: [null],
       servicePrice: [null]
     });
-    this.viewAppointments();
     this.loadServices();
   }
 
@@ -85,18 +114,25 @@ export class ServiceComponent {
   scheduleAppointment(service: Service) {
     this.selectedService = service;
     this.appointmentForm.patchValue({
-      serviceId: service.service_id,
+      service_id: service.service_id,
       servicePrice: service.price,
-      userId: '',
+      user_id: '',
       appointmentDate: '',
       appointmentTime: ''
     });
   }
 
   onSubmit() {
+<<<<<<< HEAD
     // this.appointmentForm.patchValue({
     //   service_id: this.selectedService?.service_id
     // });
+=======
+    this.appointmentForm.patchValue({
+      user_id: this.user_id,
+      service_id: this.selectedService?.service_id
+    });
+>>>>>>> 4915eaa (View ans delete appointment by user)
 
     this.appService.scheduleAppointment(this.appointmentForm.value).subscribe(response => {
       console.log(response);
@@ -111,6 +147,7 @@ export class ServiceComponent {
       console.log(response);
     });
   }
+
   loadServices() {
     this.appService.getServices().subscribe(services => {
       this.services = services;
