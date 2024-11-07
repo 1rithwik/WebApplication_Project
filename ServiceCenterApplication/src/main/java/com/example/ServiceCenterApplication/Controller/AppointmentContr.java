@@ -34,10 +34,16 @@ public class AppointmentContr {
         return appointmentServ.getAppointmentById(id);
     }
 
-    @PostMapping("/ScheduleAppointment")
-    public ResponseEntity<Appointment> postAppointment(@RequestBody Appointment appointment) {
-        return ResponseEntity.ok(appointmentServ.scheduleAppointment(appointment));
-    }
+    // @PostMapping("/user/service/scheduleAppointment")
+    // public ResponseEntity<?> postAppointment(@RequestBody Appointment
+    // appointment) {
+    // // try {
+    // return ResponseEntity.ok(appointmentServ.scheduleAppointment(appointment));
+    // // } catch (Exception e) {
+    // // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error
+    // // scheduling appointment");
+    // // }
+    // }
 
     @DeleteMapping("/DeleteAppointment/{id}")
     public ResponseEntity<String> deleteAppointment(@PathVariable Long id) {

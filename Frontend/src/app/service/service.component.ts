@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { AppService } from '../app/app.service';
 
 export interface Service {
-  service_id: number;
+  serviceId: number;
   price: number;
   servicename: string;
   description: string;
@@ -11,10 +11,10 @@ export interface Service {
 
 export interface Appointment {
   appointment_id: number;
-  user_id: number;
+  userId: number;
   appointmentDate: string;
   appointmentTime: string;
-  service_id: number;
+  serviceId: number;
 }
 
 export interface AppointmentResponse {
@@ -49,7 +49,7 @@ export interface AppointmentResponse {
   styleUrl: './service.component.css'
 })
 export class ServiceComponent {
-  user_id: string = '';
+  userId: string = '';
   services: Service[] = [];
   selectedService: Service | null = null;
   appointmentForm: FormGroup;
@@ -60,10 +60,10 @@ export class ServiceComponent {
 
   constructor(private fb: FormBuilder, private appService: AppService) {
     this.appointmentForm = this.fb.group({
-      user_id: [''],
+      userId: [''],
       appointmentDate: [''],
       appointmentTime: [''],
-      service_id: [null],
+      serviceId: [null],
       servicePrice: [null]
     });
     this.feedbackForm = this.fb.group({
@@ -88,19 +88,18 @@ export class ServiceComponent {
   scheduleAppointment(service: Service) {
     this.selectedService = service;
     this.appointmentForm.patchValue({
-      service_id: service.service_id,
+      serviceId: service.serviceId,
       servicePrice: service.price,
-      user_id: '',
+      userId: '',
       appointmentDate: '',
       appointmentTime: ''
     });
   }
 
   onSubmit() {
-    this.appointmentForm.patchValue({
-      user_id: this.user_id,
-      service_id: this.selectedService?.service_id
-    });
+    // this.appointmentForm.patchValue({
+    //   service_id: this.selectedService?.service_id
+    // });
 
     this.appService.scheduleAppointment(this.appointmentForm.value).subscribe(response => {
       console.log(response);

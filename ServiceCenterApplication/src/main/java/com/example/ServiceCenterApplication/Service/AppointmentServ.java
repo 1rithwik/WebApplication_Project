@@ -1,5 +1,7 @@
 package com.example.ServiceCenterApplication.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +22,16 @@ public class AppointmentServ {
     @Autowired
     private UserRepo userRepo;
 
-    public Appointment scheduleAppointment(Appointment appointment) {
-        Appointment appoint = new Appointment();
-        Users user = userRepo.findById(appointment.getUsers().getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        com.example.ServiceCenterApplication.model.Service service = serviceRepo
-                .findById(appointment.getService().getServiceId())
-                .orElseThrow(() -> new RuntimeException("Service not found"));
-        appoint.setUsers(user);
-        appoint.setService(service);
-        appoint.setAppointmentDate(appointment.getAppointmentDate());
-        appoint.setAppointmentTime(appointment.getAppointmentTime());
-        appoint.setAppointmentStatus(appointment.getAppointmentStatus());
-        return appointmentRepo.save(appoint);
+    public Appointment scheduleAppointment(Long userId, Long serviceId, LocalDate appointmentDate,
+            LocalTime appointmentTime) {
+        Users user = userRepo.findById(userId).orElse(null);
+        com.example.ServiceCenterApplication.model.Service service = serviceRepo.findById(serviceId).orElse(null);
+        Appointment appointment = new Appointment();
+        appointment.setUsers(user);
+        appointment.setService(service);
+        appointment.setAppointmentDate(appointmentDate);
+        appointment.setAppointmentTime(appointmentTime);
+        return appointmentRepo.save(appointment);
     }
 
     public List<Appointment> getAppointment() {

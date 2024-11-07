@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 import org.springframework.http.HttpStatus;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import com.example.ServiceCenterApplication.Service.AppointmentServ;
 import com.example.ServiceCenterApplication.model.Appointment;
@@ -24,13 +26,11 @@ public class UserAppointment {
     private AppointmentServ appointmentServ;
 
     @PostMapping("/user/service/scheduleAppointment")
-    public ResponseEntity<?> postAppointment(@RequestBody Appointment appointment) {
-        // try {
-        return ResponseEntity.ok(appointmentServ.scheduleAppointment(appointment));
-        // } catch (Exception e) {
-        // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error
-        // scheduling appointment");
-        // }
+    public ResponseEntity<Appointment> postAppointment(@RequestBody AppointmentResponse appointmentResponse) {
+
+        return ResponseEntity
+                .ok(appointmentServ.scheduleAppointment(appointmentResponse.userId, appointmentResponse.serviceId,
+                        appointmentResponse.appointmentDate, appointmentResponse.appointmentTime));
     }
 
     @DeleteMapping("/user/service/deleteAppointment/{id}")
@@ -44,5 +44,54 @@ public class UserAppointment {
     @GetMapping("/user/service/getUserAppointments/{userId}")
     public List<Appointment> getUserAppointments(@PathVariable Long userId) {
         return appointmentServ.getAppointmentsByUserId(userId);
+    }
+}
+
+class AppointmentResponse {
+    Long userId;
+    Long serviceId;
+    LocalDate appointmentDate;
+    LocalTime appointmentTime;
+    String appointmentStatus;
+
+    // Getters and setters
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(Long serviceId) {
+        this.serviceId = serviceId;
+    }
+
+    public LocalDate getAppointmentDate() {
+        return appointmentDate;
+    }
+
+    public void setAppointmentDate(LocalDate appointmentDate) {
+        this.appointmentDate = appointmentDate;
+    }
+
+    public LocalTime getAppointmentTime() {
+        return appointmentTime;
+    }
+
+    public void setAppointmentTime(LocalTime appointmentTime) {
+        this.appointmentTime = appointmentTime;
+    }
+
+    public String getAppointmentStatus() {
+        return appointmentStatus;
+    }
+
+    public void setAppointmentStatus(String appointmentStatus) {
+        this.appointmentStatus = appointmentStatus;
     }
 }
