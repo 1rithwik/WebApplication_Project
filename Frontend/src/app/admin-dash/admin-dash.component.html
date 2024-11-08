@@ -3,16 +3,16 @@
     <div class="sidebar">
       <h2>Admin Dashboard</h2>
       <ul>
-        <li><a routerLink="/overview">Overview</a></li>
-        <li><a routerLink="/manage-services">Manage Services</a></li>
-        <li><a routerLink="/appointments">Appointments</a></li>
-        <li><a routerLink="/customer-feedback">Customer Feedback</a></li>
-        <li><a routerLink="/settings">Settings</a></li>
+        <li><a (click)="activeChild = 'overview'">Overview</a></li>
+        <li><a (click)="activeChild = 'manageServices'">Manage Services</a></li>
+        <li><a (click)="activeChild = 'appointment'">Appointments</a></li>
+        <li><a (click)="activeChild = 'customerFeedback'">Customer Feedback</a></li>
+        <li><a (click)="activeChild = 'tireStock'">Tire Stock</a></li>
       </ul>
     </div>
   
     <!-- Main Content -->
-    <div class="content">
+    <div *ngIf="activeChild == 'overview'" class="content">
       <div class="header">
         <h1>Welcome, Admin</h1>
         <p>Manage your car tire services effectively.</p>
@@ -22,16 +22,115 @@
       <div class="overview-section">
         <div class="overview-card">
           <h3>Total Services</h3>
-          <p>15</p>
+          <p>4</p>
         </div>
         <div class="overview-card">
           <h3>Upcoming Appointments</h3>
-          <p>7</p>
+          <p>{{ appointments.length }}</p>
         </div>
         <div class="overview-card">
-          <h3>Customer Feedback</h3>
-          <p>5 New Reviews</p>
+          <h3>Customer Feedbacks</h3>
+          <p>{{ feedbacks.length }}</p>
         </div>
       </div>
+    </div>
+
+    <div *ngIf="activeChild == 'appointment'" class="appointment-content">
+      <div class="container">
+      <h1>Appointments</h1>
+    <table class="appointment-table">
+        <thead>
+            <tr>
+                <th>Appointment ID</th>
+                <th>Customer ID</th>
+                <th>Service ID</th>
+                <th>Appointment Date</th>
+                <th>Appointment Time</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let appointment of appointments; let i = index">
+                <td>{{ appointment.appointmentId }}</td>
+                <td>{{ appointment.userId }}</td>
+                <td>{{ appointment.serviceId }}</td>
+                <td>{{ appointment.appointmentDate }}</td>
+                <td>{{ appointment.appointmentTime }}</td>
+                <td>{{ appointment.appointmentStatus }}</td>
+                <td>
+                    <button class="update-btn" (click)="updateAppointment(i)">Update</button>
+                    <button class="delete-btn" (click)="deleteAppointment(i)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    </div>
+
+    <div *ngIf="activeChild == 'customerFeedback'" class="feedback-content">
+      <div class="content">
+        <div class="header">
+          <h1>Customer Feedback</h1>
+          <p>Here is the feedback from your customers.</p>
+        </div>
+      
+        <div class="feedback-section">
+          <div class="feedback-card">
+            <div *ngFor="let feedback of feedbacks; let i = index">
+              <h4>User ID: {{ feedback.users.userId }}</h4>
+              <h4>Email: {{ feedback.users.email }}</h4>
+              <p>Feedback: {{ feedback.comments }}</p>
+              <span class="rating">Rating: {{ feedback.rating }} / 5</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="activeChild == 'tireStock'" class="tire-content">
+      <h1>Tire Stock</h1>
+      <div class="container">
+        <!-- Tires Table -->
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr class="table-header">
+                        <th>Tire ID</th>
+                        <th>Brand</th>
+                        <th>Size</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-row" *ngFor="let tire of tires; let i = index">
+                        <td class="table-cell">{{ tire.id }}</td>
+                        <td class="table-cell">{{ tire.brand }}</td>
+                        <td class="table-cell">{{ tire.model }}</td>
+                        <td class="table-cell">{{ tire.stock }}</td>
+                        <td class="table-cell">${{ tire.price }}</td>
+                        <td class="table-cell">
+                            <button class="button button--update" (click)="updateTire(i)">Update</button>
+                            <button class="button button--delete" (click)="deleteTire(i)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    
+        <!-- Add New Tire Form -->
+        <div class="form-container">
+            <h2 class="heading-secondary">Add New Tire</h2>
+            <form (ngSubmit)="addTire()" #tireForm="ngForm">
+                <input type="text" class="form-input" placeholder="Brand" [(ngModel)]="newTire.brand" name="brand" required>
+                <input type="text" class="form-input" placeholder="Model" [(ngModel)]="newTire.model" name="model" required>
+                <input type="number" class="form-input" placeholder="Quantity" [(ngModel)]="newTire.stock" name="quantity" required>
+                <input type="number" class="form-input" placeholder="Price" [(ngModel)]="newTire.price" name="price" required>
+                <button type="submit" class="button button--add">Add Tire</button>
+            </form>
+        </div>
+    </div>
     </div>
   </div>

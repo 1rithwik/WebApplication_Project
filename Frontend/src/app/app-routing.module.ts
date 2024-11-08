@@ -5,6 +5,11 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterGuardService } from './register-guard.service';
 import { AdminDashComponent } from './admin-dash/admin-dash.component';
+import { AppointmentComponent } from './appointment/appointment.component';
+import { FeedbackComponent } from './feedback/feedback.component';
+import { TireAdminComponent } from './tire-admin/tire-admin.component';
+import { ServiceComponent } from './service/service.component';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -12,6 +17,10 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent},
   { path: 'login', component: LoginComponent },
   { path: 'adminDashboard', component: AdminDashComponent },
+  { path: 'appointment', component: AppointmentComponent },
+  { path: 'customerFeedback', component: FeedbackComponent },
+  { path: 'tireStock', component: TireAdminComponent },
+  { path: 'user/service', component: ServiceComponent },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

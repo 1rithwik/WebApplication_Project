@@ -2,21 +2,46 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AppService } from '../app/app.service';
 
-interface Service {
-  id: number;
-  name: string;
-  description: string;
+export interface Service {
+  serviceId: number;
   price: number;
+  servicename: string;
+  description: string;
 }
 
-interface Appointment {
-  id: number;
-  userId: string;
+export interface Appointment {
+  appointment_id: number;
+  userId: number;
   appointmentDate: string;
   appointmentTime: string;
   serviceId: number;
-  servicePrice: number;
 }
+
+export interface AppointmentResponse {
+  appointmentId: number;
+  users: {
+    userId: number;
+    username: string;
+    email: string;
+    mobile: string;
+    role: string;
+  };
+  service: {
+    serviceId: number;
+    servicename: string;
+    price: number;
+  };
+  appointmentDate: string;
+  appointmentTime: string;
+  appointmentStatus: string;
+}
+
+// export interface Feedback {
+//   id: number;
+//   comments: string;
+//   rating: number;
+//   user_id: number;
+// }
 
 @Component({
   selector: 'app-service',
@@ -25,32 +50,34 @@ interface Appointment {
 })
 export class ServiceComponent {
   userId: string = '';
-  services: Service[] = [
-    { id: 1, name: 'Tire Replacement', description: 'Professional tire replacement service.', price: 400 },
-    { id: 2, name: 'Wheel Alignment', description: 'Accurate wheel alignment for smooth driving.', price: 250 },
-    { id: 3, name: 'Balancing', description: 'Precise wheel balancing for better stability.', price: 150 },
-    { id: 4, name: 'Fusion Repairs', description: 'Repair and restore tire fusion effectively.', price: 100 }
-  ];
+  services: Service[] = [];
   selectedService: Service | null = null;
   appointmentForm: FormGroup;
-  userAppointments: Appointment[] = [];
+  userAppointmentResponse: AppointmentResponse[] = [];
+  searchUserId: number = 0;
+  feedbackForm: FormGroup;
+  showFeedbackForm: number | null = null;
 
   constructor(private fb: FormBuilder, private appService: AppService) {
     this.appointmentForm = this.fb.group({
-      userId: [this.userId],
+      userId: [''],
       appointmentDate: [''],
       appointmentTime: [''],
       serviceId: [null],
       servicePrice: [null]
     });
-    this.viewAppointments();
+    this.feedbackForm = this.fb.group({
+      userId: [''],
+      comments: [''],
+      rating: [null]
+    });
+    this.loadServices();
   }
 
-  viewAppointments() {
-    const userId = this.userId; // Replace with actual user ID
-    this.appService.getUserAppointments(userId).subscribe(
+  viewAppointments(searchUserId: number) {
+    this.appService.getUserAppointments(searchUserId).subscribe(
       (appointments: any) => {
-        this.userAppointments = appointments;
+        this.userAppointmentResponse = appointments;
       },
       (error) => {
         console.error('Error loading appointments:', error);
@@ -61,7 +88,7 @@ export class ServiceComponent {
   scheduleAppointment(service: Service) {
     this.selectedService = service;
     this.appointmentForm.patchValue({
-      serviceId: service.id,
+      serviceId: service.serviceId,
       servicePrice: service.price,
       userId: '',
       appointmentDate: '',
@@ -70,6 +97,10 @@ export class ServiceComponent {
   }
 
   onSubmit() {
+    // this.appointmentForm.patchValue({
+    //   service_id: this.selectedService?.service_id
+    // });
+
     this.appService.scheduleAppointment(this.appointmentForm.value).subscribe(response => {
       console.log(response);
     },
@@ -77,8 +108,27 @@ export class ServiceComponent {
       console.error('Error scheduling appointment:', error);
     });
   }
+
   deleteAppointment(appointmentId: number) {
     this.appService.deleteAppointment(appointmentId).subscribe(response => {
+      console.log(response);
+    });
+  }
+
+  loadServices() {
+    this.appService.getServices().subscribe(services => {
+      this.services = services;
+    });
+  }
+
+  toggleFeedbackForm(appointmentId: number) {
+    this.showFeedbackForm = appointmentId;
+  }
+
+  // comments: string = '';
+  // rating: number = 0;
+  submitFeedback(feedbackForm: any) {
+    this.appService.submitFeedback(this.feedbackForm.value).subscribe(response => {
       console.log(response);
     });
   }

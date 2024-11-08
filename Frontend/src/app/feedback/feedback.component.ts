@@ -15,12 +15,6 @@ export class FeedbackComponent {
 
   constructor(private appService: AppService) {}
 
-  ngOnInit() {
-    this.appService.getFeedback().subscribe(data => {
-      this.feedbacks = data as any[];
-    });
-  }
-
   deleteFeedback(id: number) {
     this.appService.deleteFeedback(id).subscribe(() => {
       this.feedbacks = this.feedbacks.filter(feedback => feedback.id !== id);
