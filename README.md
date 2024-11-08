@@ -1,4 +1,4 @@
-# Project Document
+# Project Details
 
 
 ## 1. Project Overview
