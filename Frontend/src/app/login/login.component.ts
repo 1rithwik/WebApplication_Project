@@ -33,25 +33,15 @@ export class LoginComponent {
     username: '',
     password: '',
   };
-  constructor(private appService: AppService, private router: Router) {  }
+  constructor(private appService: AppService, private router: Router) { }
   onFormSubmit() {
     this.appService.loginUser(this.loginData).subscribe(
       (response: any) => {
-        // if(response && response.token){
-        //   localStorage.setItem('token', response.token);
-        //   console.log("Form submitted successfully!", response);
-        //   alert('Login successful!');
-
-        //   const user = response.LoginUser;
-        //   console.log("User details:", user);
-        // }
-        // else{
-        //   alert('Login failed. Please try again.');
-        // }
+        
         const token = Object.keys(response)[0];
         const user = response[token];
         if(user && user.role){
-          localStorage.setItem('token', token);
+          localStorage.setItem('jwtToken', token);
           console.log("Form submitted successfully!", response);
           alert('Login successful!');
           if(user.role == 'ADMIN'){
@@ -69,4 +59,33 @@ export class LoginComponent {
       }
     );
   }
+  
+  // onFormSubmit() {
+  //   this.appService.loginUser(this.loginData).subscribe(
+  //     (response: LoginResponse) => {
+  //       const token = response.token;
+  //       const user = response.LoginUser;
+
+  //       if (token && user) {
+  //         // Store the token and user role in local storage
+  //         localStorage.setItem('jwtToken', token);
+
+  //         // Navigate based on the user role
+  //         if (user.role === 'ADMIN') {
+  //           this.router.navigate(['/adminDashboard']);
+  //         } else {
+  //           this.router.navigate(['/home']);
+  //         }
+
+  //         alert('Login successful!');
+  //       } else {
+  //         alert('Login failed. Please try again.');
+  //       }
+  //     },
+  //     (error) => {
+  //       console.error("Error submitting form", error);
+  //       alert('Login failed. Please try again.');
+  //     }
+  //   );
+  // }
 }

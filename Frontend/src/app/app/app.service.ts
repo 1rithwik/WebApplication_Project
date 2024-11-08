@@ -28,7 +28,7 @@ export class AppService {
 
   // to delete an appointment for a user
   deleteAppointment(appointmentId: number) {
-    return this.http.delete(`${this.apiUrl}/service/deleteAppointment/${appointmentId}`);
+    return this.http.delete(`${this.apiUrl}/Appointment/service/deleteAppointment/${appointmentId}`);
   }
   getUserAppointments(searchUserId: number) {
     return this.http.get(`${this.apiUrl}/user/service/getUserAppointments/${searchUserId}`);
