@@ -385,3 +385,70 @@ footer {
         transform: translateX(0);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+/* User Icon Section Styles */
+.user-icon-section {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Aligns the user icon to the right */
+    padding: 10px;
+}
+
+.user-menu {
+    position: relative;
+}
+
+.user-icon {
+    width: 40px; /* Adjust size as needed */
+    height: 40px; /* Adjust size as needed */
+    cursor: pointer;
+    border-radius: 50%; /* Makes the icon circular */
+    transition: transform 0.3s; /* Smooth transition for hover effect */
+}
+
+.user-icon:hover {
+    transform: scale(1.1); /* Slightly enlarges the icon on hover */
+}
+
+.dropdown {
+    position: absolute;
+    right: 0; /* Aligns dropdown to the right of the user icon */
+    top: 50px; /* Adjusts the dropdown position */
+    background-color: white; /* Background color of the dropdown */
+    border: 1px solid #ccc; /* Border for the dropdown */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    z-index: 1000; /* Ensures dropdown is above other elements */
+    width: 200px; /* Width of the dropdown */
+}
+
+.dropdown-item {
+    padding: 10px; /* Padding for dropdown items */
+    border-bottom: 1px solid #f0f0f0; /* Divider between items */
+    color: #333; /* Change text color for better visibility */
+}
+
+.dropdown-item:last-child {
+    border-bottom: none; /* Removes border from last item */
+}
+
+.dropdown-item strong {
+    display: inline-block; /* Ensures strong text is inline */
+}
+
+.dropdown-item:hover {
+    background-color: #f9f9f9; /* Highlight on hover */
+    cursor: pointer; /* Pointer cursor on hover */
+}
