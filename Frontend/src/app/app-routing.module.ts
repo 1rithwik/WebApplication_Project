@@ -5,16 +5,6 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterGuardService } from './register-guard.service';
 import { AdminDashComponent } from './admin-dash/admin-dash.component';
-<<<<<<< HEAD
-<<<<<<< HEAD
-import { AppointmentComponent } from './appointment/appointment.component';
-import { FeedbackComponent } from './feedback/feedback.component';
-import { TireAdminComponent } from './tire-admin/tire-admin.component';
-import { ServiceComponent } from './service/service.component';
-
-=======
->>>>>>> 78bcbaf (Admin routing)
-=======
 import { AppointmentComponent } from './appointment/appointment.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { TireAdminComponent } from './tire-admin/tire-admin.component';
@@ -25,8 +15,6 @@ export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent},
-<<<<<<< HEAD
-<<<<<<< HEAD
   { path: 'login', component: LoginComponent },
   { path: 'adminDashboard', component: AdminDashComponent },
   { path: 'appointment', component: AppointmentComponent },

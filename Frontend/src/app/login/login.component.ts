@@ -33,8 +33,6 @@ export class LoginComponent {
     username: '',
     password: '',
   };
-<<<<<<< HEAD
-<<<<<<< HEAD
   constructor(private appService: AppService, private router: Router) { }
   onFormSubmit() {
     this.appService.loginUser(this.loginData).subscribe(
@@ -54,43 +52,6 @@ export class LoginComponent {
           }
         }
 
-=======
-  constructor(private appService: AppService, private router: Router) {  }
-=======
-  constructor(private appService: AppService, private router: Router) { }
->>>>>>> 08a1de2 (Jwt token in frontend)
-  onFormSubmit() {
-    this.appService.loginUser(this.loginData).subscribe(
-      (response: any) => {
-        
-        const token = Object.keys(response)[0];
-<<<<<<< HEAD
-        const user = Object.values(response)[0] as LoginResponse;
-        localStorage.setItem('token', token);
-        console.log("Form submitted successfully!", response);
-        alert('Login successful!');
-<<<<<<< HEAD
-        this.router.navigate(['/home']);
->>>>>>> dd90d20 (Login routed)
-=======
-        if(user.LoginUser.role == 'ADMIN'){
-          this.router.navigate(['/adminDashboard']);
-=======
-        const user = response[token];
-        if(user && user.role){
-          localStorage.setItem('jwtToken', token);
-          console.log("Form submitted successfully!", response);
-          alert('Login successful!');
-          if(user.role == 'ADMIN'){
-            this.router.navigate(['/adminDashboard']);
-          }
-          else{
-            this.router.navigate(['/home']);
-          }
->>>>>>> 256486a (AdminDashBoard routing)
-        }
-
->>>>>>> 78bcbaf (Admin routing)
       },
       error => {
         console.error("Error submitting form", error);

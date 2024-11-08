@@ -22,10 +22,6 @@ public class AppointmentServ {
     @Autowired
     private UserRepo userRepo;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 16b0685 (user appointment scheduling initialized)
     public Appointment scheduleAppointment(Long userId, Long serviceId, LocalDate appointmentDate,
             LocalTime appointmentTime) {
         Users user = userRepo.findById(userId).orElse(null);
@@ -36,24 +32,6 @@ public class AppointmentServ {
         appointment.setAppointmentDate(appointmentDate);
         appointment.setAppointmentTime(appointmentTime);
         return appointmentRepo.save(appointment);
-<<<<<<< HEAD
-=======
-    public Appointment scheduleAppointment(Appointment appointment) {
-        Appointment appoint = new Appointment();
-        Users user = userRepo.findById(appointment.getUsers().getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        com.example.ServiceCenterApplication.model.Service service = serviceRepo
-                .findById(appointment.getService().getServiceId())
-                .orElseThrow(() -> new RuntimeException("Service not found"));
-        appoint.setUsers(user);
-        appoint.setService(service);
-        appoint.setAppointmentDate(appointment.getAppointmentDate());
-        appoint.setAppointmentTime(appointment.getAppointmentTime());
-        appoint.setAppointmentStatus(appointment.getAppointmentStatus());
-        return appointmentRepo.save(appoint);
->>>>>>> 4915eaa (View ans delete appointment by user)
-=======
->>>>>>> 16b0685 (user appointment scheduling initialized)
     }
 
     public List<Appointment> getAppointment() {

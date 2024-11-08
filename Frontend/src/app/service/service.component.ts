@@ -14,34 +14,7 @@ export interface Appointment {
   userId: number;
   appointmentDate: string;
   appointmentTime: string;
-<<<<<<< HEAD
-<<<<<<< HEAD
   serviceId: number;
-=======
-  service_id: number;
-=======
-  serviceId: number;
->>>>>>> 16b0685 (user appointment scheduling initialized)
-}
-
-export interface AppointmentResponse {
-  appointmentId: number;
-  users: {
-    userId: number;
-    username: string;
-    email: string;
-    mobile: string;
-    role: string;
-  };
-  service: {
-    serviceId: number;
-    servicename: string;
-    price: number;
-  };
-  appointmentDate: string;
-  appointmentTime: string;
-  appointmentStatus: string;
->>>>>>> 4915eaa (View ans delete appointment by user)
 }
 
 export interface AppointmentResponse {
@@ -78,32 +51,16 @@ export interface AppointmentResponse {
 export class ServiceComponent {
   userId: string = '';
   services: Service[] = [];
-  services: Service[] = [];
   selectedService: Service | null = null;
   appointmentForm: FormGroup;
   userAppointmentResponse: AppointmentResponse[] = [];
   searchUserId: number = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
   feedbackForm: FormGroup;
   showFeedbackForm: number | null = null;
 
   constructor(private fb: FormBuilder, private appService: AppService) {
     this.appointmentForm = this.fb.group({
       userId: [''],
-<<<<<<< HEAD
-=======
-=======
-  feedbackForm: FormGroup;
-  showFeedbackForm: number | null = null;
->>>>>>> ec41372 (user feedback initialized)
-
-  constructor(private fb: FormBuilder, private appService: AppService) {
-    this.appointmentForm = this.fb.group({
-      user_id: [''],
->>>>>>> 4915eaa (View ans delete appointment by user)
-=======
->>>>>>> 16b0685 (user appointment scheduling initialized)
       appointmentDate: [''],
       appointmentTime: [''],
       serviceId: [null],
@@ -140,22 +97,9 @@ export class ServiceComponent {
   }
 
   onSubmit() {
-<<<<<<< HEAD
-<<<<<<< HEAD
     // this.appointmentForm.patchValue({
     //   service_id: this.selectedService?.service_id
     // });
-=======
-    this.appointmentForm.patchValue({
-      user_id: this.user_id,
-      service_id: this.selectedService?.service_id
-    });
->>>>>>> 4915eaa (View ans delete appointment by user)
-=======
-    // this.appointmentForm.patchValue({
-    //   service_id: this.selectedService?.service_id
-    // });
->>>>>>> 16b0685 (user appointment scheduling initialized)
 
     this.appService.scheduleAppointment(this.appointmentForm.value).subscribe(response => {
       console.log(response);
