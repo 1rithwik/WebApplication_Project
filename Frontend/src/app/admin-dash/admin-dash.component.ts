@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AppService } from '../app/app.service';
 export interface Appointment {
   appointmentId: string;
@@ -134,17 +134,65 @@ deleteTire(index: number): void {
   }
 }
 
-feedbacks: Feedback[] = [];
+feedbacks: Feedback[] = [
+  {
+    id: 1,
+    users: { userId: 1, email: 'john.doe@example.com' },
+    rating: 5,
+    comments: 'Excellent service! My tires were replaced quickly and professionally.',
+    appointmentId: '1'
+  },
+  {
+    id: 2,
+    users: { userId: 2, email: 'jane.smith@example.com' },
+    rating: 4,
+    comments: 'Very helpful staff. The alignment service improved my driving experience significantly.',
+    appointmentId: '2'
+  },
+  {
+    id: 3,
+    users: { userId: 3, email: 'alex.johnson@example.com' },
+    rating: 5,
+    comments: 'Fast and reliable. Great experience with the tire balancing!',
+    appointmentId: '3'
+  }
+];
 
 loadFeedbacks() {
-    this.appService.getFeedbacks().subscribe((data: any) => {
-    this.feedbacks = data;
-  },
-  (error: any) => {
-    console.error('Error loading feedbacks:', error);
-  }
-);
+  this.appService.getFeedbacks().subscribe(
+      (data: any) => {
+          this.feedbacks = data; // Load data from service if available
+      },
+      (error: any) => {
+          console.error('Error loading feedbacks:', error);
+          // Default to example feedback data if there's an error
+          this.feedbacks = [
+              {
+                  id: 1,
+                  users: { userId: 1, email: 'john.doe@example.com' },
+                  rating: 5,
+                  comments: 'Excellent service! My tires were replaced quickly and professionally.',
+                  appointmentId: '1'
+              },
+              {
+                  id: 2,
+                  users: { userId: 2, email: 'jane.smith@example.com' },
+                  rating: 4,
+                  comments: 'Very helpful staff. The alignment service improved my driving experience significantly.',
+                  appointmentId: '2'
+              },
+              {
+                  id: 3,
+                  users: { userId: 3, email: 'alex.johnson@example.com' },
+                  rating: 5,
+                  comments: 'Fast and reliable. Great experience with the tire balancing!',
+                  appointmentId: '3'
+              }
+          ];
+      }
+  );
 }
+
 
 }
 
