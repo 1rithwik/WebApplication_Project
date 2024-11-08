@@ -35,6 +35,7 @@ public class SecurityConfig {
 
     @Bean
 <<<<<<< HEAD
+<<<<<<< HEAD
     public SecurityFilterChain securityFilterChain(HttpSecurity httpsec) throws Exception {
 
         httpsec
@@ -78,15 +79,37 @@ public class SecurityConfig {
 
     // return httpsec.build();
     // }
+=======
+>>>>>>> 08a1de2 (Jwt token in frontend)
     public SecurityFilterChain securityFilterChain(HttpSecurity httpsec) throws Exception {
+
         httpsec
                 .csrf(customizer -> customizer.disable())
                 .authorizeHttpRequests(request -> request
-                        .anyRequest().permitAll())
-                .httpBasic(Customizer.withDefaults());
+                        .requestMatchers("login", "register", "home")
+                        .permitAll()
+                        .anyRequest().authenticated())// any request is authenticated
+                // like when you login from
+                // different browser, it should
+                // ask login
+                // .formLogin(Customizer.withDefaults())// enabling the form login
+                .httpBasic(Customizer.withDefaults())
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));// session
+        // creation policy is stateless i.e every request new session is created
 
         return httpsec.build();
     }
+    // public SecurityFilterChain securityFilterChain(HttpSecurity httpsec) throws
+    // Exception {
+    // httpsec
+    // .csrf(customizer -> customizer.disable())
+    // .authorizeHttpRequests(request -> request
+    // .anyRequest().permitAll())
+    // .httpBasic(Customizer.withDefaults());
+
+    // return httpsec.build();
+    // }
 
     // @Bean
     // public UserDetailsService userDetailsService() {
