@@ -30,18 +30,28 @@ export class AppService {
   deleteAppointment(appointmentId: number) {
     return this.http.delete(`${this.apiUrl}/Appointment/service/deleteAppointment/${appointmentId}`);
   }
+
+
   getUserAppointments(searchUserId: number) {
     return this.http.get(`${this.apiUrl}/user/service/getUserAppointments/${searchUserId}`);
   }
+
+
   getFeedbacks() {
     return this.http.get(`${this.apiUrl}/admin/feedback/all`);
   }
+
+
   deleteFeedback(id: number) {
     return this.http.delete(`${this.apiUrl}/admin/feedback/delete/${id}`);
   }
+
+  
   getAppointments(): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(`${this.apiUrl}/Appointment/appointments`);
   }
+
+
   updateAppointment(appointment: any) {
     return this.http.put(`${this.apiUrl}/service/updateAppointment`, appointment);
   }
