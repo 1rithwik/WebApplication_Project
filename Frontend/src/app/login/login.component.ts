@@ -42,6 +42,7 @@ export class LoginComponent {
         const user = response[token];
         if(user && user.role){
           localStorage.setItem('jwtToken', token);
+          localStorage.setItem('user', JSON.stringify(user));
           console.log("Form submitted successfully!", response);
           alert('Login successful!');
           if(user.role == 'ADMIN'){
