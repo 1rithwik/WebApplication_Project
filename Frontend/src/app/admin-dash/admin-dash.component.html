@@ -70,23 +70,28 @@
 
   <div *ngIf="activeChild == 'customerFeedback'" class="feedback-content">
     <div class="content">
-      <div class="header">
-        <h1>Customer Feedback</h1>
-        <p>Here is the feedback from your customers.</p>
-      </div>
-    
-      <div class="feedback-section">
-        <div class="feedback-card">
-          <div *ngFor="let feedback of feedbacks; let i = index">
-            <h4>User ID: {{ feedback.users.userId }}</h4>
-            <h4>Email: {{ feedback.users.email }}</h4>
-            <p>Feedback: {{ feedback.comments }}</p>
-            <span class="rating">Rating: {{ feedback.rating }} / 5</span>
-          </div>
+        <div class="header">
+            <h1>Customer Feedback</h1>
+            <p>Here is the feedback from your customers.</p>
         </div>
-      </div>
+
+        <div class="feedback-section">
+            <div *ngFor="let feedback of feedbacks; let last = last" class="feedback-card">
+                <hr class="feedback-divider">
+                <h4 class="user-id">User ID: {{ feedback.users.userId }}</h4>
+                <h4 class="email">Email: {{ feedback.users.email }}</h4>
+                <p class="comment">Feedback: {{ feedback.comments }}</p>
+                <span class="rating">Rating: {{ feedback.rating }} / 5</span>
+                
+                <!-- Divider Line Between Feedbacks -->
+                <hr class="feedback-divider">
+            </div>
+        </div>
     </div>
-  </div>
+</div>
+
+  
+
 
   <div *ngIf="activeChild == 'tireStock'" class="tire-content">
     <h1>Tire Stock</h1>
