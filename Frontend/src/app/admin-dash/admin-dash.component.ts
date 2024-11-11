@@ -42,6 +42,7 @@ export class AdminDashComponent{
   constructor(private appService: AppService) {
     this.loadAppointments();
     this.loadFeedbacks();
+    this.loadTires();
   }
   appointments: Appointment[] = [];
 
@@ -168,6 +169,52 @@ updateTire(index: number): void {
   } else {
       alert('Please provide valid data for all fields.');
   }
+}
+
+showUpdate: boolean = false;
+selectedTire: Tire = {
+  id: 0,
+  brand: '',
+  model: '',
+  stock: 0,
+  price: 0
+};
+
+showUpdateForm(index: number) {
+  this.showUpdate = true;
+  this.selectedTire = { ...this.tires[index] };
+}
+
+updateTireForm() {
+  if (this.selectedTire.brand && this.selectedTire.model && this.selectedTire.stock > 0 && this.selectedTire.price > 0) {
+    this.appService.updateTire(this.selectedTire).subscribe(
+      (response: any) => {
+        const index = this.tires.findIndex(t => t.id === this.selectedTire.id);
+        if (index !== -1) {
+          this.tires[index] = { ...this.selectedTire };
+        }
+        this.showUpdate = false;
+        alert('Tire updated successfully!');
+      },
+      (error) => {
+        console.error('Error updating tire:', error);
+        alert('Failed to update tire. Please try again.');
+      }
+    );
+  } else {
+    alert('Please provide valid data for all fields.');
+  }
+}
+
+cancelUpdate() {
+  this.showUpdate = false;
+  this.selectedTire = {
+    id: 0,
+    brand: '',
+    model: '',
+    stock: 0,
+    price: 0
+  };
 }
 
 feedbacks: Feedback[] = [];
