@@ -186,6 +186,18 @@
             <p>Your appointment has been successfully scheduled.</p>
         </div>
 
+        <div *ngIf="errorMessage" class="error-message">
+            <div *ngIf="errorMessage === 'Slot already booked'" class="error-content">
+                <p><i class="fas fa-exclamation-circle"></i> This time slot is already booked. Please try selecting a different appointment time.</p>
+            </div>
+            <div *ngIf="errorMessage === 'Tire model or number of tires not available'" class="error-content">
+                <p><i class="fas fa-exclamation-circle"></i> The requested tire model or quantity is currently not available in stock. Please visit us after some time or contact our service center for more information.</p>
+            </div>
+            <div *ngIf="errorMessage && errorMessage !== 'Slot already booked' && errorMessage !== 'Tire model or number of tires not available'" class="error-content">
+                <p><i class="fas fa-exclamation-circle"></i> {{errorMessage}}</p>
+            </div>
+        </div>
+
         <div class="appointments-viewer">
             <div class="view-appointments">
                 <h2>My Appointments</h2>

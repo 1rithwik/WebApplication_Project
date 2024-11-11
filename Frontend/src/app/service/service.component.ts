@@ -60,6 +60,7 @@ export class ServiceComponent {
   feedbackForm: FormGroup;
   showFeedbackForm: number | null = null;
   appointmentConfirmed = false;
+  errorMessage: string | null = null;
 
   constructor(private fb: FormBuilder, private appService: AppService) {
     this.appointmentForm = this.fb.group({
@@ -120,6 +121,7 @@ export class ServiceComponent {
         this.selectedService = null;
       },
       error => {
+        this.errorMessage = error.error.message;
         console.error('Error scheduling appointment:', error);
       });
     }
