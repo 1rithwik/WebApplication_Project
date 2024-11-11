@@ -88,17 +88,7 @@ export class AdminDashComponent{
 
   tires: Tire[] = [
     { id: 1, brand: 'Michelin', model: '215/65R16', stock: 10, price: 120 },
-    { id: 2, brand: 'Bridgestone', model: '205/55R16', stock: 15, price: 110 },
-    { id: 3, brand: 'Goodyear', model: '225/50R17', stock: 8, price: 130 }
 ];
-
-newTire: Tire = {
-  id: 0,
-  brand: '',
-  model: '',
-  stock: 0,
-  price: 0
-};
 
 addTire(): void {
   if (this.newTire.brand && this.newTire.model && this.newTire.stock > 0 && this.newTire.price > 0) {
@@ -118,26 +108,65 @@ generateNewId(): number {
 clearNewTireForm(): void {
   this.newTire = { id: 0, brand: '', model: '', stock: 0, price: 0 };
 }
-// Update an existing tire
+// Delete a tire from stock
+deleteTire(index: number) {
+  const tire = this.tires[index];
+  if (confirm(`Are you sure you want to delete tire ${tire.id}?`)) {
+    this.tires.splice(index, 1);
+    alert(`Tire ${tire.id} deleted successfully!`);
+    this.appService.deleteTire(tire.id).subscribe((data: any) => {
+      console.log('Tire deleted:', data);
+    });
+  }
+}
+
+loadTires() {
+  this.appService.getTires().subscribe((data: any) => {
+    this.tires = data;
+  });
+}
+
+newTire: Tire = {
+  id: 0,
+  brand: '',
+  model: '',
+  stock: 0,
+  price: 0
+};
+
+addTireToDatabase() {
+  this.appService.addTire(this.newTire).subscribe((data: any) => {
+    this.tires.push(data);
+  });
+}
+
 updateTire(index: number): void {
   const updatedBrand = prompt('Enter new brand:', this.tires[index].brand);
   const updatedModel = prompt('Enter new model:', this.tires[index].model);
   const updatedstock = prompt('Enter new stock:', this.tires[index].stock.toString());
   const updatedPrice = prompt('Enter new price:', this.tires[index].price.toString());
-
+  
   if (updatedBrand && updatedModel && Number(updatedstock) > 0 && Number(updatedPrice) > 0) {
-      this.tires[index].brand = updatedBrand;
-      this.tires[index].model = updatedModel;
-      this.tires[index].stock = Number(updatedstock);
-      this.tires[index].price = Number(updatedPrice);
+      const updatedTire = {
+        id: this.tires[index].id,
+        brand: updatedBrand,
+        model: updatedModel,
+        stock: Number(updatedstock),
+        price: Number(updatedPrice)
+      };
+      
+      this.appService.updateTire(updatedTire).subscribe(
+        (response: any) => {
+          this.tires[index] = updatedTire;
+          alert('Tire updated successfully!');
+        },
+        (error) => {
+          console.error('Error updating tire:', error);
+          alert('Failed to update tire. Please try again.');
+        }
+      );
   } else {
       alert('Please provide valid data for all fields.');
-  }
-}
-// Delete a tire from stock
-deleteTire(index: number): void {
-  if (confirm(`Are you sure you want to delete the tire with ID ${this.tires[index].id}?`)) {
-      this.tires.splice(index, 1);
   }
 }
 
