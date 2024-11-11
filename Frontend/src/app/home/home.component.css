@@ -692,18 +692,23 @@ footer {
   
   #tire-replacement {
     background: url('../../assets/img3.jpeg') center/cover no-repeat;
+    width: auto;
   }
   
   #tire-alignment {
     background: url('../../assets/img4.jpeg') center/cover no-repeat;
+    width: auto;
   }
   
   #tire-balancing {
     background: url('../../assets/img5.jpeg') center/cover no-repeat;
+    width: auto;
   }
   
   #fusion-repair {
     background: url('../../assets/img2.jpeg') center/cover no-repeat;
+    width: auto;
+    color: #fefeff;
   }
   
   .service::before {
@@ -1025,4 +1030,13 @@ footer {
     .contact-section h2 {
       font-size: 2.3rem;
     }
+  }
+
+
+
+
+
+
+  .HomeComponent{
+    background: url('../../assets/img2.jpeg') center/cover no-repeat;
   }
