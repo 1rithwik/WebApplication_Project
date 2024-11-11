@@ -547,6 +547,7 @@ footer {
     padding: 6rem 2rem;
     background: url('../../assets/img1.jpeg') center/cover no-repeat fixed;
     text-align: center;
+    width: 100%;
   }
   
   .hero-section::before {
@@ -655,18 +656,26 @@ footer {
   
   #tire-replacement {
     background: url('../../assets/img3.jpeg') center/cover no-repeat;
+    color: #f9f9f9;
+    text-align: center;
   }
   
   #tire-alignment {
     background: url('../../assets/img4.jpeg') center/cover no-repeat;
+    color: #f9f9f9;
+    text-align: center;
   }
   
   #tire-balancing {
     background: url('../../assets/img5.jpeg') center/cover no-repeat;
+    color: #f9f9f9;
+    text-align: center;
   }
   
   #fusion-repair {
     background: url('../../assets/img2.jpeg') center/cover no-repeat;
+    color: #f9f9f9;
+    text-align: center;
   }
   
   .service::before {
@@ -989,3 +998,38 @@ footer {
       font-size: 2.3rem;
     }
   }
+
+.nav-list {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space out the items */
+    align-items: center;
+    width: 100%; /* Set a maximum width for the navigation bar */
+    margin: 0 auto; /* Center the navigation bar */
+    padding: 0; /* Remove default padding */
+    list-style: none; /* Remove bullet points */
+}
+@media(max-width: 768px){
+  .nav-list{
+    width: 100%;
+  }
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+
+
+
+
+
+
+
+
+

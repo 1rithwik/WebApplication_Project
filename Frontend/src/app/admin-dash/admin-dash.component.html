@@ -2,12 +2,12 @@
   <!-- Sidebar -->
   <div class="sidebar">
     <h2>Admin Dashboard</h2>
-    <ul>
-      <li><a (click)="activeChild = 'overview'">Overview</a></li>
-      <li><a (click)="activeChild = 'manageServices'">Manage Services</a></li>
-      <li><a (click)="activeChild = 'appointment'">Appointments</a></li>
-      <li><a (click)="activeChild = 'customerFeedback'">Customer Feedback</a></li>
-      <li><a (click)="activeChild = 'tireStock'">Tire Stock</a></li>
+    <ul class="large-font">
+      <li><a (click)="activeChild = 'overview'" class = "cursor-pointer">Overview</a></li>
+      <li><a (click)="activeChild = 'manageServices'" class = "cursor-pointer">Manage Services</a></li>
+      <li><a (click)="activeChild = 'appointment'" class = "cursor-pointer">Appointments</a></li>
+      <li><a (click)="activeChild = 'customerFeedback'" class = "cursor-pointer">Customer Feedback</a></li>
+      <li><a (click)="activeChild = 'tireStock'" class = "cursor-pointer">Tire Stock</a></li>
     </ul>
   </div>
 
@@ -34,6 +34,63 @@
       </div>
     </div>
   </div>
+
+  <div *ngIf="activeChild == 'manageServices'" class  ="manage-services-container">
+    <h1>Manage Services</h1>
+    <p>View, add, update, or delete available services.</p>
+
+    <!-- Service Form -->
+    <div class="service-form">
+        <h2>Add / Update Service</h2>
+        <form>
+            <label for="service-id">Service ID:</label>
+            <input type="text" id="service-id" placeholder="Enter Service ID" />
+
+            <label for="service-name">Service Name:</label>
+            <input type="text" id="service-name" placeholder="Enter Service Name" />
+            
+            <label for="description">Service Description</label>
+            <input type="text" id="service-name" placeholder="Enter Service Description" />
+
+            <label for="service-price">Service Price:</label>
+            <input type="number" id="service-price" placeholder="Enter Service Price" />
+            
+
+            <button type="button" class="btn add-btn" (click)="addService()">Add Service</button>
+            <button type="button" class="btn update-btn" (click)="selectedService ? updateService(selectedService) : null">Update Service</button>
+        </form>
+    </div>
+
+    <!-- Services List -->
+    <div class="service-list">
+        <h2>Available Services</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Service ID</th>
+                    <th>Service Name</th>
+                    <th>Service Description</th>
+                    <th>Service Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let service of services"> <!-- Assuming you have a services array -->
+                    <td>{{ service.id }}</td>
+                    <td>{{ service.name }}</td>
+                    <td>{{ service.description }}</td>
+                    <td>{{ service.price }}</td>
+                    <td>
+                        <button class="btn edit-btn" (click)="editService(service)">Edit</button>
+                        <button class="btn delete-btn" (click)="updateService(service)">Delete</button>
+                    </td>
+                </tr>
+                <!-- Additional services can be added here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
 
   <div *ngIf="activeChild == 'appointment'" class="appointment-content">
     <div class="container">
@@ -73,16 +130,37 @@
         <div class="header">
             <h1>Customer Feedback</h1>
             <p>Here is the feedback from your customers.</p>
+            
+            <!-- Filter Dropdown -->
+            <div class="filter-dropdown">
+              <label for="filter">Filter by Rating:</label>
+                <select id="filter" (change)="onFilterChange($event)">
+                    <option value="">All Ratings</option>
+                    <option value="1">Rating 1</option>
+                    <option value="2">Rating 2</option>
+                    <option value="3">Rating 3</option>
+                    <option value="4">Rating 4</option>
+                    <option value="5">Rating 5</option>
+                </select>
+                
+                
+                <label for="sort">Sort by:</label>
+                <select id="sort" (change)="onSortChange($event)">
+                    <option value="">Default</option>
+                    <option value="asc">Ascending</option>
+                    <option value="desc">Descending</option>
+                </select>
+            </div>
         </div>
 
         <div class="feedback-section">
-            <div *ngFor="let feedback of feedbacks; let last = last" class="feedback-card">
+            <div *ngFor="let feedback of filteredFeedbacks; let last = last" class="feedback-card">
                 <hr class="feedback-divider">
                 <h4 class="user-id">User ID: {{ feedback.users.userId }}</h4>
                 <h4 class="email">Email: {{ feedback.users.email }}</h4>
                 <p class="comment">Feedback: {{ feedback.comments }}</p>
                 <span class="rating">Rating: {{ feedback.rating }} / 5</span>
-                
+
                 <!-- Divider Line Between Feedbacks -->
                 <hr class="feedback-divider">
             </div>
@@ -117,8 +195,8 @@
                       <td class="table-cell">{{ tire.stock }}</td>
                       <td class="table-cell">${{ tire.price }}</td>
                       <td class="table-cell">
-                          <button class="button button--update" (click)="updateTire(i)">Update</button>
-                          <button class="button button--delete" (click)="deleteTire(i)">Delete</button>
+                          <button class="button button--update" style="background-color: green; color: white;" (click)="updateTire(i)">Update</button>
+                          <button class="button button--delete" style="background-color: red; color: white;" (click)="deleteTire(i)">Delete</button>
                       </td>
                   </tr>
               </tbody>

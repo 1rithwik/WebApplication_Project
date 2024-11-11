@@ -1,16 +1,22 @@
 <div class="home-container">
   <!-- Header Section -->
   <header class="header">
+    
       <div class="logo">Car Service Logo</div>
       <nav>
-          <ul>
-              <li><a routerLink="/">Home</a></li>
-              <li><a routerLink="/services">Services</a></li>
-              <li><a routerLink="/about">About Us</a></li>
-              <li><a routerLink="/contact">Contact</a></li>
+          <ul class="nav-list">
+              <li><a routerLink="/" onclick="document.getElementById('home').scrollIntoView({ behavior: 'smooth' })">Home</a></li>
+              <li><a routerLink="#services" onclick="document.getElementById('services').scrollIntoView({ behavior: 'smooth' })">Services</a></li>
+              <li><a routerLink="#about" onclick="document.getElementById('about').scrollIntoView({ behavior: 'smooth' })">About Us</a></li>
+              <li><a routerLink="#contact" onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })">Contact</a></li>
               <!-- User Icon for Dropdown -->
               <li class="user-menu">
-                  <img src="assets/user-icon.png" alt="User Icon" class="HomeComponent" (click)="toggleDropdown()" />
+                   
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#f8f9fa" class="bi bi-person-circle cursor-pointer" viewBox="0 0 16 16" (click)="toggleDropdown()" >
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                    
+                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                </svg>
                   <div class="dropdown" *ngIf="showDropdown" (clickOutside)="closeDropdown()">
                       <div class="dropdown-item">
                           <strong>Name:</strong> {{ user.username }}
@@ -28,6 +34,7 @@
                           <button (click)="logout()">Logout</button>
                       </div>
                   </div>
+                
               </li>
           </ul>
       </nav>

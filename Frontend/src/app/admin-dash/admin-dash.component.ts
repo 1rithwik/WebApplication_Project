@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AppService } from '../app/app.service';
 export interface Appointment {
   appointmentId: number;
@@ -14,6 +14,12 @@ export interface Tire {
   brand: string;
   model: string;
   stock: number;
+  price: number;
+}
+interface Service {
+  id: string;
+  name: string;
+  description: string;
   price: number;
 }
 
@@ -36,8 +42,15 @@ export interface Feedback {
   styleUrl: './admin-dash.component.css'
 })
 export class AdminDashComponent{
+  selectedService: Service | null = null; // For tracking the service being edited
 
   activeChild: string = 'overview';
+
+  services: Service[] = [
+    { id: '001', name: 'Wheel Balancing', description: 'Drive with Confidence – Let Your Wheels Find Their Balance!', price: 50 },
+    { id: '002', name: 'Wheel Alignment', description: 'Drive Straight, Drive Safe – Precision Tire Alignment!', price: 70 }
+    // Additional services can be initialized here
+  ]; // Declare the services property
 
   constructor(private appService: AppService) {
     this.loadAppointments();
@@ -141,17 +154,173 @@ deleteTire(index: number): void {
   }
 }
 
-feedbacks: Feedback[] = [];
-
-loadFeedbacks() {
-    this.appService.getFeedbacks().subscribe((data: any) => {
-    this.feedbacks = data;
+feedbacks: Feedback[] = [
+  {
+    id: 1,
+    users: { userId: 1, email: 'john.doe@example.com' },
+    rating: 5,
+    comments: 'Excellent service! My tires were replaced quickly and professionally.',
+    appointmentId: '1'
   },
-  (error: any) => {
-    console.error('Error loading feedbacks:', error);
+  {
+    id: 2,
+    users: { userId: 2, email: 'jane.smith@example.com' },
+    rating: 4,
+    comments: 'Very helpful staff. The alignment service improved my driving experience significantly.',
+    appointmentId: '2'
+  },
+  {
+    id: 3,
+    users: { userId: 3, email: 'alex.johnson@example.com' },
+    rating: 5,
+    comments: 'Fast and reliable. Great experience with the tire balancing!',
+    appointmentId: '3'
   }
-);
+];
+
+filteredFeedbacks = [...this.feedbacks]; // Initially show all feedbacks
+  selectedRating = '';
+  sortOrder = '';
+
+  onFilterChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedRating = selectElement.value;
+    this.applyFilters();
+  }
+
+  onSortChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    this.sortOrder = selectElement.value;
+    this.applyFilters();
+  }
+
+  applyFilters() {
+    let filtered = this.feedbacks;
+
+    // Filter by selected rating
+    if (this.selectedRating) {
+      filtered = filtered.filter(feedback => feedback.rating === +this.selectedRating);
+    }
+
+    // Sort based on selected order
+    if (this.sortOrder === 'asc') {
+      filtered.sort((a, b) => a.rating - b.rating);
+    } else if (this.sortOrder === 'desc') {
+      filtered.sort((a, b) => b.rating - a.rating);
+    }
+
+    this.filteredFeedbacks = filtered;
+  }
+loadFeedbacks() {
+  this.appService.getFeedbacks().subscribe(
+      (data: any) => {
+          this.feedbacks = data; // Load data from service if available
+      },
+      (error: any) => {
+          console.error('Error loading feedbacks:', error);
+          // Default to example feedback data if there's an error
+          this.feedbacks = [
+              {
+                  id: 1,
+                  users: { userId: 1, email: 'john.doe@example.com' },
+                  rating: 5,
+                  comments: 'Excellent service! My tires were replaced quickly and professionally.',
+                  appointmentId: '1'
+              },
+              {
+                  id: 2,
+                  users: { userId: 2, email: 'jane.smith@example.com' },
+                  rating: 4,
+                  comments: 'Very helpful staff. The alignment service improved my driving experience significantly.',
+                  appointmentId: '2'
+              },
+              {
+                  id: 3,
+                  users: { userId: 3, email: 'alex.johnson@example.com' },
+                  rating: 5,
+                  comments: 'Fast and reliable. Great experience with the tire balancing!',
+                  appointmentId: '3'
+              }
+          ];
+      }
+  );
 }
 
+updateService(service: Service) {
+    // Logic to update the service
+    this.services = this.services.filter(s => s.id !== service.id);
+  }
+editService(service: Service): void {
+    // Logic to update the service
+    this.selectedService = { ...service };
 }
+}
+
+
+export class ManageServicesComponent {
+  services: Service[] = [
+    { id: '001', name: 'Wheel Balancing', description: 'Drive with Confidence – Let Your Wheels Find Their Balance!', price: 50 },
+    { id: '002', name: 'Wheel Alignment', description: 'Drive Straight, Drive Safe – Precision Tire Alignment!', price: 70 }
+    // Additional services can be initialized here
+  ];
+
+  constructor() {
+    // Initialize any necessary properties or perform setup here
+  }
+
+  selectedService: Service | null = null; // For tracking the service being edited
+
+  // Method to add a new service
+  addService(id: string, name: string, serviceDescription: string, servicePrice: number) {
+    const newService: Service = {
+      id: id,
+      name: name,
+      description: serviceDescription,
+      price: servicePrice
+    };
+    
+    // Check if the service ID already exists
+    if (this.services.find(service => service.id === newService.id)) {
+      alert('Service ID already exists. Please use a different ID.');
+      return;
+    }
+
+    this.services.push(newService);
+    this.clearForm();
+  }
+
+  // Method to update an existing service
+  updateService(serviceId: string, serviceName: string, serviceDescription: string, servicePrice: number) {
+    if (this.selectedService) {
+      this.selectedService.id = serviceId;
+      this.selectedService.name = serviceName;
+      this.selectedService.description = serviceDescription;
+      this.selectedService.price = servicePrice;
+
+      this.clearForm();
+    }
+  }
+
+  // Method to delete a service
+  deleteService(serviceId: string) {
+    this.services = this.services.filter(service => service.id !== serviceId);
+  }
+
+  // Method to select a service for editing
+  editService(service: Service) {
+    this.selectedService = { ...service }; // Create a copy of the selected service
+  }
+
+  // Clear the form fields
+  clearForm() {
+    this.selectedService = null; // Reset selected service
+    // Optionally reset form input values here if using template variables
+  }
+}
+
+
+
+
+
+
 
