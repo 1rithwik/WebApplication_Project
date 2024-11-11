@@ -168,10 +168,146 @@ The Angular frontend communicates with the Spring Boot backend through RESTful A
 Data consistency between the frontend and backend is maintained through CRUD operations on the MySQL database. With Spring Data JPA, each operation on the database follows the relational schema defined, ensuring that data is correctly stored, updated, and retrieved.
 
 ##5. Database Design
+The database schema includes several interrelated tables, each serving a specific purpose within the application. Below is an overview of the primary tables, their relationships, and the rationale for their design.
+
+### 1. Users Table
+#### Purpose: Stores user details for both customers and administrators, including authentication credentials and user roles.
+#### Columns:
+user_id (BIGINT, Primary Key, Auto-Increment): Unique identifier for each user.
+username (VARCHAR): Username chosen by the user.
+password (VARCHAR): Encrypted password for user authentication.
+email (VARCHAR): User’s email address.
+mobile (VARCHAR): Contact number for communication.
+role (ENUM): Specifies the user role, either 'USER' or 'ADMIN'.
+created_at (TIMESTAMP): Record creation timestamp.
+
+### 2. Appointments Table
+#### Purpose: Stores scheduling details for user appointments, linked to specific services and users.
+#### Columns:
+appointment_id (BIGINT, Primary Key, Auto-Increment): Unique identifier for each appointment.</br>
+appointment_date (DATE): Date of the appointment.</br>
+appointment_time (TIME): Time of the appointment.</br>
+appointment_status (VARCHAR): Status of the appointment (e.g., 'Pending', 'Completed', 'Cancelled').</br>
+service_id (BIGINT, Foreign Key): Links to the Services table to specify the service for the appointment.</br>
+user_id (BIGINT, Foreign Key): Links to the Users table, identifying the customer for the appointment.</br>
+
+###3. Services Table
+#### Purpose: Stores the details of available services offered by the center.
+#### Columns:
+service_id (BIGINT, Primary Key, Auto-Increment): Unique identifier for each service.</br>
+service_name (VARCHAR): Name of the service (e.g., 'Tire Replacement', 'Wheel Alignment').</br>
+description (TEXT): Detailed description of the service.</br>
+price (DECIMAL): Cost of the service.</br>
+
+### 4. Tires Table
+#### Purpose: Manages tire inventory details for sale and replacement.
+#### Columns:
+tire_id (BIGINT, Primary Key, Auto-Increment): Unique identifier for each tire.</br>
+model (VARCHAR): Model name or number of the tire.</br>
+brand (VARCHAR): Brand of the tire.</br>
+price (DECIMAL): Cost of the tire.</br>
+quantity_in_stock (INT): Available stock quantity.</br>
+
+### 5. Feedback Table
+#### Purpose: Stores user feedback and reviews for services, allowing administrators to monitor and manage customer satisfaction.
+#### Columns:
+feedback_id (BIGINT, Primary Key, Auto-Increment): Unique identifier for each feedback entry.</br>
+user_id (BIGINT, Foreign Key): Links to the Users table to identify the customer.</br>
+service_id (BIGINT, Foreign Key): Links to the Services table to specify the service for which feedback was provided.</br>
+rating (INT): Customer rating for the service (e.g., 1 to 5).</br>
+review (TEXT): Text of the customer’s review.</br>
+review_date (TIMESTAMP): Date when the review was submitted.</br>
+
+### Database Relationships
+#### One-to-Many: Between Users and Appointments as each user can have multiple appointments.
+#### Many-to-One: Between Appointments and Services as each appointment is for one specific service.
+#### One-to-Many: Between Users and Feedback as each user can provide multiple reviews.
+#### Many-to-One: Between Feedback and Services as feedback is service-specific.
+#### One-to-Many: Between Tires and Appointments for services that involve tire replacement.
+
+### Design Considerations
+Data Integrity: Using foreign key constraints to maintain relational integrity between tables (e.g., user_id in Appointments references Users).</br>
+Normalization: Following normalization principles to minimize data redundancy, especially in storing user, service, and appointment details.</br>
+Optimized Performance: Indexing columns frequently queried, like appointment_date and service_id, to enhance read performance for scheduling and service listing features.</br>
+Security: Encrypting sensitive data, such as password in Users, and using roles to manage access levels across the user interface.
 
 ##6. Authentication and Authorization
 
 ##7. User Interface Design
+
+The UI is divided into User Side and Admin Side sections, each containing dedicated pages for specific functionalities.
+
+### User Side
+#### Home Page
+
+#### Purpose: Acts as the landing page, introducing the services and providing navigation options.
+#### Components:
+Hero Banner: Display a welcoming banner with a carousel of images showcasing available services.</br>
+Navigation Bar: Links to Services, About Us, Contact Us, and Login. If not logged in, clicking on Services redirects to the login page.</br>
+Service Highlights: Briefly showcase popular services, such as "Wheel Alignment" and "Tire Replacement."</br>
+Schedule Appointment Button: Directs users to the appointment scheduling page.</br>
+
+#### Services Page
+
+#### Purpose: Lists all services provided by the wheel alignment center, along with detailed descriptions and prices.
+#### Components:
+Service Cards: Each service displayed as a card with:</br>
+Service name and description</br>
+Price details</br>
+"Schedule Appointment" button for each service.</br>
+Schedule Appointment Form: Appears when a service's "Schedule Appointment" button is clicked, pre-filling the selected service ID. The user can choose the appointment date and time.</br>
+
+#### Appointment Scheduling Page
+
+#### Purpose: Allows users to book appointments for selected services.
+#### Components:
+Service Selector: Dropdown or card selection for service choice.</br>
+Date and Time Picker: To select the desired appointment date and time.</br>
+Confirmation Button: Submits appointment details.</br>
+
+#### Feedback Page
+
+#### Purpose: Enables users to submit feedback or reviews for services they’ve used.
+#### Components:
+Feedback Form: Contains fields for rating (1-5 stars), review text, and submission button.</br>
+User Review Section: Displays recent user feedback and ratings.</br>
+
+### Admin Side
+#### Admin Dashboard
+
+#### Purpose: Acts as a central hub for administrators to manage appointments, view feedback, and handle inventory.
+#### Components:
+Dashboard Menu: Sidebar with links to Appointments, Tire Stock, User Reviews, and Service Management.</br>
+Quick Stats: Displays statistics like total appointments, available stock, and recent feedback highlights.</br>
+
+###Appointments Management Page
+
+#### Purpose: Enables admins to view and manage scheduled appointments.
+#### Components:
+Appointment Table: Displays all appointments with columns for user details, service, date, time, and status.</br>
+Action Buttons: Options to update appointment status (e.g., Completed, Cancelled) or delete appointments.</br>
+Search Function: Allows filtering of appointments by date, user, or service.</br>
+
+#### Tire Inventory Management Page
+
+#### Purpose: Manages tire stock information, enabling administrators to update or add inventory.
+#### Components:
+Inventory Table: Lists tire models, brand, price, and quantity in stock.</br>
+Update Stock Form: Allows admins to edit quantity and price details for each tire model.</br>
+
+#### User Feedback Page
+
+#### Purpose: Allows admins to view, filter, and delete feedback submitted by users.
+#### Components:
+Feedback List: Displays a list of all user feedback, sortable by rating, date, or service.</br>
+Delete Option: Provides the option to delete inappropriate or unnecessary feedback.</br>
+
+### User Interface Design Considerations
+Responsiveness: Design optimized for both mobile and desktop views to enhance accessibility for all users.</br>
+Consistency: Use a cohesive color scheme, typography, and button styling across all pages.</br>
+User-Friendly Forms: Ensure all forms have clear field labels, validations, and feedback on form submission.</br>
+Intuitive Navigation: Maintain easy-to-navigate menus and clear calls to action on each page, ensuring users can quickly access their desired functions.</br>
+
 
 ##8. Api Endpoints
 
