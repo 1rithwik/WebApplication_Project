@@ -15,4 +15,18 @@ public class ServiceServ {
     public List<com.example.ServiceCenterApplication.model.Service> getAllServices() {
         return serviceRepo.findAll();
     }
+
+    public com.example.ServiceCenterApplication.model.Service addService(
+            com.example.ServiceCenterApplication.model.Service service) {
+        return serviceRepo.save(service);
+    }
+
+    public com.example.ServiceCenterApplication.model.Service updateService(
+            com.example.ServiceCenterApplication.model.Service service) {
+        return serviceRepo.save(service);
+    }
+
+    public void deleteService(int serviceId) {
+        serviceRepo.deleteById(Long.valueOf(serviceId));
+    }
 }

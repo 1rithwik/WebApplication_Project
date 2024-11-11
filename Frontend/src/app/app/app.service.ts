@@ -75,7 +75,6 @@ export class AppService {
   submitFeedback(feedback: any) {
     return this.http.post(`${this.apiUrl}/user/service/submitFeedback`, feedback);
   }
-
   
   getTires(): Observable<Tire[]> {
     return this.http.get<Tire[]>(`${this.apiUrl}/tires/alltires`);
@@ -89,4 +88,17 @@ export class AppService {
   deleteTire(id: number) {
     return this.http.delete(`${this.apiUrl}/tires/deletetires/${id}`);
   } 
+
+
+  addService(service: any) {
+    return this.http.post(`${this.apiUrl}/admin/service/addService`, service);
+  }
+
+  updateService(service: any) {
+    return this.http.put(`${this.apiUrl}/admin/service/updateService`, service);
+  }
+
+  deleteService(serviceId: number) {
+    return this.http.delete(`${this.apiUrl}/admin/service/deleteService/${serviceId}`);
+  }
 }

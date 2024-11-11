@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../app/app.service';
+import { Service } from '../service/service.component';
 export interface Appointment {
   appointmentId: number;
   appointmentDate: string;
@@ -43,6 +44,7 @@ export class AdminDashComponent{
     this.loadAppointments();
     this.loadFeedbacks();
     this.loadTires();
+    this.loadServices();
   }
   appointments: Appointment[] = [];
 
@@ -225,6 +227,85 @@ loadFeedbacks() {
     console.error('Error loading feedbacks:', error);
   }
 );
+}
+
+services: Service[] = [];
+newService: Service = {
+  serviceId: 0,
+  price: 0,
+  servicename: '',
+  description: ''
+};
+
+loadServices() {
+  this.appService.getServices().subscribe((data: any) => {
+    this.services = data;
+  });
+}
+
+addService() {
+  this.appService.addService(this.newService).subscribe((data: any) => {
+    this.services.push(data);
+    alert('Service added successfully!');
+  });
+}
+
+editService(index: number) {
+  this.appService.updateService(this.services[index]).subscribe((data: any) => {
+    this.services[index] = data;
+    alert('Service updated successfully!');
+  });
+}
+
+isEditing: boolean = false;
+selectedService: Service = {
+  serviceId: 0,
+  price: 0,
+  servicename: '',
+  description: ''
+};
+
+showEditForm(index: number) {
+  this.isEditing = true;
+  this.selectedService = { ...this.services[index] };
+}
+
+updateService() {
+  this.appService.updateService(this.selectedService).subscribe(
+    (data: any) => {
+      const index = this.services.findIndex(s => s.serviceId === this.selectedService.serviceId);
+      if (index !== -1) {
+        this.services[index] = { ...this.selectedService };
+      }
+      this.isEditing = false;
+      alert('Service updated successfully!');
+    },
+    (error) => {
+      console.error('Error updating service:', error);
+      alert('Failed to update service. Please try again.');
+    }
+  );
+}
+
+cancelEdit() {
+  this.isEditing = false;
+  this.selectedService = {
+    serviceId: 0,
+    price: 0,
+    servicename: '',
+    description: ''
+  };
+}
+
+deleteService(index: number): void {
+    // Confirm deletion
+    if (confirm('Are you sure you want to delete this service?')) {
+        // Remove the service from the array
+        this.appService.deleteService(this.services[index].serviceId).subscribe((data: any) => {
+          this.services.splice(index, 1);
+          alert('Service deleted successfully!');
+        });
+    }
 }
 
 }

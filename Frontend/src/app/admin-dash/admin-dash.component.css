@@ -370,3 +370,101 @@ background-color: #0056b3;
   height: 2px;
   background: #f8e71c; /* Accent line under header */
 }
+
+.manage-services-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+  color: #333;
+}
+
+p {
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.service-form {
+  margin-bottom: 30px;
+  padding: 15px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.service-form form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.service-form label {
+  font-size: 14px;
+  color: #555;
+}
+
+.service-form input {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.btn {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-btn {
+  background-color: #28a745;
+  color: white;
+  grid-column: span 2;
+}
+
+.update-btn {
+  background-color: #007bff;
+  color: white;
+  grid-column: span 2;
+}
+
+.service-list table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+}
+
+.service-list th, .service-list td {
+  padding: 12px 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.service-list th {
+  background-color: #f3f3f3;
+  font-weight: bold;
+  color: #555;
+}
+
+.service-list tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.edit-btn {
+  background-color: #007bff;
+  color: white;
+  margin-right: 5px;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+}
