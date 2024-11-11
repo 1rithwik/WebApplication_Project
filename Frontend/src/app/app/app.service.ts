@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoginForm, LoginResponse } from '../login/login.component';
 import { Observable } from 'rxjs';
-import { Appointment } from '../admin-dash/admin-dash.component';
+import { Appointment, Tire } from '../admin-dash/admin-dash.component';
 import { Service } from '../service/service.component';
 
 @Injectable({
@@ -65,4 +65,18 @@ export class AppService {
   submitFeedback(feedback: any) {
     return this.http.post(`${this.apiUrl}/user/service/submitFeedback`, feedback);
   }
+
+  
+  getTires(): Observable<Tire[]> {
+    return this.http.get<Tire[]>(`${this.apiUrl}/tires/alltires`);
+  }
+  addTire(tire: any) {
+    return this.http.post(`${this.apiUrl}/tires/addTire`, tire);
+  }
+  updateTire(tire: any) {
+    return this.http.put(`${this.apiUrl}/tires/updateTire`, tire);
+  }
+  deleteTire(id: number) {
+    return this.http.delete(`${this.apiUrl}/tires/deletetires/${id}`);
+  } 
 }
