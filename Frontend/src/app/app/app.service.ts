@@ -9,7 +9,7 @@ import { Service } from '../service/service.component';
   providedIn: 'root'
 })
 export class AppService {
-  private apiUrl = 'http://localhost:8080'; // Backend URL
+  private apiUrl = 'http://localhost:8081'; // Backend URL
 
   constructor(private http: HttpClient) { }
 

@@ -60,6 +60,7 @@ export class ServiceComponent {
   feedbackForm: FormGroup;
   showFeedbackForm: number | null = null;
   appointmentConfirmed = false;
+  timeSlots: string[] = [];
 
   constructor(private fb: FormBuilder, private appService: AppService) {
     this.appointmentForm = this.fb.group({
@@ -77,6 +78,7 @@ export class ServiceComponent {
       rating: [null]
     });
     this.loadServices();
+    this.generateTimeSlots();
   }
 
   viewAppointments(searchUserId: number) {
@@ -152,5 +154,22 @@ export class ServiceComponent {
     this.appService.submitFeedback(this.feedbackForm.value).subscribe(response => {
       console.log(response);
     });
+  }
+
+  generateTimeSlots() {
+    const startTime = new Date();
+    startTime.setHours(9, 0, 0); // 9 AM
+    const endTime = new Date();
+    endTime.setHours(17, 0, 0);  // 5 PM
+
+    while (startTime < endTime) {
+      const formattedTime = startTime.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+      });
+      this.timeSlots.push(formattedTime);
+      startTime.setMinutes(startTime.getMinutes() + 30);
+    }
   }
 }
