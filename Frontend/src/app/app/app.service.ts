@@ -22,8 +22,18 @@ export class AppService {
   }
 
   // to schedule an appointment for a user
-  scheduleAppointment(appointment: any) {
-    return this.http.post(`${this.apiUrl}/user/service/scheduleAppointment`, appointment);
+  scheduleAppointment(appointment: any): Observable<Appointment> {
+    // Ensure the appointment object includes tire information
+    const appointmentWithTireInfo = {
+      ...appointment,
+      tireModel: appointment.tireModel, // Add tire model
+      tireStock: appointment.tireStock  // Add tire stock
+    };
+
+    return this.http.post<Appointment>(
+      `${this.apiUrl}/user/service/scheduleAppointment`,
+      appointmentWithTireInfo
+    );
   }
 
   // to delete an appointment for a user

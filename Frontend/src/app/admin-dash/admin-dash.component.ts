@@ -67,8 +67,6 @@ export class AdminDashComponent{
                       };
           
             alert(`Appointment ${appointment.appointmentId} updated successfully!`);
-          
-                      // Here, you'd send an update request to your backend.
           }
   }
   deleteAppointment(index: number) {

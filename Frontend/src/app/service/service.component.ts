@@ -15,8 +15,8 @@ export interface Appointment {
   appointmentDate: string;
   appointmentTime: string;
   serviceId: number;
-  model: string;
-  stock: number;
+  tireModel: string;
+  numberOfTires: number;
 }
 
 export interface AppointmentResponse {
@@ -68,8 +68,8 @@ export class ServiceComponent {
       appointmentTime: [''],
       serviceId: [null],
       servicePrice: [null],
-      model: [''],
-      stock: [null]
+      tireModel: [''],
+      numberOfTires: [null]
     });
     this.feedbackForm = this.fb.group({
       userId: [''],
@@ -104,8 +104,8 @@ export class ServiceComponent {
       userId: '',
       appointmentDate: '',
       appointmentTime: '',
-      model: '',
-      stock: null
+      tireModel: '',
+      numberOfTires: null
     });
     this.appointmentConfirmed = false;
   }
