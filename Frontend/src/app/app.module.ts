@@ -17,6 +17,8 @@ import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
 import { TireAdminComponent } from './tire-admin/tire-admin.component';
 import { AdminDashComponent } from './admin-dash/admin-dash.component';
+import { AuthInterceptor } from './auth.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 @NgModule({
   declarations: [
     ServiceComponent,
@@ -48,7 +50,7 @@ import { AdminDashComponent } from './admin-dash/admin-dash.component';
     // LoginComponent,
     CommonModule
   ],
-  providers: [],
+  // providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

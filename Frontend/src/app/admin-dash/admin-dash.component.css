@@ -330,6 +330,7 @@ background-color: #0056b3;
 }
 
 .feedback-content .content {
+  -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   background-color: rgba(255, 255, 255, 0.1); /* Translucent background */
   padding: 30px;

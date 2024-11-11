@@ -40,9 +40,8 @@ public class SecurityConfig {
     // httpsec
     // .csrf(customizer -> customizer.disable())
     // .authorizeHttpRequests(request -> request
-    // .requestMatchers("login", "register")
+    // .requestMatchers("login", "register", "home")
     // .permitAll()
-    // .requestMatchers("/admin/**").hasRole("ADMIN")
     // .anyRequest().authenticated())// any request is authenticated
     // // like when you login from
     // // different browser, it should

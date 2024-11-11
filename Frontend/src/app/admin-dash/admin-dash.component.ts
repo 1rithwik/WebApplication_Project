@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AppService } from '../app/app.service';
 export interface Appointment {
-  appointmentId: string;
+  appointmentId: number;
   appointmentDate: string;
   appointmentStatus: string;
   appointmentTime: string;
@@ -76,6 +76,13 @@ export class AdminDashComponent{
         this.appointments.splice(index, 1);
         alert(`Appointment ${appointment.appointmentId} deleted successfully!`);
               // Here, you'd send a delete request to your backend.
+        this.appService.deleteAppointment(appointment.appointmentId).subscribe((data: any) => {
+          console.log('Appointment deleted successfully:', data);
+        },
+        (error: any) => {
+          console.error('Error deleting appointment:', error);
+        }
+      );
     }
   }
 

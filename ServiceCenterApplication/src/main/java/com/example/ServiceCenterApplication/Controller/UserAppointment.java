@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.cache.annotation.Cacheable;
+
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import java.time.LocalDate;
@@ -30,7 +32,8 @@ public class UserAppointment {
 
         return ResponseEntity
                 .ok(appointmentServ.scheduleAppointment(appointmentResponse.userId, appointmentResponse.serviceId,
-                        appointmentResponse.appointmentDate, appointmentResponse.appointmentTime));
+                        appointmentResponse.appointmentDate, appointmentResponse.appointmentTime,
+                        appointmentResponse.tireModel, appointmentResponse.numberOfTires));
     }
 
     @DeleteMapping("/user/service/deleteAppointment/{id}")
@@ -41,6 +44,7 @@ public class UserAppointment {
         }
     }
 
+    @Cacheable(value = "userAppointmentsCache", key = "#userId")
     @GetMapping("/user/service/getUserAppointments/{userId}")
     public List<Appointment> getUserAppointments(@PathVariable Long userId) {
         return appointmentServ.getAppointmentsByUserId(userId);
@@ -53,6 +57,8 @@ class AppointmentResponse {
     LocalDate appointmentDate;
     LocalTime appointmentTime;
     String appointmentStatus;
+    String tireModel;
+    Integer numberOfTires;
 
     // Getters and setters
     public Long getUserId() {
@@ -93,5 +99,21 @@ class AppointmentResponse {
 
     public void setAppointmentStatus(String appointmentStatus) {
         this.appointmentStatus = appointmentStatus;
+    }
+
+    public String getTireModel() {
+        return tireModel;
+    }
+
+    public void setTireModel(String tireModel) {
+        this.tireModel = tireModel;
+    }
+
+    public Integer getNumberOfTires() {
+        return numberOfTires;
+    }
+
+    public void setNumberOfTires(Integer numberOfTires) {
+        this.numberOfTires = numberOfTires;
     }
 }

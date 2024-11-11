@@ -15,6 +15,8 @@ export interface Appointment {
   appointmentDate: string;
   appointmentTime: string;
   serviceId: number;
+  model: string;
+  stock: number;
 }
 
 export interface AppointmentResponse {
@@ -57,6 +59,7 @@ export class ServiceComponent {
   searchUserId: number = 0;
   feedbackForm: FormGroup;
   showFeedbackForm: number | null = null;
+  appointmentConfirmed = false;
 
   constructor(private fb: FormBuilder, private appService: AppService) {
     this.appointmentForm = this.fb.group({
@@ -64,7 +67,9 @@ export class ServiceComponent {
       appointmentDate: [''],
       appointmentTime: [''],
       serviceId: [null],
-      servicePrice: [null]
+      servicePrice: [null],
+      model: [''],
+      stock: [null]
     });
     this.feedbackForm = this.fb.group({
       userId: [''],
@@ -87,32 +92,48 @@ export class ServiceComponent {
 
   scheduleAppointment(service: Service) {
     this.selectedService = service;
+    // if(service.servicename==="Tire Replacement"){
+    //   this.appointmentForm.patchValue({
+    //     model: '',
+    //     stock: null
+    //   });
+    // }
     this.appointmentForm.patchValue({
       serviceId: service.serviceId,
       servicePrice: service.price,
       userId: '',
       appointmentDate: '',
-      appointmentTime: ''
+      appointmentTime: '',
+      model: '',
+      stock: null
     });
+    this.appointmentConfirmed = false;
   }
 
   onSubmit() {
-    // this.appointmentForm.patchValue({
-    //   service_id: this.selectedService?.service_id
-    // });
+    if (this.appointmentForm.valid) {
+      this.appService.scheduleAppointment(this.appointmentForm.value).subscribe(response => {
+        console.log(response);
 
-    this.appService.scheduleAppointment(this.appointmentForm.value).subscribe(response => {
-      console.log(response);
-    },
-    error => {
-      console.error('Error scheduling appointment:', error);
-    });
+        this.appointmentConfirmed = true;
+        this.appointmentForm.reset();
+        this.selectedService = null;
+      },
+      error => {
+        console.error('Error scheduling appointment:', error);
+      });
+    }
   }
 
   deleteAppointment(appointmentId: number) {
     this.appService.deleteAppointment(appointmentId).subscribe(response => {
       console.log(response);
-    });
+      this.userAppointmentResponse = this.userAppointmentResponse.filter(appointment => appointment.appointmentId !== appointmentId);
+    },
+    error => {
+      console.error('Error deleting appointment:', error);
+    }
+  );
   }
 
   loadServices() {
