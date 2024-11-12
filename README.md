@@ -1,6 +1,6 @@
 # Project Details
 
-
+To see more detailed information about the project, please refer to the [Project Document](Project Document.md).
 ## 1. Project Overview
 Project Name: Wheel Alignment Center Web Application</br>
 Objective: To create a web application for a wheel alignment center, including features for scheduling services, managing tire inventory, and handling customer feedback.</br>
