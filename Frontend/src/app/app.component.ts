@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 // import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { RouterModule } from '@angular/router';
@@ -13,4 +14,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Frontend';
+  constructor(private router: Router) {
+    localStorage.clear();
+  }
 }
