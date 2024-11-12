@@ -231,9 +231,9 @@ Normalization: Following normalization principles to minimize data redundancy, e
 Optimized Performance: Indexing columns frequently queried, like appointment_date and service_id, to enhance read performance for scheduling and service listing features.</br>
 Security: Encrypting sensitive data, such as password in Users, and using roles to manage access levels across the user interface.
 
-##6. Authentication and Authorization
+## 6. Authentication and Authorization
 
-##7. User Interface Design
+## 7. User Interface Design
 
 The UI is divided into User Side and Admin Side sections, each containing dedicated pages for specific functionalities.
 
@@ -275,14 +275,16 @@ User Review Section: Displays recent user feedback and ratings.</br>
 ### Admin Side
 #### Admin Dashboard
 
-#### Purpose: Acts as a central hub for administrators to manage appointments, view feedback, and handle inventory.
+#### Purpose:
+Acts as a central hub for administrators to manage appointments, view feedback, and handle inventory.
 #### Components:
 Dashboard Menu: Sidebar with links to Appointments, Tire Stock, User Reviews, and Service Management.</br>
 Quick Stats: Displays statistics like total appointments, available stock, and recent feedback highlights.</br>
 
-###Appointments Management Page
+### Appointments Management Page
 
-#### Purpose: Enables admins to view and manage scheduled appointments.
+#### Purpose:
+Enables admins to view and manage scheduled appointments.
 #### Components:
 Appointment Table: Displays all appointments with columns for user details, service, date, time, and status.</br>
 Action Buttons: Options to update appointment status (e.g., Completed, Cancelled) or delete appointments.</br>
@@ -309,32 +311,206 @@ User-Friendly Forms: Ensure all forms have clear field labels, validations, and 
 Intuitive Navigation: Maintain easy-to-navigate menus and clear calls to action on each page, ensuring users can quickly access their desired functions.</br>
 
 
-##8. Api Endpoints
+## 8. Api Endpoints
 
 ### 1. Authentication
 #### Login
 
-URL: /login
-Method: POST
-Request Body:
-{
-  "username": "string",
-  "password": "string"
-}
-Response:
-{
-  "token": "string",
-  "user": {
-    "id": "number",
-    "username": "string",
-    "role": "string",
-    "email": "string"
-  }
-}
-Description: Authenticates user credentials and returns a JWT token if successful.
-Status Codes:
-200 OK: Login successful
-401 Unauthorized: Invalid credentials
+URL: /login</br>
+Method: POST</br>
 
-##9. Future Enhancements
+Request Body:</br>
+{</br>
+  "username": "string",</br>
+  "password": "string"</br>
+}</br>
 
+Response:</br>
+{</br>
+  "token": "string",</br>
+  "user": {</br>
+    "id": "number",</br>
+    "username": "string",</br>
+    "role": "string",</br>
+    "email": "string"</br>
+  }</br>
+}</br>
+Description: Authenticates user credentials and returns a JWT token if successful.</br>
+Status Codes:</br>
+200 OK: Login successful</br>
+401 Unauthorized: Invalid credentials</br>
+
+#### Register
+
+URL: /register
+Method: POST</br>
+
+Request Body:</br>
+{</br>
+  "username": "string",</br>
+  "password": "string",</br>
+  "email": "string",</br>
+  "mobile": "string"</br>
+}</br>
+
+Response: Confirmation message indicating successful registration.</br>
+Status Codes:</br>
+201 Created: User successfully registered</br>
+400 Bad Request: Validation errors or missing fields</br>
+
+### 2. User Services
+#### Get All Services
+
+URL: /user/service/all</br>
+Method: GET</br>
+Authorization: Bearer token required (JWT in Authorization header)</br>
+Response:</br>
+[</br>
+  {</br>
+    "service_id": "number",</br>
+    "service_name": "string",</br>
+    "description": "string",</br>
+    "price": "number"</br>
+  }</br>
+]</br>
+Description: Fetches the list of available services.</br>
+Status Codes:</br>
+200 OK: Returns list of services</br>
+403 Forbidden: User not authorized</br>
+
+#### Schedule Appointment
+
+URL: /user/service/scheduleAppointment</br>
+Method: POST</br>
+Request Body:</br>
+{</br>
+  "user_id": "number",</br>
+  "service_id": "number",</br>
+  "appointment_date": "string",</br>
+  "appointment_time": "string"</br>
+}</br>
+Response: Confirmation message with scheduled appointment details.</br>
+Status Codes:</br>
+201 Created: Appointment successfully scheduled</br>
+400 Bad Request: Missing or incorrect data fields</br>
+
+### 3. Feedback
+#### Submit Feedback
+
+URL: /user/service/submitFeedback</br>
+Method: POST</br>
+Request Body:</br>
+{</br>
+  "user_id": "number",</br>
+  "service_id": "number",</br>
+  "rating": "number",</br>
+  "comments": "string"</br>
+}</br>
+Response: Confirmation of feedback submission.</br>
+Status Codes:</br>
+201 Created: Feedback submitted</br>
+400 Bad Request: Invalid feedback format</br>
+
+#### Get All Feedback (Admin Only)
+
+URL: /admin/feedback/all</br>
+Method: GET</br>
+Authorization: Bearer token required (Admin role)</br>
+Response:</br>
+[</br>
+  {</br>
+    "feedback_id": "number",</br>
+    "user_id": "number",</br>
+    "service_id": "number",</br>
+    "rating": "number",</br>
+    "comments": "string",</br>
+    "date_submitted": "string"</br>
+  }</br>
+]</br>
+Status Codes:</br>
+200 OK: Returns list of feedback</br>
+403 Forbidden: Unauthorized access</br>
+
+### 4. Appointment Management (Admin Only)
+#### View All Appointments
+
+URL: /admin/appointments</br>
+Method: GET</br>
+Authorization: Bearer token required (Admin role)</br>
+Response:</br>
+[</br>
+  {</br>
+    "appointment_id": "number",</br>
+    "user_id": "number",</br>
+    "service_id": "number",</br>
+    "appointment_date": "string",</br>
+    "appointment_time": "string",</br>
+    "status": "string"</br>
+  }</br>
+]</br>
+Description: Fetches all scheduled appointments.</br>
+Status Codes:</br>
+200 OK: Returns list of appointments</br>
+403 Forbidden: Unauthorized access</br>
+
+#### Update Appointment Status
+
+URL: /admin/appointment/update</br>
+Method: PUT</br>
+Request Body:</br>
+{</br>
+  "appointment_id": "number",</br>
+  "status": "string"</br>
+}</br>
+Response: Confirmation of updated appointment status.</br>
+Status Codes:</br>
+200 OK: Appointment status updated</br>
+400 Bad Request: Missing or incorrect data fields</br>
+
+### 5. Error Codes
+200 OK: Request successful</br>
+201 Created: Resource created successfully</br>
+400 Bad Request: Invalid input data</br>
+401 Unauthorized: Authentication required</br>
+403 Forbidden: Insufficient permissions</br>
+404 Not Found: Resource not found</br>
+
+## 9. Specifying few features that we added in our project
+
+### 1. Caching
+To optimize the performance and reduce database load in our project, we integrated Caffeine Cache. This allows for faster access to frequently requested data by temporarily storing it in memory. Here’s how we implemented caching:
+
+####User Appointments Cache:
+
+Purpose: Stores user appointment data to prevent repeated database calls for the same user requests.</br>
+Configuration:</br>
+Maximum Size: 100 entries.</br>
+Expiration: 60 minutes after the cache entry is written.</br>
+
+####User Cache:
+
+Purpose: Stores frequently accessed user data to improve response times for user-related endpoints.</br>
+Configuration:</br>
+Maximum Size: 100 entries.</br>
+Expiration: 30 minutes after the cache entry is written.</br>
+These caches ensure that frequently accessed information remains readily available without continuously querying the database, improving both the application’s responsiveness and scalability.</br>
+
+### 2. Transaction Management
+
+To ensure data consistency during the appointment scheduling process, we implemented transaction management using the @Transactional annotation. This helps to maintain atomicity and data integrity, especially when multiple database operations are involved. Here’s a breakdown of how transaction management is applied in our scheduleAppointment method:</br>
+
+#### 1.Objective:
+To schedule a user’s service appointment and, if necessary, reserve the specified tire model and quantity. The method should complete successfully only if all steps are executed without any issues.</br>
+
+#### 2.Transactional Steps:
+User and Service Retrieval: Retrieves the user and service details by their IDs.</br>
+Tire Availability Check: If a tire model and quantity are specified, the system checks if the requested tire model and quantity are available. If unavailable, it throws an exception, rolling back the transaction.</br>
+Slot Availability Check: Before creating an appointment, the method checks if the selected time slot is already booked. If it is, an exception is thrown to prevent double-booking, also rolling back the transaction.</br>
+
+#### 3.Appointment Creation:
+If all checks pass, a new Appointment object is created with the necessary details and saved to the database.</br>
+
+#### 4.Rollback on Failure:
+In the event of any error or exception during this process, the @Transactional annotation ensures that none of the changes are persisted to the database, thereby avoiding partial or inconsistent data entries.</br>
+
+By handling transaction management in this way, the application maintains data integrity across multiple operations that are dependent on each other, ensuring a smooth and reliable scheduling process.</br>
