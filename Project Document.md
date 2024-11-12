@@ -1,11 +1,11 @@
 # Project Document
 
-##1. Project Overview
+## 1. Project Overview
 Project Name: Wheel Alignment Center Web Application</br>
 Objective: To create a web application for a wheel alignment center, including features for scheduling services, managing tire inventory, and handling customer feedback.</br>
 Technologies Used: Angular (Frontend), Spring Boot (Backend), MySQL (Database), Spring AI (Potential use for intelligent features), JWT for authentication.</br>
 
-##2. System Requirements
+## 2. System Requirements
 ### Frontend
 #### Angular Framework (Version 15+)</br>
 Angular was chosen for the frontend due to its robust component-based structure, powerful data binding, and reactive forms. This enabled us to create a dynamic, interactive UI for our wheel alignment center application with easy routing and service integration.
@@ -57,7 +57,7 @@ The use of RESTful endpoints in the backend ensured that future frontend clients
 #### User-Friendly UI
 The application’s UI was designed with intuitive navigation and clear visual cues. Components like the appointment scheduling form are easy to use, guiding users through each step. Validation messages and button animations help users understand actions and outcomes, improving the overall usability of the app.
 
-##3. Functional Requirements
+## 3. Functional Requirements
 ### User Side
 #### Home Page
 
@@ -97,7 +97,7 @@ Admins can add new tire models or adjust existing records, allowing the inventor
 The admin side includes a review management section to monitor customer feedback and reviews.</br>
 Admins can read reviews, analyze trends in customer feedback, and take necessary actions if issues arise, ensuring high service quality and customer satisfaction.
 
-##4. System Architecture
+## 4. System Architecture
 ### Components
 
 #### app.component.ts:
@@ -191,7 +191,7 @@ appointment_status (VARCHAR): Status of the appointment (e.g., 'Pending', 'Compl
 service_id (BIGINT, Foreign Key): Links to the Services table to specify the service for the appointment.</br>
 user_id (BIGINT, Foreign Key): Links to the Users table, identifying the customer for the appointment.</br>
 
-###3. Services Table
+### 3. Services Table
 #### Purpose: Stores the details of available services offered by the center.
 #### Columns:
 service_id (BIGINT, Primary Key, Auto-Increment): Unique identifier for each service.</br>
@@ -514,3 +514,27 @@ If all checks pass, a new Appointment object is created with the necessary detai
 In the event of any error or exception during this process, the @Transactional annotation ensures that none of the changes are persisted to the database, thereby avoiding partial or inconsistent data entries.</br>
 
 By handling transaction management in this way, the application maintains data integrity across multiple operations that are dependent on each other, ensuring a smooth and reliable scheduling process.</br>
+
+## 10. Future Enhancements
+
+To enhance the functionality and user experience of the application, we’ve identified several potential future improvements:
+
+#### 1.Enhanced Appointment Management:
+Automated Reminders: Integrate automated SMS or email reminders to reduce missed appointments and improve user satisfaction.</br>
+
+#### 2.Comprehensive Reporting:
+Real-Time Stock Levels: Enhance tire inventory management with real-time monitoring and low-stock alerts for seamless operations.</br>
+
+#### 3.Advanced Caching Strategies:
+Distributed Caching: Upgrade to a distributed cache (such as Redis) for better scalability and faster access times across multiple servers, especially useful as the application scales.</br>
+Cache Eviction Policies: Implement more granular cache eviction policies to maintain data freshness while optimizing performance.
+
+#### 4.User Personalization:
+Service Recommendations: Introduce personalized service recommendations based on user history and preferences.</br>
+Loyalty Programs: Implement loyalty programs where users can earn points for services and redeem them for discounts on future appointments.</br>
+
+#### 5.Integration with Payment Gateways:
+Enable online payment options for services, including options for popular payment methods (e.g., credit/debit cards, digital wallets) to make the booking process even more convenient.</br>
+
+#### 6.AI-Powered Enhancements:
+Predictive Maintenance: Leverage machine learning to predict optimal maintenance schedules based on vehicle data and service history.</br>
