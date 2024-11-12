@@ -22,15 +22,15 @@
     <div class="overview-section">
       <div class="overview-card">
         <h3>Total Services</h3>
-        <p>4</p>
+        <p style="color: antiquewhite;">4</p>
       </div>
       <div class="overview-card">
         <h3>Upcoming Appointments</h3>
-        <p>{{ appointments.length }}</p>
+        <p style="color: antiquewhite;">{{ appointments.length }}</p>
       </div>
       <div class="overview-card">
         <h3>Customer Feedbacks</h3>
-        <p>{{ feedbacks.length }}</p>
+        <p style="color: antiquewhite;">{{ feedbacks.length }}</p>
       </div>
     </div>
   </div>
@@ -56,7 +56,7 @@
             <input type="number" id="service-price" placeholder="Enter Service Price" />
             
 
-            <button type="button" class="btn add-btn" (click)="addService()">Add Service</button>
+            <button type="button" class="btn add-btn" >Add Service</button>
             <button type="button" class="btn update-btn" (click)="selectedService ? updateService(selectedService) : null">Update Service</button>
         </form>
     </div>
@@ -179,12 +179,12 @@
           <table class="table">
               <thead>
                   <tr class="table-header">
-                      <th>Tire ID</th>
-                      <th>Brand</th>
-                      <th>Size</th>
-                      <th>Quantity</th>
-                      <th>Price</th>
-                      <th>Actions</th>
+                      <th class="table-cell">Tire ID</th>
+                      <th class="table-cell">Brand</th>
+                      <th class="table-cell">Size</th>
+                      <th class="table-cell">Quantity</th>
+                      <th class="table-cell">Price</th>
+                      <th class="table-cell">Actions</th>
                   </tr>
               </thead>
               <tbody>
@@ -194,9 +194,9 @@
                       <td class="table-cell">{{ tire.model }}</td>
                       <td class="table-cell">{{ tire.stock }}</td>
                       <td class="table-cell">${{ tire.price }}</td>
-                      <td class="table-cell">
-                          <button class="button button--update" style="background-color: green; color: white;" (click)="updateTire(i)">Update</button>
-                          <button class="button button--delete" style="background-color: red; color: white;" (click)="deleteTire(i)">Delete</button>
+                      <td class="table-cell" id ="tire-stock-buttons">
+                          <button class="button button--update" style="background-color: green; color: white; margin-left: 0px; margin-right: 10px;" (click)="updateTire(i)">Update</button>
+                          <button class="button button--delete" style="background-color: red; color: white; margin-right: 20px;" (click)="deleteTire(i)">Delete</button>
                       </td>
                   </tr>
               </tbody>
