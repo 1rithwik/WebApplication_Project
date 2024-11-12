@@ -311,5 +311,30 @@ Intuitive Navigation: Maintain easy-to-navigate menus and clear calls to action 
 
 ##8. Api Endpoints
 
+### 1. Authentication
+#### Login
+
+URL: /login
+Method: POST
+Request Body:
+{
+  "username": "string",
+  "password": "string"
+}
+Response:
+{
+  "token": "string",
+  "user": {
+    "id": "number",
+    "username": "string",
+    "role": "string",
+    "email": "string"
+  }
+}
+Description: Authenticates user credentials and returns a JWT token if successful.
+Status Codes:
+200 OK: Login successful
+401 Unauthorized: Invalid credentials
+
 ##9. Future Enhancements
 
