@@ -69,7 +69,7 @@ Uses Spring Data JPA for CRUD operations on MySQL database tables.</br>
 ## 6. Database Schema
 Tables: Users, Appointments, Services, Tires, Feedback.</br>
 
-## Flow Chart
+## Flow Chart of Application
 
 ```mermaid
 graph TD;
