@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { AppService } from '../app/app.service';
 import { Service } from '../service/service.component';
+import { Chart } from 'chart.js/auto';
 export interface Appointment {
   appointmentId: number;
   appointmentDate: string;
@@ -39,12 +40,14 @@ export interface Feedback {
 export class AdminDashComponent{
 
   activeChild: string = 'overview';
+  chart: any;
 
   constructor(private appService: AppService) {
     this.loadAppointments();
     this.loadFeedbacks();
     this.loadTires();
     this.loadServices();
+    this.createPieChart();
   }
   appointments: Appointment[] = [];
 
@@ -306,6 +309,37 @@ deleteService(index: number): void {
           alert('Service deleted successfully!');
         });
     }
+}
+
+createPieChart() {
+  // Count ratings
+  const ratingCounts = this.feedbacks.reduce((acc, feedback) => {
+    acc[feedback.rating] = (acc[feedback.rating] || 0) + 1;
+    return acc;
+  }, {} as { [key: number]: number });
+
+  // Data preparation
+  const labels = Object.keys(ratingCounts);
+  const data = Object.values(ratingCounts);
+
+  this.chart = new Chart("ratingPieChart", {
+    type: 'pie',
+    data: {
+      labels: labels,
+      datasets: [{
+        data: data,
+        backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#2ecc71'],
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+        },
+      },
+    }
+  });
 }
 
 }
