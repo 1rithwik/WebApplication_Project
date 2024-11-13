@@ -73,9 +73,15 @@ Tables: Users, Appointments, Services, Tires, Feedback.</br>
 
 ```mermaid
 graph TD;
-HomePage --> UserRegistration_and_Login;
-Loginpage --> HomePage;
-Loginpage --> Admin_Dashboard;
+UserRegistration_and_Login --> Home_Page;
+UserRegistration_and_Login --> Admin_Dashboard;
+Home_Page --> Go_and_View_ServicePage;
+Go_and_View_ServicePage --> Schedule_Appointment_for_Service;
+Admin_Dashboard --> Maintain_Tire_Stock;
+Admin_Dashboard --> Manage_Appointments;
+Admin_Dashboard --> View_Feedbacks;
+Home_Page --> FeedBack;
+Schedule_Appointment_for_Service --> Feedback;
 ```
 
 ## 7. Authentication and Authorization
