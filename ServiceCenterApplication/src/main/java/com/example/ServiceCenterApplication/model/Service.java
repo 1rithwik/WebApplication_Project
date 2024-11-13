@@ -59,4 +59,12 @@ public class Service {
     public void setAppointments(List<Appointment> appointments) {
         this.appointments = appointments;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

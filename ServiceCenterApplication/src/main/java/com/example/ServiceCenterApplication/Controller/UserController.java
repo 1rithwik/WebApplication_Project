@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.http.ResponseEntity;
+import org.springframework.cache.annotation.Cacheable;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -28,7 +29,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
+    // @Cacheable(value = "userCache", key = "#user.getUsername()", cacheManager =
+    // "userCacheManager")
     public HashMap<String, Users> login(@RequestBody Users user) {
+        map.clear();
         String token = service.verify(user);
         if (token != null) {
             Users userDetails = service.getUserDetails(user.getUsername());

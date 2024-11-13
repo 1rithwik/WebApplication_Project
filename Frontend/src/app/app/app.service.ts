@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoginForm, LoginResponse } from '../login/login.component';
 import { Observable } from 'rxjs';
-import { Appointment } from '../admin-dash/admin-dash.component';
+import { Appointment, Tire } from '../admin-dash/admin-dash.component';
 import { Service } from '../service/service.component';
 
 @Injectable({
@@ -22,8 +22,18 @@ export class AppService {
   }
 
   // to schedule an appointment for a user
-  scheduleAppointment(appointment: any) {
-    return this.http.post(`${this.apiUrl}/user/service/scheduleAppointment`, appointment);
+  scheduleAppointment(appointment: any): Observable<Appointment> {
+    // Ensure the appointment object includes tire information
+    const appointmentWithTireInfo = {
+      ...appointment,
+      tireModel: appointment.tireModel, // Add tire model
+      tireStock: appointment.tireStock  // Add tire stock
+    };
+
+    return this.http.post<Appointment>(
+      `${this.apiUrl}/user/service/scheduleAppointment`,
+      appointmentWithTireInfo
+    );
   }
 
   // to delete an appointment for a user
@@ -64,5 +74,31 @@ export class AppService {
   // to submit feedback for a service
   submitFeedback(feedback: any) {
     return this.http.post(`${this.apiUrl}/user/service/submitFeedback`, feedback);
+  }
+  
+  getTires(): Observable<Tire[]> {
+    return this.http.get<Tire[]>(`${this.apiUrl}/tires/alltires`);
+  }
+  addTire(tire: any) {
+    return this.http.post(`${this.apiUrl}/tires/addTire`, tire);
+  }
+  updateTire(tire: any) {
+    return this.http.put(`${this.apiUrl}/tires/updateTire`, tire);
+  }
+  deleteTire(id: number) {
+    return this.http.delete(`${this.apiUrl}/tires/deletetires/${id}`);
+  } 
+
+
+  addService(service: any) {
+    return this.http.post(`${this.apiUrl}/admin/service/addService`, service);
+  }
+
+  updateService(service: any) {
+    return this.http.put(`${this.apiUrl}/admin/service/updateService`, service);
+  }
+
+  deleteService(serviceId: number) {
+    return this.http.delete(`${this.apiUrl}/admin/service/deleteService/${serviceId}`);
   }
 }

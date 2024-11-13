@@ -38,6 +38,10 @@ public class AppointmentServ {
                 throw new IllegalArgumentException("Tire model or number of tires not available");
             }
         }
+        Appointment existingAppointment = appointmentRepo.findSlot(appointmentDate, appointmentTime);
+        if (existingAppointment != null) {
+            throw new IllegalArgumentException("Slot already booked");
+        }
 
         Appointment appointment = new Appointment();
         appointment.setUsers(user);

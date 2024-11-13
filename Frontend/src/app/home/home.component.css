@@ -77,43 +77,6 @@ body {
 }
 
 
-.header nav ul li a:hover {
-    color: #ffa500;
-}
-
-/* User Menu Dropdown */
-.user-menu {
-    position: relative;
-    cursor: pointer;
-}
-
-.user-menu img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-}
-
-.dropdown {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: #444;
-    color: #fff;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    display: none;
-    flex-direction: column;
-}
-
-.dropdown-item {
-    padding: 0.5rem 0;
-}
-
-.user-menu:hover .dropdown {
-    display: flex;
-}
-
-/* Hero Section */
 .hero-section {
     background: url('../../assets/img1.jpeg') center/cover no-repeat;
     color: #fdfdfd;
@@ -413,7 +376,7 @@ footer {
    */
 
    /* Modern CSS Reset and Base Styles */
-:root {
+   :root {
     --primary-color: #ffa500;
     --secondary-color: #333;
     --accent-color: #2c3e50;
@@ -584,6 +547,7 @@ footer {
     padding: 6rem 2rem;
     background: url('../../assets/img1.jpeg') center/cover no-repeat fixed;
     text-align: center;
+    width: 100%;
   }
   
   .hero-section::before {
@@ -692,23 +656,26 @@ footer {
   
   #tire-replacement {
     background: url('../../assets/img3.jpeg') center/cover no-repeat;
-    width: auto;
+    color: #f9f9f9;
+    text-align: center;
   }
   
   #tire-alignment {
     background: url('../../assets/img4.jpeg') center/cover no-repeat;
-    width: auto;
+    color: #f9f9f9;
+    text-align: center;
   }
   
   #tire-balancing {
     background: url('../../assets/img5.jpeg') center/cover no-repeat;
-    width: auto;
+    color: #f9f9f9;
+    text-align: center;
   }
   
   #fusion-repair {
     background: url('../../assets/img2.jpeg') center/cover no-repeat;
-    width: auto;
-    color: #fefeff;
+    color: #f9f9f9;
+    text-align: center;
   }
   
   .service::before {
@@ -1032,11 +999,26 @@ footer {
     }
   }
 
-
-
-
-
-
-  .HomeComponent{
-    background: url('../../assets/img2.jpeg') center/cover no-repeat;
+.nav-list {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space out the items */
+    align-items: center;
+    width: 100%; /* Set a maximum width for the navigation bar */
+    margin: 0 auto; /* Center the navigation bar */
+    padding: 0; /* Remove default padding */
+    list-style: none; /* Remove bullet points */
+}
+@media(max-width: 768px){
+  .nav-list{
+    width: 100%;
   }
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+
+
+
+html {
+  scroll-behavior: smooth;
+}

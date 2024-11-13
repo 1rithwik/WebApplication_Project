@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppService } from '../app/app.service';
+import { Service } from '../service/service.component';
 export interface Appointment {
   appointmentId: number;
   appointmentDate: string;
@@ -42,6 +43,8 @@ export class AdminDashComponent{
   constructor(private appService: AppService) {
     this.loadAppointments();
     this.loadFeedbacks();
+    this.loadTires();
+    this.loadServices();
   }
   appointments: Appointment[] = [];
 
@@ -66,8 +69,6 @@ export class AdminDashComponent{
                       };
           
             alert(`Appointment ${appointment.appointmentId} updated successfully!`);
-          
-                      // Here, you'd send an update request to your backend.
           }
   }
   deleteAppointment(index: number) {
@@ -88,17 +89,7 @@ export class AdminDashComponent{
 
   tires: Tire[] = [
     { id: 1, brand: 'Michelin', model: '215/65R16', stock: 10, price: 120 },
-    { id: 2, brand: 'Bridgestone', model: '205/55R16', stock: 15, price: 110 },
-    { id: 3, brand: 'Goodyear', model: '225/50R17', stock: 8, price: 130 }
 ];
-
-newTire: Tire = {
-  id: 0,
-  brand: '',
-  model: '',
-  stock: 0,
-  price: 0
-};
 
 addTire(): void {
   if (this.newTire.brand && this.newTire.model && this.newTire.stock > 0 && this.newTire.price > 0) {
@@ -118,88 +109,204 @@ generateNewId(): number {
 clearNewTireForm(): void {
   this.newTire = { id: 0, brand: '', model: '', stock: 0, price: 0 };
 }
-// Update an existing tire
+// Delete a tire from stock
+deleteTire(index: number) {
+  const tire = this.tires[index];
+  if (confirm(`Are you sure you want to delete tire ${tire.id}?`)) {
+    this.tires.splice(index, 1);
+    alert(`Tire ${tire.id} deleted successfully!`);
+    this.appService.deleteTire(tire.id).subscribe((data: any) => {
+      console.log('Tire deleted:', data);
+    });
+  }
+}
+
+loadTires() {
+  this.appService.getTires().subscribe((data: any) => {
+    this.tires = data;
+  });
+}
+
+newTire: Tire = {
+  id: 0,
+  brand: '',
+  model: '',
+  stock: 0,
+  price: 0
+};
+
+addTireToDatabase() {
+  this.appService.addTire(this.newTire).subscribe((data: any) => {
+    this.tires.push(data);
+  });
+}
+
 updateTire(index: number): void {
   const updatedBrand = prompt('Enter new brand:', this.tires[index].brand);
   const updatedModel = prompt('Enter new model:', this.tires[index].model);
   const updatedstock = prompt('Enter new stock:', this.tires[index].stock.toString());
   const updatedPrice = prompt('Enter new price:', this.tires[index].price.toString());
-
+  
   if (updatedBrand && updatedModel && Number(updatedstock) > 0 && Number(updatedPrice) > 0) {
-      this.tires[index].brand = updatedBrand;
-      this.tires[index].model = updatedModel;
-      this.tires[index].stock = Number(updatedstock);
-      this.tires[index].price = Number(updatedPrice);
+      const updatedTire = {
+        id: this.tires[index].id,
+        brand: updatedBrand,
+        model: updatedModel,
+        stock: Number(updatedstock),
+        price: Number(updatedPrice)
+      };
+      
+      this.appService.updateTire(updatedTire).subscribe(
+        (response: any) => {
+          this.tires[index] = updatedTire;
+          alert('Tire updated successfully!');
+        },
+        (error) => {
+          console.error('Error updating tire:', error);
+          alert('Failed to update tire. Please try again.');
+        }
+      );
   } else {
       alert('Please provide valid data for all fields.');
   }
 }
-// Delete a tire from stock
-deleteTire(index: number): void {
-  if (confirm(`Are you sure you want to delete the tire with ID ${this.tires[index].id}?`)) {
-      this.tires.splice(index, 1);
+
+showUpdate: boolean = false;
+selectedTire: Tire = {
+  id: 0,
+  brand: '',
+  model: '',
+  stock: 0,
+  price: 0
+};
+
+showUpdateForm(index: number) {
+  this.showUpdate = true;
+  this.selectedTire = { ...this.tires[index] };
+}
+
+updateTireForm() {
+  if (this.selectedTire.brand && this.selectedTire.model && this.selectedTire.stock > 0 && this.selectedTire.price > 0) {
+    this.appService.updateTire(this.selectedTire).subscribe(
+      (response: any) => {
+        const index = this.tires.findIndex(t => t.id === this.selectedTire.id);
+        if (index !== -1) {
+          this.tires[index] = { ...this.selectedTire };
+        }
+        this.showUpdate = false;
+        alert('Tire updated successfully!');
+      },
+      (error) => {
+        console.error('Error updating tire:', error);
+        alert('Failed to update tire. Please try again.');
+      }
+    );
+  } else {
+    alert('Please provide valid data for all fields.');
   }
 }
 
-feedbacks: Feedback[] = [
-  {
-    id: 1,
-    users: { userId: 1, email: 'john.doe@example.com' },
-    rating: 5,
-    comments: 'Excellent service! My tires were replaced quickly and professionally.',
-    appointmentId: '1'
-  },
-  {
-    id: 2,
-    users: { userId: 2, email: 'jane.smith@example.com' },
-    rating: 4,
-    comments: 'Very helpful staff. The alignment service improved my driving experience significantly.',
-    appointmentId: '2'
-  },
-  {
-    id: 3,
-    users: { userId: 3, email: 'alex.johnson@example.com' },
-    rating: 5,
-    comments: 'Fast and reliable. Great experience with the tire balancing!',
-    appointmentId: '3'
-  }
-];
+cancelUpdate() {
+  this.showUpdate = false;
+  this.selectedTire = {
+    id: 0,
+    brand: '',
+    model: '',
+    stock: 0,
+    price: 0
+  };
+}
+
+feedbacks: Feedback[] = [];
 
 loadFeedbacks() {
-  this.appService.getFeedbacks().subscribe(
-      (data: any) => {
-          this.feedbacks = data; // Load data from service if available
-      },
-      (error: any) => {
-          console.error('Error loading feedbacks:', error);
-          // Default to example feedback data if there's an error
-          this.feedbacks = [
-              {
-                  id: 1,
-                  users: { userId: 1, email: 'john.doe@example.com' },
-                  rating: 5,
-                  comments: 'Excellent service! My tires were replaced quickly and professionally.',
-                  appointmentId: '1'
-              },
-              {
-                  id: 2,
-                  users: { userId: 2, email: 'jane.smith@example.com' },
-                  rating: 4,
-                  comments: 'Very helpful staff. The alignment service improved my driving experience significantly.',
-                  appointmentId: '2'
-              },
-              {
-                  id: 3,
-                  users: { userId: 3, email: 'alex.johnson@example.com' },
-                  rating: 5,
-                  comments: 'Fast and reliable. Great experience with the tire balancing!',
-                  appointmentId: '3'
-              }
-          ];
+    this.appService.getFeedbacks().subscribe((data: any) => {
+    this.feedbacks = data;
+  },
+  (error: any) => {
+    console.error('Error loading feedbacks:', error);
+  }
+);
+}
+
+services: Service[] = [];
+newService: Service = {
+  serviceId: 0,
+  price: 0,
+  servicename: '',
+  description: ''
+};
+
+loadServices() {
+  this.appService.getServices().subscribe((data: any) => {
+    this.services = data;
+  });
+}
+
+addService() {
+  this.appService.addService(this.newService).subscribe((data: any) => {
+    this.services.push(data);
+    alert('Service added successfully!');
+  });
+}
+
+editService(index: number) {
+  this.appService.updateService(this.services[index]).subscribe((data: any) => {
+    this.services[index] = data;
+    alert('Service updated successfully!');
+  });
+}
+
+isEditing: boolean = false;
+selectedService: Service = {
+  serviceId: 0,
+  price: 0,
+  servicename: '',
+  description: ''
+};
+
+showEditForm(index: number) {
+  this.isEditing = true;
+  this.selectedService = { ...this.services[index] };
+}
+
+updateService() {
+  this.appService.updateService(this.selectedService).subscribe(
+    (data: any) => {
+      const index = this.services.findIndex(s => s.serviceId === this.selectedService.serviceId);
+      if (index !== -1) {
+        this.services[index] = { ...this.selectedService };
       }
+      this.isEditing = false;
+      alert('Service updated successfully!');
+    },
+    (error) => {
+      console.error('Error updating service:', error);
+      alert('Failed to update service. Please try again.');
+    }
   );
 }
 
+cancelEdit() {
+  this.isEditing = false;
+  this.selectedService = {
+    serviceId: 0,
+    price: 0,
+    servicename: '',
+    description: ''
+  };
+}
+
+deleteService(index: number): void {
+    // Confirm deletion
+    if (confirm('Are you sure you want to delete this service?')) {
+        // Remove the service from the array
+        this.appService.deleteService(this.services[index].serviceId).subscribe((data: any) => {
+          this.services.splice(index, 1);
+          alert('Service deleted successfully!');
+        });
+    }
+}
 
 }
 
