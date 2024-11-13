@@ -73,9 +73,9 @@ Tables: Users, Appointments, Services, Tires, Feedback.</br>
 
 ```mermaid
 graph TD;
-HOME PAGE -> User Registration and Login;
-Login page -> HOME PAGE;
-Login page -> Admin DashBoard;
+HOME PAGE --> User Registration and Login;
+Login page --> HOME PAGE;
+Login page --> Admin DashBoard;
 ```
 
 ## 7. Authentication and Authorization
