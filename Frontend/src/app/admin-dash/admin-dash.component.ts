@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Chart } from 'chart.js/auto';
+
 import { AppService } from '../app/app.service';
-import { Service } from '../service/service.component';
 export interface Appointment {
   appointmentId: number;
   appointmentDate: string;
@@ -15,6 +16,12 @@ export interface Tire {
   brand: string;
   model: string;
   stock: number;
+  price: number;
+}
+interface Service {
+  id: string;
+  name: string;
+  description: string;
   price: number;
 }
 
@@ -37,14 +44,19 @@ export interface Feedback {
   styleUrl: './admin-dash.component.css'
 })
 export class AdminDashComponent{
+  selectedService: Service | null = null; // For tracking the service being edited
 
   activeChild: string = 'overview';
+
+  services: Service[] = [
+    { id: '001', name: 'Wheel Balancing', description: 'Drive with Confidence – Let Your Wheels Find Their Balance!', price: 50 },
+    { id: '002', name: 'Wheel Alignment', description: 'Drive Straight, Drive Safe – Precision Tire Alignment!', price: 70 }
+    // Additional services can be initialized here
+  ]; // Declare the services property
 
   constructor(private appService: AppService) {
     this.loadAppointments();
     this.loadFeedbacks();
-    this.loadTires();
-    this.loadServices();
   }
   appointments: Appointment[] = [];
 
@@ -69,6 +81,8 @@ export class AdminDashComponent{
                       };
           
             alert(`Appointment ${appointment.appointmentId} updated successfully!`);
+          
+                      // Here, you'd send an update request to your backend.
           }
   }
   deleteAppointment(index: number) {
@@ -171,142 +185,209 @@ updateTire(index: number): void {
   }
 }
 
-showUpdate: boolean = false;
-selectedTire: Tire = {
-  id: 0,
-  brand: '',
-  model: '',
-  stock: 0,
-  price: 0
-};
-
-showUpdateForm(index: number) {
-  this.showUpdate = true;
-  this.selectedTire = { ...this.tires[index] };
-}
-
-updateTireForm() {
-  if (this.selectedTire.brand && this.selectedTire.model && this.selectedTire.stock > 0 && this.selectedTire.price > 0) {
-    this.appService.updateTire(this.selectedTire).subscribe(
-      (response: any) => {
-        const index = this.tires.findIndex(t => t.id === this.selectedTire.id);
-        if (index !== -1) {
-          this.tires[index] = { ...this.selectedTire };
-        }
-        this.showUpdate = false;
-        alert('Tire updated successfully!');
-      },
-      (error) => {
-        console.error('Error updating tire:', error);
-        alert('Failed to update tire. Please try again.');
-      }
-    );
-  } else {
-    alert('Please provide valid data for all fields.');
-  }
-}
-
-cancelUpdate() {
-  this.showUpdate = false;
-  this.selectedTire = {
-    id: 0,
-    brand: '',
-    model: '',
-    stock: 0,
-    price: 0
-  };
-}
-
-feedbacks: Feedback[] = [];
-
-loadFeedbacks() {
-    this.appService.getFeedbacks().subscribe((data: any) => {
-    this.feedbacks = data;
+feedbacks: Feedback[] = [
+  {
+    id: 1,
+    users: { userId: 1, email: 'john.doe@example.com' },
+    rating: 5,
+    comments: 'Excellent service! My tires were replaced quickly and professionally.',
+    appointmentId: '1'
   },
-  (error: any) => {
-    console.error('Error loading feedbacks:', error);
+  {
+    id: 2,
+    users: { userId: 2, email: 'jane.smith@example.com' },
+    rating: 4,
+    comments: 'Very helpful staff. The alignment service improved my driving experience significantly.',
+    appointmentId: '2'
+  },
+  {
+    id: 3,
+    users: { userId: 3, email: 'alex.johnson@example.com' },
+    rating: 5,
+    comments: 'Fast and reliable. Great experience with the tire balancing!',
+    appointmentId: '3'
   }
-);
-}
+];
 
-services: Service[] = [];
-newService: Service = {
-  serviceId: 0,
-  price: 0,
-  servicename: '',
-  description: ''
-};
+filteredFeedbacks = [...this.feedbacks]; // Initially show all feedbacks
+  selectedRating = '';
+  sortOrder = '';
 
-loadServices() {
-  this.appService.getServices().subscribe((data: any) => {
-    this.services = data;
-  });
-}
+  onFilterChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedRating = selectElement.value;
+    this.applyFilters();
+  }
 
-addService() {
-  this.appService.addService(this.newService).subscribe((data: any) => {
-    this.services.push(data);
-    alert('Service added successfully!');
-  });
-}
+  onSortChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    this.sortOrder = selectElement.value;
+    this.applyFilters();
+  }
 
-editService(index: number) {
-  this.appService.updateService(this.services[index]).subscribe((data: any) => {
-    this.services[index] = data;
-    alert('Service updated successfully!');
-  });
-}
+  applyFilters() {
+    let filtered = this.feedbacks;
 
-isEditing: boolean = false;
-selectedService: Service = {
-  serviceId: 0,
-  price: 0,
-  servicename: '',
-  description: ''
-};
-
-showEditForm(index: number) {
-  this.isEditing = true;
-  this.selectedService = { ...this.services[index] };
-}
-
-updateService() {
-  this.appService.updateService(this.selectedService).subscribe(
-    (data: any) => {
-      const index = this.services.findIndex(s => s.serviceId === this.selectedService.serviceId);
-      if (index !== -1) {
-        this.services[index] = { ...this.selectedService };
-      }
-      this.isEditing = false;
-      alert('Service updated successfully!');
-    },
-    (error) => {
-      console.error('Error updating service:', error);
-      alert('Failed to update service. Please try again.');
+    // Filter by selected rating
+    if (this.selectedRating) {
+      filtered = filtered.filter(feedback => feedback.rating === +this.selectedRating);
     }
+
+    // Sort based on selected order
+    if (this.sortOrder === 'asc') {
+      filtered.sort((a, b) => a.rating - b.rating);
+    } else if (this.sortOrder === 'desc') {
+      filtered.sort((a, b) => b.rating - a.rating);
+    }
+
+    this.filteredFeedbacks = filtered;
+  }
+loadFeedbacks() {
+  this.appService.getFeedbacks().subscribe(
+      (data: any) => {
+          this.feedbacks = data; // Load data from service if available
+      },
+      (error: any) => {
+          console.error('Error loading feedbacks:', error);
+          // Default to example feedback data if there's an error
+          this.feedbacks = [
+              {
+                  id: 1,
+                  users: { userId: 1, email: 'john.doe@example.com' },
+                  rating: 5,
+                  comments: 'Excellent service! My tires were replaced quickly and professionally.',
+                  appointmentId: '1'
+              },
+              {
+                  id: 2,
+                  users: { userId: 2, email: 'jane.smith@example.com' },
+                  rating: 4,
+                  comments: 'Very helpful staff. The alignment service improved my driving experience significantly.',
+                  appointmentId: '2'
+              },
+              {
+                  id: 3,
+                  users: { userId: 3, email: 'alex.johnson@example.com' },
+                  rating: 5,
+                  comments: 'Fast and reliable. Great experience with the tire balancing!',
+                  appointmentId: '3'
+              }
+          ];
+      }
   );
 }
+chart: any;
 
-cancelEdit() {
-  this.isEditing = false;
-  this.selectedService = {
-    serviceId: 0,
-    price: 0,
-    servicename: '',
-    description: ''
-  };
+  ngAfterViewInit() {
+    this.createPieChart();
+  }
+
+  createPieChart() {
+    // Count ratings
+    const ratingCounts = this.feedbacks.reduce((acc, feedback) => {
+      acc[feedback.rating] = (acc[feedback.rating] || 0) + 1;
+      return acc;
+    }, {} as { [key: number]: number });
+
+    // Data preparation
+    const labels = Object.keys(ratingCounts);
+    const data = Object.values(ratingCounts);
+
+    this.chart = new Chart("ratingPieChart", {
+      type: 'pie',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Rating Distribution',
+          data: data,
+          backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#2ecc71'],
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+        },
+      }
+    });
+  }
+updateService(service: Service) {
+    // Logic to update the service
+    this.services = this.services.filter(s => s.id !== service.id);
+  }
+editService(service: Service): void {
+    // Logic to update the service
+    this.selectedService = { ...service };
+}
 }
 
-deleteService(index: number): void {
-    // Confirm deletion
-    if (confirm('Are you sure you want to delete this service?')) {
-        // Remove the service from the array
-        this.appService.deleteService(this.services[index].serviceId).subscribe((data: any) => {
-          this.services.splice(index, 1);
-          alert('Service deleted successfully!');
-        });
+
+export class ManageServicesComponent {
+  services: Service[] = [
+    { id: '001', name: 'Wheel Balancing', description: 'Drive with Confidence – Let Your Wheels Find Their Balance!', price: 50 },
+    { id: '002', name: 'Wheel Alignment', description: 'Drive Straight, Drive Safe – Precision Tire Alignment!', price: 70 }
+    // Additional services can be initialized here
+  ];
+
+  constructor() {
+    // Initialize any necessary properties or perform setup here
+  }
+
+  selectedService: Service | null = null; // For tracking the service being edited
+
+  // Method to add a new service
+  addService(id: string, name: string, serviceDescription: string, servicePrice: number) {
+    const newService: Service = {
+      id: id,
+      name: name,
+      description: serviceDescription,
+      price: servicePrice
+    };
+    
+    // Check if the service ID already exists
+    if (this.services.find(service => service.id === newService.id)) {
+      alert('Service ID already exists. Please use a different ID.');
+      return;
     }
+
+    this.services.push(newService);
+    this.clearForm();
+  }
+
+  // Method to update an existing service
+  updateService(serviceId: string, serviceName: string, serviceDescription: string, servicePrice: number) {
+    if (this.selectedService) {
+      this.selectedService.id = serviceId;
+      this.selectedService.name = serviceName;
+      this.selectedService.description = serviceDescription;
+      this.selectedService.price = servicePrice;
+
+      this.clearForm();
+    }
+  }
+
+  // Method to delete a service
+  deleteService(serviceId: string) {
+    this.services = this.services.filter(service => service.id !== serviceId);
+  }
+
+  // Method to select a service for editing
+  editService(service: Service) {
+    this.selectedService = { ...service }; // Create a copy of the selected service
+  }
+
+  // Clear the form fields
+  clearForm() {
+    this.selectedService = null; // Reset selected service
+    // Optionally reset form input values here if using template variables
+  }
 }
 
-}
+
+
+
+
+
 

@@ -376,7 +376,7 @@ footer {
    */
 
    /* Modern CSS Reset and Base Styles */
-   :root {
+:root {
     --primary-color: #ffa500;
     --secondary-color: #333;
     --accent-color: #2c3e50;
@@ -400,6 +400,10 @@ footer {
     line-height: 1.6;
     overflow-x: hidden;
   }
+
+
+  /* Add this to your CSS file */
+
   
   /* Enhanced Header */
   .header {
@@ -473,6 +477,10 @@ footer {
     /* -webkit-text-fill-color: transparent; */
   }
   
+.registerbtn{
+  cursor: pointer;
+}
+
   /* Enhanced User Menu */
   .user-menu {
     position: relative;
@@ -536,71 +544,216 @@ footer {
     box-shadow: 0 5px 15px rgba(255, 165, 0, 0.3);
   }
   
-  /* Enhanced Hero Section */
-  .hero-section {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    padding: 6rem 2rem;
-    background: url('../../assets/img1.jpeg') center/cover no-repeat fixed;
-    text-align: center;
-    width: 100%;
-  }
   
-  .hero-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(rgba(96, 183, 245, 0.374), rgba(0, 0, 0, 0.7));
-    z-index: 1;
-  }
-  
+
+  /* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* Header Styling */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #343a40;
+  color: #f8f9fa;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #f8f9fa;
+}
+
+/* Navbar Styling */
+.navbar {
+  display: flex;
+  align-items: center;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-list li {
+  position: relative;
+}
+
+.nav-list a {
+  color: #f8f9fa;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.nav-list a:hover {
+  color: #adb5bd;
+}
+
+/* User Menu Styling */
+.user-menu {
+  position: relative;
+  cursor: pointer;
+}
+
+.bi-person-circle {
+  width: 24px;
+  height: 24px;
+  color: #f8f9fa;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #495057;
+  color: #f8f9fa;
+  width: 200px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  z-index: 10;
+}
+
+.dropdown-item {
+  padding: 8px;
+  border-bottom: 1px solid #6c757d;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item strong {
+  color: #ced4da;
+}
+
+.dropdown-item button {
+  width: 100%;
+  padding: 8px;
+  background-color: #dc3545;
+  color: #f8f9fa;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-item button:hover {
+  background-color: #c82333;
+}
+
+
+
+
+
+
+
+
+
+/* Hero Section Styling */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 6rem 2rem;
+  background: url('../../assets/img1.jpeg') center/cover no-repeat fixed;
+  text-align: center;
+  width: 100%;
+  color: #f8f9fa;
+}
+
+/* Hero Title */
+.hero-section h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Hero Description */
+.hero-section p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Register Button */
+.hero-section a {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #343a40;
+  background-color: #f8f9fa;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.hero-section a:hover {
+  background-color: #adb5bd;
+  color: #343a40;
+  transform: translateY(-3px);
+}
+
+/* Overlay Effect */
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+/* Position content on top of overlay */
+.hero-section h1,
+.hero-section p,
+.hero-section a {
+  position: relative;
+  z-index: 2;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
   .hero-section h1 {
-    font-size: 4.5rem;
-    font-weight: 800;
-    color: #fafafa;
-    margin-bottom: 1.5rem;
-    position: relative;
-    z-index: 2;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    animation: slideDown 2s ease;
+      font-size: 2.5rem;
   }
-  
   .hero-section p {
-    font-size: 1.8rem;
-    color: #fafafa;
-    margin-bottom: 2rem;
-    position: relative;
-    z-index: 2;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-    animation: slideUp 2s ease;
+      font-size: 1rem;
   }
-  
   .hero-section a {
-    background: var(--gradient);
-    color: rgba(255, 166, 0, 0.881);
-    padding: 1.2rem 3rem;
-    border-radius: 50px;
-    font-size: 1.3rem;
-    font-weight: 600;
-    text-decoration: none;
-    position: relative;
-    z-index: 2;
-    transition: var(--transition);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    animation: fadeIn 2s ease 0.5s backwards;
+      padding: 0.6rem 1.5rem;
+      font-size: 1rem;
   }
-  
-  .hero-section a:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(255, 165, 0, 0.4);
-  }
+}
+
   
   /* Enhanced Services Section */
   .services-section {
@@ -1022,3 +1175,14 @@ footer {
 html {
   scroll-behavior: smooth;
 }
+
+
+
+
+
+
+
+
+
+
+

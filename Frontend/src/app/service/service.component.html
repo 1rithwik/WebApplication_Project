@@ -127,30 +127,7 @@
                                 <i class="fas fa-clock"></i>
                                 Time
                             </label>
-                            <select id="appointmentTime" formControlName="appointmentTime" required>
-                                <option value="10:00">10:00 AM - 10:30 AM</option>
-                                <option value="10:30">10:30 AM - 11:00 AM</option>
-                                <option value="11:00">11:00 AM - 11:30 AM</option>
-                                <option value="11:30">11:30 AM - 12:00 PM</option>
-                                <option value="12:00">12:00 PM - 12:30 PM</option>
-                                <option value="12:30">12:30 PM - 1:00 PM</option>
-                                <option value="13:00">1:00 PM - 1:30 PM</option>
-                                <option value="13:30">1:30 PM - 2:00 PM</option>
-                                <option value="14:00">2:00 PM - 2:30 PM</option>
-                                <option value="14:30">2:30 PM - 3:00 PM</option>
-                                <option value="15:00">3:00 PM - 3:30 PM</option>
-                                <option value="15:30">3:30 PM - 4:00 PM</option>
-                                <option value="16:00">4:00 PM - 4:30 PM</option>
-                                <option value="16:30">4:30 PM - 5:00 PM</option>
-                                <option value="17:00">5:00 PM - 5:30 PM</option>
-                                <option value="17:30">5:30 PM - 6:00 PM</option>
-                                <option value="18:00">6:00 PM - 6:30 PM</option>
-                                <option value="18:30">6:30 PM - 7:00 PM</option>
-                                <option value="19:00">7:00 PM - 7:30 PM</option>
-                                <option value="19:30">7:30 PM - 8:00 PM</option>
-                                <option value="20:00">8:00 PM - 8:30 PM</option>
-                                <option value="20:30">8:30 PM - 9:00 PM</option>
-                            </select>
+                            <input type="time" id="appointmentTime" formControlName="appointmentTime" required>
                         </div>
                     </div>
 
@@ -161,7 +138,7 @@
                                 <i class="fas fa-car"></i>
                                 Tire Model
                             </label>
-                            <input type="text" id="model" formControlName="tireModel" required>
+                            <input type="text" id="model" formControlName="model" required>
                         </div>
 
                         <div class="form-group">
@@ -169,7 +146,7 @@
                                 <i class="fas fa-list-ol"></i>
                                 Number of Tires
                             </label>
-                            <input type="number" id="stock" formControlName="numberOfTires" required>
+                            <input type="number" id="stock" formControlName="stock" required>
                         </div>
                     </div>
 
@@ -184,18 +161,6 @@
         <div *ngIf="appointmentConfirmed" class="confirmation-message">
             <h2>Appointment Confirmed!</h2>
             <p>Your appointment has been successfully scheduled.</p>
-        </div>
-
-        <div *ngIf="errorMessage" class="error-message">
-            <div *ngIf="errorMessage === 'Slot already booked'" class="error-content">
-                <p><i class="fas fa-exclamation-circle"></i> This time slot is already booked. Please try selecting a different appointment time.</p>
-            </div>
-            <div *ngIf="errorMessage === 'Tire model or number of tires not available'" class="error-content">
-                <p><i class="fas fa-exclamation-circle"></i> The requested tire model or quantity is currently not available in stock. Please visit us after some time or contact our service center for more information.</p>
-            </div>
-            <div *ngIf="errorMessage && errorMessage !== 'Slot already booked' && errorMessage !== 'Tire model or number of tires not available'" class="error-content">
-                <p><i class="fas fa-exclamation-circle"></i> {{errorMessage}}</p>
-            </div>
         </div>
 
         <div class="appointments-viewer">

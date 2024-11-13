@@ -44,7 +44,6 @@ export class LoginComponent {
           localStorage.setItem('jwtToken', token);
           localStorage.setItem('user', JSON.stringify(user));
           console.log("Form submitted successfully!", response);
-          console.log(token);
           alert('Login successful!');
           if(user.role == 'ADMIN'){
             this.router.navigate(['/adminDashboard']);

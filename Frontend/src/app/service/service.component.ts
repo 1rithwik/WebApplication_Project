@@ -15,8 +15,8 @@ export interface Appointment {
   appointmentDate: string;
   appointmentTime: string;
   serviceId: number;
-  tireModel: string;
-  numberOfTires: number;
+  model: string;
+  stock: number;
 }
 
 export interface AppointmentResponse {
@@ -60,7 +60,6 @@ export class ServiceComponent {
   feedbackForm: FormGroup;
   showFeedbackForm: number | null = null;
   appointmentConfirmed = false;
-  errorMessage: string | null = null;
 
   constructor(private fb: FormBuilder, private appService: AppService) {
     this.appointmentForm = this.fb.group({
@@ -69,8 +68,8 @@ export class ServiceComponent {
       appointmentTime: [''],
       serviceId: [null],
       servicePrice: [null],
-      tireModel: [''],
-      numberOfTires: [null]
+      model: [''],
+      stock: [null]
     });
     this.feedbackForm = this.fb.group({
       userId: [''],
@@ -105,8 +104,8 @@ export class ServiceComponent {
       userId: '',
       appointmentDate: '',
       appointmentTime: '',
-      tireModel: '',
-      numberOfTires: null
+      model: '',
+      stock: null
     });
     this.appointmentConfirmed = false;
   }
@@ -121,7 +120,6 @@ export class ServiceComponent {
         this.selectedService = null;
       },
       error => {
-        this.errorMessage = error.error.message;
         console.error('Error scheduling appointment:', error);
       });
     }

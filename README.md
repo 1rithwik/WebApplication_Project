@@ -1,6 +1,7 @@
 # Project Details
 
 To see more detailed information about the project, please refer to the [Project Document](Project Document.md).
+
 ## 1. Project Overview
 Project Name: Wheel Alignment Center Web Application</br>
 Objective: To create a web application for a wheel alignment center, including features for scheduling services, managing tire inventory, and handling customer feedback.</br>
@@ -67,6 +68,30 @@ Uses Spring Data JPA for CRUD operations on MySQL database tables.</br>
 
 ## 6. Database Schema
 Tables: Users, Appointments, Services, Tires, Feedback.</br>
+
+```mermaid
+graph TD;
+Users_Table --> Appointments_Table;
+Users_Table --> Feedback_Table;
+Tire_Stock_Table;
+Services_Table;
+```
+
+## Flow Chart of Application
+
+```mermaid
+graph TD;
+UserRegistration_and_Login --> Home_Page;
+UserRegistration_and_Login --> Admin_Dashboard;
+Home_Page --> Go_and_View_ServicePage;
+Go_and_View_ServicePage --> Schedule_Appointment_for_Service;
+Admin_Dashboard --> Maintain_Tire_Stock;
+Admin_Dashboard --> Manage_Appointments;
+Admin_Dashboard --> View_Feedbacks;
+Home_Page --> FeedBack;
+Schedule_Appointment_for_Service --> Feedback;
+Admin_Dashboard --> Manage_Services_Provided
+```
 
 ## 7. Authentication and Authorization
 #### JWT Authentication Flow:</br>

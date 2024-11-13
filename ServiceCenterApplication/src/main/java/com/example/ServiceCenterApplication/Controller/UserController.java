@@ -29,8 +29,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    // @Cacheable(value = "userCache", key = "#user.getUsername()", cacheManager =
-    // "userCacheManager")
+    @Cacheable(value = "userCache", key = "#user.getUsername()", cacheManager = "userCacheManager")
     public HashMap<String, Users> login(@RequestBody Users user) {
         map.clear();
         String token = service.verify(user);
