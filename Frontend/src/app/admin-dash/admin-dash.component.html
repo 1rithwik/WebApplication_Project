@@ -1,0 +1,241 @@
+<div class="admin-dashboard">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Admin Dashboard</h2>
+    <ul>
+      <li><a (click)="activeChild = 'overview'" class = "cursor-pointer">Overview</a></li>
+      <li><a (click)="activeChild = 'manageServices'" class = "cursor-pointer">Manage Services</a></li>
+      <li><a (click)="activeChild = 'appointment'" class = "cursor-pointer">Appointments</a></li>
+      <li><a (click)="activeChild = 'customerFeedback'" class = "cursor-pointer">Customer Feedback</a></li>
+      <li><a (click)="activeChild = 'tireStock'" class = "cursor-pointer">Tire Stock</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div *ngIf="activeChild == 'overview'" class="content">
+    <div class="header">
+      <h1>Welcome, Admin</h1>
+      <p>Manage your car tire services effectively.</p>
+    </div>
+
+    <!-- Overview Section -->
+    <div class="overview-section">
+      <div class="overview-card">
+        <h3>Total Services</h3>
+        <p>4</p>
+      </div>
+      <div class="overview-card">
+        <h3>Upcoming Appointments</h3>
+        <p>{{ appointments.length }}</p>
+      </div>
+      <div class="overview-card">
+        <h3>Customer Feedbacks</h3>
+        <p>{{ feedbacks.length }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="activeChild == 'manageServices'" class="service-content">
+    <h1>Manage Services</h1>
+
+    <!-- Service Form -->
+    <div class="service-form">
+        <h2>Add Service</h2>
+        <form #serviceForm="ngForm">
+            <label for="service-id">Service ID:</label>
+            <input type="number" id="service-id" placeholder="Enter Service ID" [(ngModel)]="newService.serviceId" name="serviceId" required />
+
+            <label for="service-name">Service Name:</label>
+            <input type="text" id="service-name" placeholder="Enter Service Name" [(ngModel)]="newService.servicename" name="servicename" required />
+            
+            <label for="description">Service Description:</label>
+            <input type="text" id="description" placeholder="Enter Service Description" [(ngModel)]="newService.description" name="description" required />
+
+            <label for="service-price">Service Price:</label>
+            <input type="number" id="service-price" placeholder="Enter Service Price" [(ngModel)]="newService.price" name="price" required />
+            
+
+            <button type="button" class="btn add-btn" (click)="addService()">Add Service</button>
+        </form>
+    </div>
+
+    <!-- Services List -->
+    <div class="service-list">
+        <h2>Available Services</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Service ID</th>
+                    <th>Service Name</th>
+                    <th>Service Description</th>
+                    <th>Service Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let service of services; let i = index">
+                    <td>{{ service.serviceId }}</td>
+                    <td>{{ service.servicename }}</td>
+                    <td>{{ service.description }}</td>
+                    <td>{{ service.price }}</td>
+                    <td>
+                        <button class="btn edit-btn" (click)="showEditForm(i)">Edit</button>
+                        <button class="btn delete-btn" (click)="deleteService(i)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  </div>
+
+  <div *ngIf="activeChild == 'appointment'" class="appointment-content">
+    <div class="container">
+    <h1>Appointments</h1>
+  <table class="appointment-table">
+      <thead>
+          <tr>
+              <th>Appointment ID</th>
+              <th>Customer ID</th>
+              <th>Service ID</th>
+              <th>Appointment Date</th>
+              <th>Appointment Time</th>
+              <th>Status</th>
+              <th>Actions</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let appointment of appointments; let i = index">
+              <td>{{ appointment.appointmentId }}</td>
+              <td>{{ appointment.userId }}</td>
+              <td>{{ appointment.serviceId }}</td>
+              <td>{{ appointment.appointmentDate }}</td>
+              <td>{{ appointment.appointmentTime }}</td>
+              <td>{{ appointment.appointmentStatus }}</td>
+              <td>
+                  <button class="update-btn" (click)="updateAppointment(i)">Update</button>
+                  <button class="delete-btn" (click)="deleteAppointment(i)">Delete</button>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+  </div>
+
+  <div *ngIf="activeChild == 'customerFeedback'" class="feedback-content">
+    <div class="content">
+        <div class="header">
+            <h1>Customer Feedback</h1>
+            <p>Here is the feedback from your customers.</p>
+        </div>
+
+        <div class="feedback-section">
+            <div *ngFor="let feedback of feedbacks; let last = last" class="feedback-card">
+                <hr class="feedback-divider">
+                <h4 class="user-id">User ID: {{ feedback.users.userId }}</h4>
+                <h4 class="email">Email: {{ feedback.users.email }}</h4>
+                <p class="comment">Feedback: {{ feedback.comments }}</p>
+                <span class="rating">Rating: {{ feedback.rating }} / 5</span>
+                
+                <!-- Divider Line Between Feedbacks -->
+                <hr class="feedback-divider">
+            </div>
+        </div>
+    </div>
+</div>
+
+  
+
+
+<div *ngIf="activeChild == 'tireStock'" class="tire-content">
+  <h1>Tire Stock</h1>
+  <div class="container">
+    <!-- Tires Table -->
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr class="table-header">
+                    <th>Tire ID</th>
+                    <th>Brand</th>
+                    <th>Size</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-row" *ngFor="let tire of tires; let i = index">
+                    <td class="table-cell">{{ tire.id }}</td>
+                    <td class="table-cell">{{ tire.brand }}</td>
+                    <td class="table-cell">{{ tire.model }}</td>
+                    <td class="table-cell">{{ tire.stock }}</td>
+                    <td class="table-cell">{{ tire.price }}</td>
+                    <td class="table-cell">
+                        <button class="button button--update" (click)="showUpdateForm(i)">Update</button>
+                        <button class="button button--delete" (click)="deleteTire(i)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Update Tire Form -->
+    <div *ngIf="showUpdate" class="update-form">
+      <h3>Update Tire</h3>
+      <form (ngSubmit)="updateTireForm()">
+        <div class="form-group">
+          <label>Brand:</label>
+          <input type="text" [(ngModel)]="selectedTire.brand" name="brand" required placeholder="Enter brand">
+        </div>
+        <div class="form-group">
+          <label >Model:</label>
+          <input type="text" [(ngModel)]="selectedTire.model" name="model" required placeholder="Enter model">
+        </div>
+        <div class="form-group">
+          <label>Stock:</label>
+          <input type="number" [(ngModel)]="selectedTire.stock" name="stock" required placeholder="Enter stock">
+        </div>
+        <div class="form-group">
+          <label >Price:</label>
+          <input type="number" [(ngModel)]="selectedTire.price" name="price" required placeholder="Enter price">
+        </div>
+        <div>
+          <button type="submit">
+            Update
+          </button>
+          <button type="button" (click)="cancelUpdate()">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+    <!-- Add New Tire Form -->
+    <div class="form-container">
+        <h2 class="heading-secondary">Add New Tire</h2>
+        <form (ngSubmit)="addTireToDatabase()" #tireForm="ngForm">
+            <input type="text" class="form-input" placeholder="Brand" [(ngModel)]="newTire.brand" name="brand" required>
+            <input type="text" class="form-input" placeholder="Model" [(ngModel)]="newTire.model" name="model" required>
+            <input type="number" class="form-input" placeholder="Quantity" [(ngModel)]="newTire.stock" name="quantity" required>
+            <input type="number" class="form-input" placeholder="Price" [(ngModel)]="newTire.price" name="price" required>
+            <button type="submit" class="button button--add">Add Tire</button>
+        </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Edit Service Form -->
+<div *ngIf="isEditing" class="edit-form">
+    <h3>Edit Service</h3>
+    <form (ngSubmit)="updateService()">
+        <label for="servicename">Service Name:</label>
+        <input type="text" id="servicename" [(ngModel)]="selectedService.servicename" name="servicename" required>
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" [(ngModel)]="selectedService.price" name="price" required>
+
+        <label for="description">Description:</label>
+        <textarea id="description" [(ngModel)]="selectedService.description" name="description" required></textarea>
+
+        <button type="submit" class="btn save-btn">Save</button>
+        <button type="button" class="btn cancel-btn" (click)="cancelEdit()">Cancel</button>
+    </form>
+</div>
