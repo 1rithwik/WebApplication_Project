@@ -82,6 +82,7 @@ Admin_Dashboard --> Manage_Appointments;
 Admin_Dashboard --> View_Feedbacks;
 Home_Page --> FeedBack;
 Schedule_Appointment_for_Service --> Feedback;
+Admin_Dashboard --> Manage_Services_Provided
 ```
 
 ## 7. Authentication and Authorization
