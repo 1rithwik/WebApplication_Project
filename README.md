@@ -69,6 +69,15 @@ Uses Spring Data JPA for CRUD operations on MySQL database tables.</br>
 ## 6. Database Schema
 Tables: Users, Appointments, Services, Tires, Feedback.</br>
 
+## Flow Chart
+
+```mermaid
+graph TD;
+HOME PAGE -> User Registration and Login;
+Login page -> HOME PAGE;
+Login page -> Admin DashBoard;
+```
+
 ## 7. Authentication and Authorization
 #### JWT Authentication Flow:</br>
 Frontend sends username and password to backend.</br>
