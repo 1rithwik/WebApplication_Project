@@ -1,5 +1,6 @@
 # Project Details
 
+To see more detailed information about the project, please refer to the [Project Document](Project Document.md).
 
 ## 1. Project Overview
 Project Name: Wheel Alignment Center Web Application</br>
