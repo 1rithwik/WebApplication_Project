@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-public class ServiceContr {
+public class ServiceContr 
+{
     @Autowired
     private ServiceServ serviceServ;
 

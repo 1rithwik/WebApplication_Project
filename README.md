@@ -126,5 +126,5 @@ GET /api/feedback: Retrieves user feedback.</br>
 ## 10. Future Enhancements
 Integrating Spring AI: For predictive maintenance or automated suggestions.</br>
 Expanding Services: Add more services or appointment types as the business grows.</br>
-Enhanced Admin Analytics: Adding dashboard features to analyze customer feedback and service usage trends.</br>
+Enhanced Admin Analytics: Adding dashboard features to analyze customer feedback and services usage trends.</br>
 
