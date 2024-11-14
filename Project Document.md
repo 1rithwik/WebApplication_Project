@@ -167,7 +167,7 @@ The Angular frontend communicates with the Spring Boot backend through RESTful A
 #### Database Management
 Data consistency between the frontend and backend is maintained through CRUD operations on the MySQL database. With Spring Data JPA, each operation on the database follows the relational schema defined, ensuring that data is correctly stored, updated, and retrieved.
 
-##5. Database Design
+## 5. Database Design
 The database schema includes several interrelated tables, each serving a specific purpose within the application. Below is an overview of the primary tables, their relationships, and the rationale for their design.
 
 ### 1. Users Table
@@ -232,6 +232,40 @@ Optimized Performance: Indexing columns frequently queried, like appointment_dat
 Security: Encrypting sensitive data, such as password in Users, and using roles to manage access levels across the user interface.
 
 ## 6. Authentication and Authorization
+
+To ensure secure access and data integrity, our application implements a robust authentication and authorization mechanism.
+
+### Authentication:
+
+#### JWT (JSON Web Token):
+Upon successful login, the backend generates a JWT for the user. This token contains encoded user information and is signed with a secure secret key.</br>
+The token is sent to the frontend, where it is stored in localStorage to manage the user session securely.</br>
+#### Token Interception:
+All HTTP requests to secured API endpoints are intercepted by the AuthInterceptor in the frontend, which retrieves the JWT from local storage and attaches it to the Authorization header as a Bearer token.</br>
+This token ensures that only authenticated users can access protected resources.</br>
+
+### Authorization:
+
+#### Role-Based Access Control:
+Users are assigned roles (e.g., User, Admin) that determine their access level within the application.</br>
+Based on these roles, users can access only the resources permitted for their role:</br>
+User Role: Access to standard features like scheduling appointments, viewing services, and submitting feedback.</br>
+Admin Role: Access to admin-specific features like managing appointments, viewing feedback, updating tire stock, and viewing all service reviews.</br>
+
+#### Secured Endpoints:
+Specific endpoints are protected by Spring Security in the backend, allowing access based on role authorization.</br>
+Examples:</br>
+/user/** endpoints are accessible only to authenticated users.</br>
+/admin/** endpoints are restricted to users with Admin privileges.</br>
+Any attempt to access restricted endpoints without the appropriate role returns a 403 Forbidden response.</br>
+
+### Token Validation:
+Each incoming request with a token is validated by the backend to ensure it’s legitimate and not expired. If the token is invalid or expired, the user is logged out, and they must log in again.</br>
+Token expiry is configured to enforce periodic re-authentication, enhancing security for sensitive data and functionality.</br>
+
+### CORS (Cross-Origin Resource Sharing):
+To prevent unauthorized access from external sources, the backend is configured to allow requests only from approved origins (e.g., http://localhost:4200 for local development).</br>
+This helps in mitigating CORS-related issues and protecting the application from unauthorized domain access.</br>
 
 ## 7. User Interface Design
 
