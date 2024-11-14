@@ -514,14 +514,14 @@ Status Codes:</br>
 ### 1. Caching
 To optimize the performance and reduce database load in our project, we integrated Caffeine Cache. This allows for faster access to frequently requested data by temporarily storing it in memory. Here’s how we implemented caching:
 
-####User Appointments Cache:
+#### User Appointments Cache:
 
 Purpose: Stores user appointment data to prevent repeated database calls for the same user requests.</br>
 Configuration:</br>
 Maximum Size: 100 entries.</br>
 Expiration: 60 minutes after the cache entry is written.</br>
 
-####User Cache:
+#### User Cache:
 
 Purpose: Stores frequently accessed user data to improve response times for user-related endpoints.</br>
 Configuration:</br>
